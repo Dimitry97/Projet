@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Context>
+ 	
+ 
+ 	
+ 
+	<Resource
+		name="Encheres_cnx"
+		driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
+		
+		type="javax.sql.DataSource"
+		url="jdbc:sqlserver://127.0.0.1:1433;instanceName=SQLexpress;databasename=ENCHERES"
+		
+		username="sa" 
+		password="Pa$$w0rd"
+		
+		maxIdle="20"
+		maxActive="100"
+		
+		acceptCount="10"
+		maxWaitMillis="5000"
+		
+		removeAbandoned="true"
+		removeAbandonedTimeOut="30"
+		/>
+ 
+ </Context>
