@@ -4,113 +4,124 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Créer profil</title>
 </head>
 
 <jsp:include page="/WEB-INF/fragments/headerConnect.jsp"></jsp:include>
 
+<div class="col-md-12 form-row text-center"><h3>Mon profil</h3></div>
+
 <div class="container-fluid">
+	<div class="col-md-2"></div>
+
 	<div class="row">
-		<div class="col-md-6">
-			<form role="form">
+		<div class="col-md-4">
+			<form role="form" method="post" action="creerProfil">
 			
 				<div class="form-group">
-					<label for="pseudo">
-						Pseudo :
+					<label for="pseudo"> Pseudo
+						<span class="requis">*</span>
 						<!-- Vérifier si pseudo déjà existant, sinon message alerte -->
 					</label>
-					<input type="text" class="form-control" id="pseudo" />
+					<input type="text" class="form-control" id="pseudo" name="pseudo" value=""/>
 				</div>
 				
 				<div class="form-group"> 
-					<label for="prenom">
-						Prenom :
+					<label for="prenom"> Prenom
+					<span class="requis">*</span>
 					</label>
-					<input type="text" class="form-control" id="prenom" />
+					<input type="text" class="form-control" id="prenom" name="prenom" value=""/>
 				</div>
 					 
 				<div class="form-group"> 
-					<label for="telephone">
-						Telephone :
+					<label for="telephone"> Telephone
 					</label>
-					<input type="text" class="form-control" id="telephone" />
+					<input type="text" class="form-control" id="telephone" name="telephone" value=""/>
 				</div>
 					 
 				<div class="form-group"> 
-					<label for="codePostal">
-						Code Postal :
+					<label for="codePostal"> Code Postal
+					<span class="requis">*</span>
 					</label>
-					<input type="text" class="form-control" id="codePostal" />
+					<input type="text" class="form-control" id="codePostal" name="codePostal" value=""/>
 				</div>
 					 
 				<div class="form-group"> 
-					<label for="password">
-						Mot de passe :
+					<label for="password"> Mot de passe
+					<span class="requis">*</span>
 					</label>
-					<input type="password" class="form-control" id="password" />
+					<input type="password" class="form-control" id="password" name="password" value=""/>
 				</div>
 					
 			</form>
 		</div>
 		
 		
-		<div class="col-md-6">
+		<div class="col-md-4">
 			<form role="form">
 			
 				<div class="form-group">
-					<label for="nom">
-						Nom :
+					<label for="nom"> Nom
+					<span class="requis">*</span>
 					</label>
-					<input type="text" class="form-control" id="nom" />
+					<input type="text" class="form-control" id="nom" name="nom" value=""/>
 				</div>
 				
 				<div class="form-group">
-					<label for="email">
-						Email :
+					<label for="email"> Email
+					<span class="requis">*</span>
 						<!-- Vérifier si email déjà existant, sinon message alerte -->
 					</label>
-					<input type="email" class="form-control" id="email" />
+					<input type="email" class="form-control" id="email" name="email" value=""/>
 				</div>
 				
 				<div class="form-group">
-					<label for="rue">
-						Rue :
+					<label for="rue"> Rue
+					<span class="requis">*</span>
 					</label>
-					<input type="text" class="form-control" id="rue" />
+					<input type="text" class="form-control" id="rue" name="rue" value=""/>
 				</div>	 
 					
 				<div class="form-group">
-					<label for="ville">
-						Ville :
+					<label for="ville"> Ville
+					<span class="requis">*</span>
 					</label>
-					<input type="text" class="form-control" id="ville" />
+					<input type="text" class="form-control" id="ville" name="ville" value=""/>
 				</div>	 
 				
 				<div class="form-group">
-					<label for="passwordVerif">
-						Confirmation mot de passe :
+					<label for="passwordVerif"> Confirmation mot de passe
+					<span class="requis">*</span>
 						<!-- Saisie doit être identique à password -->
 					</label>
-					<input type="password" class="form-control" id="passwordVerif" />
+					<input type="password" class="form-control" id="passwordVerif" name="passwordVerif" value=""/>
 				</div>	 
 		
 			</form>
 		</div>
 		
+		<div class="col-md-2"></div>
+		
+		
+		<div class="col-md-12 form-row text-center">
+			<div class="col-md-3"></div>
 
-		<div class="row">
-			<div class="col-md-12">
-			 
+			<div class="col-md-3">
 				<button type="submit" class="btn btn-primary btn-lg">
 					Créer
 					<!-- Ajout utilisateur dans la base de données -->
 				</button>
-				
-				<button type="submit" class="btn btn-primary btn-lg">
+			</div>	
+
+			<div class="col-md-3">	
+			<!-- lien à modifier pour retour à la page d'accueil -->
+				<a href="./jsp/accueil" role="button" class="btn btn-primary btn-lg">
 					Annuler
-				</button>
-				
+				</a>
+					<!-- retour à la page d'accueil -->
 			</div>
+
+			<div class="col-md-3"></div>
 		</div>
 	</div>
 </div>
