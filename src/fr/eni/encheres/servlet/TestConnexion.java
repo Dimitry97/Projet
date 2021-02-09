@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import fr.eni.ecole.dal.DALException;
-import fr.eni.ecole.dal.DBConnection;
+import fr.eni.encheres.dal.DALException;
+import fr.eni.encheres.dal.DBConnection;
 
 /**
  * Servlet implementation class TestConnexion
