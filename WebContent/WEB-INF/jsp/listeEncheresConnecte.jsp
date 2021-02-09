@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Liste des enchères non connecté</title>
+<title>Liste des enchères connecté</title>
 </head>
 <body>
 
@@ -35,6 +35,61 @@
 						<option>Vêtement</option>
 						<option>Sport / Loisirs</option>
 					</select>
+				</div>
+
+
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group row">
+							<input class="form-check-input" type="radio" class="col-sm-2">&nbsp; Achat
+						</div>
+						<br>
+						<div class="col-sm-12">
+							<div class="form-check">
+								<input class="form-check-input" type="checkbox"
+									id="encheresOuvertes"> <label class="form-check-label"
+									for="encheresOuvertes"> enchères ouvertes </label>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input" type="checkbox" id="mesEncheres">
+								<label class="form-check-label" for="mesEncheres"> mes
+									enchères </label>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input" type="checkbox"
+									id="mesEncheresRemportees"> <label
+									class="form-check-label" for="mesEncheresRemportees">
+									mes enchères remportées </label>
+							</div>
+						</div>
+					</div>
+
+
+					<div class="col-md-6">
+						<div class="form-group row">
+							<input class="form-check-input" type="radio" class="col-sm-2">&nbsp; Mes
+							ventes
+						</div>
+						<br>
+						<div class="col-sm-12">
+							<div class="form-check">
+								<input class="form-check-input" type="checkbox"
+									id="venteEnCours"> <label class="form-check-label"
+									for="venteEnCours"> mes ventes encours </label>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input" type="checkbox"
+									id="ventesNonDebutees"> <label class="form-check-label"
+									for="ventesNonDebutees"> ventes non débutées </label>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input" type="checkbox"
+									id="ventesTerminées"> <label class="form-check-label"
+									for="ventesTerminées"> ventes terminées </label>
+							</div>
+						</div>
+
+					</div>
 				</div>
 			</div>
 

@@ -4,18 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.encheres.bo.ArticleVendu;
-import fr.eni.encheres.bo.Categorie;
-import fr.eni.encheres.bo.Retrait;
-import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.dal.DALException;
 import fr.eni.encheres.dal.DBConnection;
-import fr.eni.encheres.dal.categorie.CategorieDAO;
 
 public class ArticleVenduImpl implements ArticleVenduDAO {
 
