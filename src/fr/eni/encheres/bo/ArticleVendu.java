@@ -99,7 +99,7 @@ public class ArticleVendu {
 
 
 	////////// GETTERS AND SETTERS ////////// 
-
+	
 	/**
 	 * Methode permettant de récupérer le nom d'un article vendu
 	 * @return le nom de l'article (String)

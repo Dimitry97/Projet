@@ -6,7 +6,7 @@ public class Utilisateur {
 	
 	////////// ATTRIBUTS //////////
 	
-	private String noUtilisateur;
+	private int noUtilisateur;
 	private String pseudo;
 	private String nom;
 	private String prenom;
@@ -94,8 +94,12 @@ public class Utilisateur {
 		this.articleVendu = articleVendu;
 		this.enchere = enchere;
 	}
+	
 
-
+	public Utilisateur(String pseudo) {
+		super();
+		this.pseudo = pseudo;
+	}
 	////////// GETTERS AND SETTERS ////////// 
 	
 
@@ -103,7 +107,7 @@ public class Utilisateur {
 	 * Methode permettant de récupérer le numero de l'utilisateur
 	 * @return le numero de l'utilisateur
 	 */
-	public String getNoUtilisateur() {
+	public int getNoUtilisateur() {
 		return noUtilisateur;
 	}
 

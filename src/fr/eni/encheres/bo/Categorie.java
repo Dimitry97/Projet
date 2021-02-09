@@ -20,6 +20,10 @@ public class Categorie {
 		
 	}
 	
+	public Categorie (String libelle) {
+		this.libelle = libelle;
+	}
+	
 	/**
 	 * Constructeur permettant de créer une catégorie
 	 * @param noCategorie
@@ -35,6 +39,11 @@ public class Categorie {
 	}
 
 
+	public Categorie(int noCategorie, String libelle) {
+		super();
+		this.noCategorie = noCategorie;
+		this.libelle = libelle;
+	}
 
 	/**
 	 * Methode permettant de récupérer l'id d'une catégorie
@@ -71,6 +80,10 @@ public class Categorie {
 	 */
 	public List<ArticleVendu> getArticleVendu() {
 		return articleVendu;
+	}
+
+	public void setNoCategorie(int noCategorie) {
+		this.noCategorie = noCategorie;
 	}
 	
 	
