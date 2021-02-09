@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Vente remportée</title>
 </head>
 
 <jsp:include page="/WEB-INF/fragments/headerConnect.jsp"></jsp:include>
@@ -14,24 +14,42 @@
 
 	<div class="row">
 		<div class="col-md-12">
-			<h3 class="text-center">Profil</h3>
+			<h3 class="text-center">Vous avez remporté la vente</h3>
 		</div>
 	</div>
 	<br>
 
 	<div class="row">
-		<div class="col-md-3"></div>
+		<div class="col-md-3">
+			<div class="card" style="width: 18rem;">
+				<img class="card-img-top" src="..." alt="imageVente">
+				<!-- Ajouter photo de uploader -->
+			</div>
+		</div>
 
 		<div class="col-md-6">
 
 			<div class="form-group">
+				<display type="text" class="form-control" id="article">Récupérer
+				nom article</display>
+			</div>
+
+			<div class="form-group">
+				<label for="description"> Description </label>
+				<display class="form-control container-fluid" id="description">
+				Récupérer la description de l'article (s'adapte à la taille de la
+				description) </display>
+			</div>
+
+
+			<div class="form-group">
 				<div class="row">
 					<div class="col-md-6">
-						<label for="pseudo"> Pseudo </label>
+						<label for="meilleureOffre"> Meilleure offre </label>
 					</div>
 					<div class="col-md-6">
-						<display type="text" class="form-control" id="pseudo">Récupérer
-						Pseudo</display>
+						<display type="text" class="form-control" id="meilleureOffre">Récupérer
+						meilleure offre</display>
 					</div>
 				</div>
 			</div>
@@ -39,11 +57,11 @@
 			<div class="form-group">
 				<div class="row">
 					<div class="col-md-6">
-						<label for="nom"> Nom </label>
+						<label for="miseAPrix"> Mise à prix </label>
 					</div>
 					<div class="col-md-6">
-						<display type="text" class="form-control" id="nom">Récupérer
-						nom</display>
+						<display type="text" class="form-control" id="miseAPrix">Récupérer
+						mise à prix</display>
 					</div>
 				</div>
 			</div>
@@ -51,11 +69,12 @@
 			<div class="form-group">
 				<div class="row">
 					<div class="col-md-6">
-						<label for="email"> Email </label>
+						<label for="adresseRetrait"> Retrait </label>
 					</div>
 					<div class="col-md-6">
-						<display type="text" class="form-control" id="email">Récupérer
-						email</display>
+						<display type="text" class="form-control container-fluid"
+							id="adresseRetrait"> Récupérer rue<br>
+						Récupérer codepostal et ville </display>
 					</div>
 				</div>
 			</div>
@@ -63,11 +82,11 @@
 			<div class="form-group">
 				<div class="row">
 					<div class="col-md-6">
-						<label for="telephone"> Telephone </label>
+						<label for="pseudoVendeur"> Vendeur </label>
 					</div>
 					<div class="col-md-6">
-						<display type="text" class="form-control" id="telephone">Récupérer
-						telephone</display>
+						<display type="text" class="form-control" id="pseudoVendeur">Récupérer
+						pseudo vendeur</display>
 					</div>
 				</div>
 			</div>
@@ -75,57 +94,30 @@
 			<div class="form-group">
 				<div class="row">
 					<div class="col-md-6">
-						<label for="rue"> Rue </label>
+						<label for="telVendeur"> Telephone </label>
 					</div>
 					<div class="col-md-6">
-						<display type="text" class="form-control" id="rue">Récupérer
-						rue</display>
+						<display type="text" class="form-control" id="telVendeur">Récupérer
+						tel vendeur</display>
 					</div>
 				</div>
 			</div>
 
-			<div class="form-group">
-				<div class="row">
-					<div class="col-md-6">
-						<label for="codePostal"> Code Postal </label>
-					</div>
-					<div class="col-md-6">
-						<display type="text" class="form-control" id="codePostal">Récupérer
-						Code Postal</display>
-					</div>
-				</div>
+			<br> <br>
+
+
+
+			<div class="col-md-6 form-row text-center">
+				<button type="submit"
+					class="btn btn-primary btn-lg btn-block active">Back</button>
 			</div>
-
-			<div class="form-group">
-				<div class="row">
-					<div class="col-md-6">
-						<label for="ville"> Ville </label>
-					</div>
-					<div class="col-md-6">
-						<display type="text" class="form-control" id="ville">Récupérer
-						ville</display>
-					</div>
-				</div>
-			</div>
-			<br>
-
-
-			<div class="row">
-				<div class="col-md-12 text-center">
-
-					<button type="submit" class="btn btn-primary btn-lg">
-						Modifier
-						<!-- Renvoi sur la page monProfil.jsp -->
-					</button>
-
-				</div>
-			</div>
-
-
-
-			<div class="col-md-3"></div>
 		</div>
 	</div>
+
+
+
+
+	<div class="col-md-3"></div>
 </div>
 
 
