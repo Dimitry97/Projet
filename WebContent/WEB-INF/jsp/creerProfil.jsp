@@ -9,7 +9,8 @@
 
 <jsp:include page="/WEB-INF/fragments/headerConnect.jsp"></jsp:include>
 
-<div class="col-md-12 form-row text-center"><h3>Mon profil</h3></div>
+<div class="text-center"><h3>Mon profil</h3></div>
+<br>
 
 <div class="container-fluid">
 	<div class="col-md-2"></div>
