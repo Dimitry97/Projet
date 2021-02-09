@@ -1,26 +1,38 @@
 package fr.eni.encheres.bo;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class TestBo {
 
 	public static void main(String[] args) {
-
-		Utilisateur user1 = new Utilisateur();
-		
-		user1.setNom("Dimitri");
-		user1.setPrenom("Germany");
-		user1.setPseudo("DG");
-		
-		System.out.println(user1.toString());
-		
-		System.out.println();
-		ArticleVendu article = new ArticleVendu();
-		article.setDateDebutEncheres(LocalDate.now(ZoneId.of("Europe/Paris")));
-		
-		System.out.println(article.toString());
-		
+		System.out.println(doHashing("'hrt&éàçeajzpdncàéjeaz,nqdscài"));
 	}
 
-}
+	private static String doHashing(String mdp) {
+		try {
+			MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+			
+			messageDigest.update(mdp.getBytes());
+			
+			byte[] result = messageDigest.digest();
+			
+			StringBuilder sb = new StringBuilder();
+			
+			for (byte b : result) {
+				sb.append(String.format("%x", b));
+			}
+			return sb.toString();
+			
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+} 
+// b8f6a049eeb602be9a5befde206af -> Mot de passe
+// ffba2fdd52f559322a932da6f6d3d20 -> AAAAAAAAAAAJDNBHTOLMPSDCNJFOTI
+// 2b92a04b9d66388452f1a0e551d05539 -> 'hrt&éàçeajzpdncàéjeaz,nqdscài
+
+
