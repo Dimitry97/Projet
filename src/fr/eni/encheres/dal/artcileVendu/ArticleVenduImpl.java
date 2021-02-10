@@ -36,7 +36,7 @@ public class ArticleVenduImpl implements ArticleVenduDAO {
 		Connection cnx = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		ArticleVendu selection = null;
+		ArticleVendu selection = new ArticleVendu();
 		try {
 			cnx = DBConnection.seConnecter();
 			stmt = cnx.prepareStatement(RECHERCHER);
@@ -100,9 +100,12 @@ public class ArticleVenduImpl implements ArticleVenduDAO {
 	public void modifArticle(ArticleVendu article) throws DALException, SQLException {
 		Connection cnx = null;
 		PreparedStatement stmt = null;
-		cnx = DBConnection.seConnecter();
+		
 		try {
+			cnx = DBConnection.seConnecter();
+			cnx.setAutoCommit(false);
 			stmt = cnx.prepareStatement(MODIFIER);
+			
 			stmt.setString(1, article.getNomArticle());
 			stmt.setString(2, article.getDescription());
 			stmt.setDate(3, Date.valueOf(article.getDateFinEncheres()));
@@ -112,6 +115,8 @@ public class ArticleVenduImpl implements ArticleVenduDAO {
 			stmt.setInt(7, article.getVendeur().getNoUtilisateur());
 			stmt.setInt(8, article.getCategorie().getNoCategorie());
 			stmt.setInt(9, article.getNoArticle());
+			
+			stmt.executeUpdate();
 		} catch (SQLException e) {
 			cnx.rollback();
 			throw new DALException("Erreur lors de la modification de l'article");
@@ -126,9 +131,13 @@ public class ArticleVenduImpl implements ArticleVenduDAO {
 	public void nouvelArticle(ArticleVendu article) throws DALException, SQLException {
 		Connection cnx = null;
 		PreparedStatement stmt = null;
+		
 		try {
 			cnx = DBConnection.seConnecter();
+			cnx.setAutoCommit(false);
+			
 			stmt = cnx.prepareStatement(AJOUTER, PreparedStatement.RETURN_GENERATED_KEYS);
+			
 			stmt.setString(1, article.getNomArticle());
 			stmt.setString(2, article.getDescription());
 			stmt.setDate(3, Date.valueOf(article.getDateFinEncheres()));
