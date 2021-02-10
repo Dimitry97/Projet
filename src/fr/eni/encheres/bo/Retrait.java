@@ -12,6 +12,8 @@ public class Retrait {
 	
 	////////// CONSTRUCTEUR //////////
 	
+	
+	
 	public Retrait(int noRetrait, String rue, String codePostal, String ville) {
 		this.noRetrait = noRetrait;
 		this.rue = rue;
@@ -20,6 +22,10 @@ public class Retrait {
 		
 	}
 	
+	public Retrait() {
+		super();
+	}
+
 	public Retrait(String rue, String codePostal, String ville, ArticleVendu articleVendu) {
 		super();
 		this.rue = rue;
