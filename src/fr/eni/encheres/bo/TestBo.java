@@ -3,10 +3,17 @@ package fr.eni.encheres.bo;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import fr.eni.encheres.dal.DAOFactory;
+import fr.eni.encheres.dal.categorie.CategorieImpl;
+
 public class TestBo {
 
 	public static void main(String[] args) {
 		System.out.println(doHashing("'hrt&éàçeajzpdncàéjeaz,nqdscài"));
+		
+		CategorieImpl categorie = new CategorieImpl();
+		
+		
 	}
 
 	private static String doHashing(String mdp) {

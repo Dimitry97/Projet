@@ -19,8 +19,8 @@ import fr.eni.encheres.dal.DBConnection;
 public class ArticleVenduImpl implements ArticleVenduDAO {
 
 	private static final String AJOUTER = "INSERT INTO ARTICLES_VENDUS(nom_article, description,"
-			+ " date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie)"
-			+ " VALUES(?,?,?,?,?,?,?,?) ;";
+			+ " date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie, no_retrait)"
+			+ " VALUES(?,?,?,?,?,?,?,?,?) ;";
 	private static final String SUPPRIMER = "delete from ARTICLES_VENDUS where no_vente = ?";
 
 	private static final String MODIFIER = "UPDATE ARTICLES_VENDUS SET  nom_article=?, description=?, date_debut_encheres=?,"
@@ -146,6 +146,7 @@ public class ArticleVenduImpl implements ArticleVenduDAO {
 			stmt.setInt(6, article.getPrixVente());
 			stmt.setInt(7, article.getVendeur().getNoUtilisateur());
 			stmt.setInt(8, article.getCategorie().getNoCategorie());
+			stmt.setInt(9, article.getLieuRetrait().getNoRetrait());
 
 			stmt.executeUpdate();
 			ResultSet rs = stmt.getGeneratedKeys();
