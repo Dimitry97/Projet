@@ -18,8 +18,8 @@ public class UtilisateurImpl implements UtilisateurDAO {
 	private final static String SUPPRIMER = "DELETE FROM UTILISATEURS WHERE pseudo = '?';";
 	private final static String MODIFIER = " UPDATE UTILISATEURS set pseudo = '?', nom = '?', prenom = '?', email = '?', telephone = '?', rue ='?',"
 			+ " code_postal = '?', ville = '?', mot_de_passe = '?', administrateur = '?' WHERE no_utilisateur = '?'";
-	private static String PSEUDOMDP = "SELECT * FROM UTILISATEURS WHERE (pseudo = ? OR email = ?) AND mot_de_passe = ?";
-	private static String SELECTBYNO = "SELECT * FROM UTILISATEURS WHERE no_utilisateur = ?";
+	private final static String PSEUDOMDP = "SELECT * FROM UTILISATEURS WHERE (pseudo = ? OR email = ?) AND mot_de_passe = ?";
+	private final static String SELECTBYNO = "SELECT * FROM UTILISATEURS WHERE no_utilisateur = ?";
 
 	/**
 	 * Methode pour selectionner un utilisateur avec tous les parametres
