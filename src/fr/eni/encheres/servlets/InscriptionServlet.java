@@ -49,25 +49,25 @@ public class InscriptionServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// Recuperer les champs du formulaire
 		String pseudo = request.getParameter(CHAMP_PSEUDO);
-//		String nom = request.getParameter(CHAMP_NOM);
-//		String prenom = request.getParameter(CHAMP_PRENOM);
+		String nom = request.getParameter(CHAMP_NOM);
+		String prenom = request.getParameter(CHAMP_PRENOM);
 		String email = request.getParameter(CHAMP_EMAIL);
 		String telephone = request.getParameter(CHAMP_TEL);
-//		String rue = request.getParameter(CHAMP_RUE);
+		String rue = request.getParameter(CHAMP_RUE);
 		String codePostal = request.getParameter(CHAMP_RUE);
-//		String ville = request.getParameter(CHAMP_VILLE);
+		String ville = request.getParameter(CHAMP_VILLE);
 		String password = request.getParameter(CHAMP_MDP);
 		String passwordVerif = request.getParameter(CHAMP_VERIF_MDP);
 		
 		try {
 			validationPseudo(pseudo);
-//			validationNom(nom);
-//			validationPrenom(prenom);
+			validationNom(nom);
+			validationPrenom(prenom);
 			validationEmail(email);
 			validationTelephone(telephone);
-//			validationRue(rue);
+			validationRue(rue);
 			validationCodePostal(codePostal);
-//			validationVille(ville);
+			validationVille(ville);
 			validationPassword(password, passwordVerif);
 		} catch (Exception e){
 			// TO DO gerer les exceptions
@@ -75,7 +75,46 @@ public class InscriptionServlet extends HttpServlet {
 		
 	}
 
-
+	/**
+	 * Valide le nom .
+	 */
+	private void validationNom( String nom ) throws Exception {
+	    if ( nom != null && nom.trim().length() < 1 && nom.trim().length() > 30) {
+	        throw new Exception( "Le nom d'utilisateur doit contenir entre 1 et 30 caractËres." );
+	    
+	    }
+	}
+	
+	/**
+	 * Valide le prenom .
+	 */
+	private void validationPrenom( String prenom ) throws Exception {
+	    if ( prenom != null && prenom.trim().length() < 1 && prenom.trim().length() > 30) {
+	        throw new Exception( "Le prenom d'utilisateur doit contenir entre 1 et 30 caractËres." );
+	    
+	    }
+	}
+	
+	/**
+	 * Valide le nom de rue .
+	 */
+	private void validationRue( String rue ) throws Exception {
+	    if ( rue != null && rue.trim().length() < 1 && rue.trim().length() > 30) {
+	        throw new Exception( "Le nom de la rue doit contenir entre 1 et 30 caractËres." );
+	    
+	    }
+	}
+	
+	/**
+	 * Valide le nom de la ville .
+	 */
+	private void validationVille( String ville ) throws Exception {
+	    if ( ville != null && ville.trim().length() < 1 && ville.trim().length() > 30) {
+	        throw new Exception( "Le nom de la ville doit contenir entre 1 et 30 caractËres." );
+	    
+	    }
+	}
+	
 	/**
 	 * Valide l'adresse mail saisie.
 	 */
@@ -95,9 +134,9 @@ public class InscriptionServlet extends HttpServlet {
 	private void validationPassword( String password, String passwordVerif ) throws Exception{
 	    if (password != null && password.trim().length() != 0 && passwordVerif != null && passwordVerif.trim().length() != 0) {
 	        if (!password.equals(passwordVerif)) {
-	            throw new Exception("Les mots de passe entr√©s sont diff√©rents, merci de les saisir √† nouveau.");
+	            throw new Exception("Les mots de passe entrÈs sont diffÈrents, merci de les saisir ‡† nouveau.");
 	        } else if (password.trim().length() < 3) {
-	            throw new Exception("Les mots de passe doivent contenir au moins 3 caract√®res.");
+	            throw new Exception("Les mots de passe doivent contenir au moins 3 caractËres.");
 	        }
 	    } else {
 	        throw new Exception("Merci de saisir et confirmer votre mot de passe.");
@@ -123,11 +162,11 @@ public class InscriptionServlet extends HttpServlet {
 	}
 	
 	/**
-	 * Valide le codePostal d'utilisateur saisi.
+	 * Valide le numÈro de tÈlÈphone d'utilisateur saisie. --> peut etre null
 	 */
 	private void validationTelephone( String telephone ) throws Exception {
-	    if ( telephone != null && telephone.trim().length() != 10 ) {
-	        throw new Exception( "Le num√©ro de t√©l√©phone doit contenir 10 chiffres." );
+	    if ( telephone.trim().length() != 0 && telephone.trim().length() != 10 && telephone.trim().length() != 12 ) {
+	        throw new Exception( "Le num√©ro de t√©l√©phone doit contenir 10 chiffres (ou 12 avec indicatif)." );
 	    }
 	}
 
