@@ -28,7 +28,6 @@ public class CategorieImpl implements CategorieDAO {
 			stmt = cnx.prepareStatement(AJOUTER);
 			stmt.setString(1, categorie.getLibelle());
 			stmt.executeUpdate();
-			cnx.close();
 		} catch (SQLException e) {
 			throw new DALException("Erreur lors de l'ajouter du libelle");
 		} finally {
@@ -44,6 +43,7 @@ public class CategorieImpl implements CategorieDAO {
 			cnx = DBConnection.seConnecter();
 			stmt = cnx.prepareStatement(MODIFIER);
 			stmt.setString(1, categorie.getLibelle());
+			stmt.executeUpdate();
 		} catch (SQLException e) {
 			throw new DALException("Erreur lors de la modification du libelle");
 		} finally {
