@@ -35,6 +35,12 @@ public class Enchere {
 		this.articleVendu = articleVendu;
 		this.utilisateur = utilisateur;
 	}
+	
+	public Enchere(LocalDate dateEnchere, int montantEnchere) {
+		super();
+		this.dateEnchere = dateEnchere;
+		this.montantEnchere = montantEnchere;
+	}
 
 
 

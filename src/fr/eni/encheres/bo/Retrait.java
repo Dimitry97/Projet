@@ -3,7 +3,7 @@ package fr.eni.encheres.bo;
 public class Retrait {
 
 	//////////ATTRIBUTS //////////
-	
+	private int noVente;
 	private String rue;
 	private String codePostal;
 	private String ville;
@@ -12,7 +12,11 @@ public class Retrait {
 	
 	////////// CONSTRUCTEUR //////////
 	
-	public Retrait() {
+	public Retrait(int noVente, String rue, String codePostal, String ville) {
+		this.noVente = noVente;
+		this.rue = rue;
+		this.codePostal = codePostal;
+		this.ville = ville;
 		
 	}
 	

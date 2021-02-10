@@ -1,5 +1,6 @@
 package fr.eni.encheres.bo;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -65,6 +66,23 @@ public class ArticleVendu {
 		this.enchere = enchere;
 	}
 	
+	public ArticleVendu(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres,
+			LocalDate dateFinEncheres, int miseAPrix, int etatVente, Categorie categorie,
+			Retrait lieuRetrait, Utilisateur vendeur) {
+		super();
+		this.noArticle = noArticle;
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.dateDebutEncheres = dateDebutEncheres;
+		this.dateFinEncheres = dateFinEncheres;
+		this.miseAPrix = miseAPrix;
+		this.etatVente = etatVente;
+		this.categorie = categorie;
+		this.lieuRetrait = lieuRetrait;
+		this.vendeur = vendeur;
+	}
+	
+	
 	
 	
 	/**
@@ -96,10 +114,12 @@ public class ArticleVendu {
 		this.enchere = enchere;
 	}
 
-
+	
 
 	////////// GETTERS AND SETTERS ////////// 
 	
+	
+
 	/**
 	 * Methode permettant de récupérer le nom d'un article vendu
 	 * @return le nom de l'article (String)
