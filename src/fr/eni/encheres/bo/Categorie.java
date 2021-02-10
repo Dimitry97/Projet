@@ -45,6 +45,11 @@ public class Categorie {
 		this.libelle = libelle;
 	}
 
+	public Categorie(int noCategorie) {
+
+		this.noCategorie = noCategorie;
+	}
+
 	/**
 	 * Methode permettant de récupérer l'id d'une catégorie
 	 * @return

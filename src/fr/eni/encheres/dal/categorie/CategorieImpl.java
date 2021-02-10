@@ -20,7 +20,7 @@ public class CategorieImpl implements CategorieDAO {
 	private static final String LISTER = "select * from CATEGORIES ";
 
 	@Override
-	public void ajouter(Categorie categorie) throws DALException {
+	public void ajouterNewCat(Categorie categorie) throws DALException {
 		Connection cnx = null;
 		PreparedStatement stmt = null;
 		try {
@@ -32,21 +32,12 @@ public class CategorieImpl implements CategorieDAO {
 		} catch (SQLException e) {
 			throw new DALException("Erreur lors de l'ajouter du libelle");
 		} finally {
-			try {
-				if (stmt != null) {
-					stmt.close();
-				}
-				if (cnx != null) {
-					cnx.close();
-				}
-			} catch (SQLException e) {
-				throw new DALException("Erreur lors de l'ajouter du libelle");
-			}
+			DBConnection.seDeconnecter(cnx, stmt);
 		}
 	}
 
 	@Override
-	public void modifier(Categorie categorie) throws DALException {
+	public void modifCat(Categorie categorie) throws DALException {
 		Connection cnx = null;
 		PreparedStatement stmt = null;
 		try {
@@ -56,21 +47,12 @@ public class CategorieImpl implements CategorieDAO {
 		} catch (SQLException e) {
 			throw new DALException("Erreur lors de la modification du libelle");
 		} finally {
-			try {
-				if (stmt != null) {
-					stmt.close();
-				}
-				if (cnx != null) {
-					cnx.close();
-				}
-			} catch (SQLException e) {
-				throw new DALException("Erreur lors de la modification du libelle");
-			}
+			DBConnection.seDeconnecter(cnx, stmt);
 		}
 	}
 
 	@Override
-	public int supprimer(Categorie categorie) throws DALException {
+	public int suppCat(Categorie categorie) throws DALException {
 		Connection cnx = null;
 		PreparedStatement stmt = null;
 		int nbSupprime = 0;
@@ -82,22 +64,13 @@ public class CategorieImpl implements CategorieDAO {
 		} catch (SQLException e) {
 			throw new DALException("Erreur lors de suppession du libelle");
 		} finally {
-			try {
-				if (stmt != null) {
-					stmt.close();
-				}
-				if (cnx != null) {
-					cnx.close();
-				}
-			} catch (SQLException e) {
-				throw new DALException("Erreur lors de suppression du libelle");
-			}
+			DBConnection.seDeconnecter(cnx, stmt);
 		}
 		return nbSupprime;
 	}
 
 	@Override
-	public ArrayList<Categorie> lister() throws DALException {
+	public ArrayList<Categorie> listerCat() throws DALException {
 		Connection cnx = null;
 		Statement stmt = null;
 		ResultSet rs = null;
@@ -113,22 +86,14 @@ public class CategorieImpl implements CategorieDAO {
 			}
 		} catch (SQLException e) {
 			throw new DALException("Erreur lors de la creation de la liste des catégories");
-		}
-		try {
-			if (stmt != null) {
-				stmt.close();
-			}
-			if (cnx != null) {
-				cnx.close();
-			}
-		} catch (SQLException e) {
-			throw new DALException("Erreur lors de la creation de la liste des catégories");
+		} finally {
+			DBConnection.seDeconnecter(cnx, stmt);
 		}
 		return listeCategorie;
 	}
 
 	@Override
-	public Categorie recherche(int id) throws DALException {
+	public Categorie rechCatByNo(int id) throws DALException {
 		Connection cnx = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -146,16 +111,8 @@ public class CategorieImpl implements CategorieDAO {
 			}
 		} catch (SQLException e) {
 			throw new DALException("Erreur lors de la recherche avec : " + id);
-		}
-		try {
-			if (stmt != null) {
-				stmt.close();
-			}
-			if (cnx != null) {
-				cnx.close();
-			}
-		} catch (SQLException e) {
-			throw new DALException("Erreur lors de la recherche avec : " + id);
+		} finally {
+			DBConnection.seDeconnecter(cnx, stmt);
 		}
 		return categorie;
 	}

@@ -18,200 +18,165 @@ import fr.eni.encheres.dal.DBConnection;
 
 public class ArticleVenduImpl implements ArticleVenduDAO {
 
-	private static final String AJOUTER = "insert into ARTICLES_VENDUS (nom_article, " + "description, " + "date_fin_encheres, "
-			+ "prix_initial, " + "prix_vente, " + "no_utilisateur, " + "no_categorie)" + "values (?,?,?,?,?,?,?)";
+	private static final String AJOUTER = "INSERT INTO ARTICLES_VENDUS(nom_article, description,"
+			+ " date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie)"
+			+ " VALUES(?,?,?,?,?,?,?,?) ;";
 	private static final String SUPPRIMER = "delete from ARTICLES_VENDUS where no_vente = ?";
-	
-	private static final String MODIFIER = "update ARTICLES_VENDUS set nom_article =?, description = ?, date_fin_encheres = ?, no_categorie = ? ," +
-	  "where no_vente = ?";
-	 
+
+	private static final String MODIFIER = "UPDATE ARTICLES_VENDUS SET  nom_article=?, description=?, date_debut_encheres=?,"
+			+ " date_fin_encheres=?, prix_initial=?, prix_vente=?,  no_utilisateur=?, no_categorie=?  WHERE no_article=? ";
+
 	private static final String MODIFIERPRIXVENTE = "update ARTICLES_VENDUS set prix_vente =? where no_article = ?";
 
 	private static final String RECHERCHER = "select * from ARTICLES_VENDUS where no_article = ?";
 	private static final String LISTER = "select * from ARTICLES_VENDUS ORDER BY no_article DESC";
-	
-	
 
 	@Override
-	public ArticleVendu selectByNo(int id) throws DALException {
+	public ArticleVendu selectArticleByNo(int id) throws DALException {
 		Connection cnx = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		ArticleVendu vente = null;
+		ArticleVendu selection = null;
 		try {
 			cnx = DBConnection.seConnecter();
 			stmt = cnx.prepareStatement(RECHERCHER);
 			stmt.setInt(1, id);
 			rs = stmt.executeQuery();
-			
-			// TODO : Methode a compléter
-			
+			if (rs.next()) {
+				selection.setNomArticle(rs.getString("nom_article"));
+				selection.setDescription(rs.getString("description"));
+				selection.setDateDebutEncheres(rs.getDate("date_debut_encheres").toLocalDate());
+				selection.setDateFinEncheres(rs.getDate("date_fin_encheres").toLocalDate());
+				selection.setMiseAPrix(rs.getInt("prix_initial"));
+				selection.setPrixVente(rs.getInt("prix_vente"));
+			} else {
+				throw new DALException("Pas d'article avec ce numéro");
+			}
 		} catch (SQLException e) {
 			throw new DALException("Erreur lors de la selection");
 		} finally {
-			try {
-				if (stmt != null) {
-					stmt.close();
-				}
-				if (cnx != null) {
-					cnx.close();
-				}
-			} catch (SQLException e) {
-				throw new DALException("Erreur lors de la selection");
-			}
+			DBConnection.seDeconnecter(cnx, stmt);
 		}
-		return vente;
+		return selection;
 	}
 
 	@Override
-	public List<ArticleVendu> selectAll() throws DALException {
+	public List<ArticleVendu> selectAllArticle() throws DALException {
 		Connection cnx = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		
+
 		List<ArticleVendu> listVentes = new ArrayList<>();
 		ArticleVendu vente = null;
 		try {
 			cnx = DBConnection.seConnecter();
 			rs = stmt.executeQuery(LISTER);
-			
-			while(rs.next()) {
+
+			while (rs.next()) {
 				Categorie categorie = new Categorie(rs.getString("libelle"));
 				Utilisateur vendeur = new Utilisateur(rs.getString("pseudo"));
 				Date dateDbt = rs.getDate("date_debut_enchere");
 				Date dateFin = rs.getDate("date_fin_encheres");
 				LocalDate dbtEnchere = dateDbt.toLocalDate();
 				LocalDate finEnchere = dateFin.toLocalDate();
-				Retrait retrait = new Retrait(rs.getInt("no_retrait"), rs.getString("rue"), rs.getString("code_postal"), rs.getString("ville"));
-				vente = new ArticleVendu(rs.getInt("no_article"),
-								  rs.getString("nom_article"),
-								  rs.getString("description"),
-								  dbtEnchere,
-								  finEnchere,
-								  rs.getInt("prix_initial"),
-								  rs.getInt("prix_vente"),
-								  categorie,
-								  retrait,
-								  vendeur);
+				Retrait retrait = new Retrait(rs.getInt("no_retrait"), rs.getString("rue"), rs.getString("code_postal"),
+						rs.getString("ville"));
+				vente = new ArticleVendu(rs.getInt("no_article"), rs.getString("nom_article"),
+						rs.getString("description"), dbtEnchere, finEnchere, rs.getInt("prix_initial"),
+						rs.getInt("prix_vente"), categorie, retrait, vendeur);
 				listVentes.add(vente);
-				
+
 			}
 		} catch (SQLException e) {
 			throw new DALException("Erreur lors de la selection");
 		} finally {
-			try {
-				if (stmt != null) {
-					stmt.close();
-				}
-				if (cnx != null) {
-					cnx.close();
-				}
-			} catch (SQLException e) {
-				throw new DALException("Erreur lors de la selection");
-			}
+			DBConnection.seDeconnecter(cnx, stmt);
 		}
 		return listVentes;
 
 	}
 
 	@Override
-	public void update(ArticleVendu data) throws DALException {
+	public void modifArticle(ArticleVendu article) throws DALException, SQLException {
 		Connection cnx = null;
 		PreparedStatement stmt = null;
-		ResultSet rs = null;
 		cnx = DBConnection.seConnecter();
 		try {
 			stmt = cnx.prepareStatement(MODIFIER);
-			stmt.setString(1, data.getNomArticle());
-			stmt.setString(2, data.getDescription());
-			stmt.setDate(3, Date.valueOf(data.getDateFinEncheres()));
-			stmt.setInt(4, data.getMiseAPrix());
-			stmt.setInt(5, data.getMiseAPrix());
-			stmt.setInt(6, data.getVendeur().getNoUtilisateur());
-			stmt.setInt(7, data.getCategorie().getNoCategorie());
-			stmt.executeUpdate();
+			stmt.setString(1, article.getNomArticle());
+			stmt.setString(2, article.getDescription());
+			stmt.setDate(3, Date.valueOf(article.getDateFinEncheres()));
+			stmt.setDate(4, Date.valueOf(article.getDateFinEncheres()));
+			stmt.setInt(5, article.getMiseAPrix());
+			stmt.setInt(6, article.getPrixVente());
+			stmt.setInt(7, article.getVendeur().getNoUtilisateur());
+			stmt.setInt(8, article.getCategorie().getNoCategorie());
+			stmt.setInt(9, article.getNoArticle());
 		} catch (SQLException e) {
-			throw new DALException("Erreur lors de la modification de l'article : " + data);
+			cnx.rollback();
+			throw new DALException("Erreur lors de la modification de l'article");
 		} finally {
-			try {
-				if (stmt != null) {
-					stmt.close();
-				}
-				if (cnx != null) {
-					cnx.close();
-				}
-			} catch (SQLException e) {
-				throw new DALException("Erreur lors de la modification de l'article : " + data);
-			}
+			cnx.setAutoCommit(true);
+			DBConnection.seDeconnecter(cnx, stmt);
 		}
 
 	}
 
 	@Override
-	public void insert(ArticleVendu data) throws DALException {
+	public void nouvelArticle(ArticleVendu article) throws DALException, SQLException {
 		Connection cnx = null;
 		PreparedStatement stmt = null;
-		ResultSet rs = null;
-		cnx = DBConnection.seConnecter();
 		try {
-			stmt = cnx.prepareStatement(AJOUTER);
-			stmt.setString(1, data.getNomArticle());
-			stmt.setString(2, data.getDescription());
-			stmt.setDate(3, Date.valueOf(data.getDateDebutEncheres()));
-			stmt.setInt(4, data.getMiseAPrix());
-			stmt.setInt(5, data.getEtatVente());
-			stmt.setInt(6, data.getVendeur().getNoUtilisateur());
-			stmt.setInt(7, data.getCategorie().getNoCategorie());
-			stmt.executeUpdate();
-		} catch (SQLException e) {
-			throw new DALException("Erreur lors de la creation de l'article : " + data);
-		} finally {
-			try {
-				if (stmt != null) {
-					stmt.close();
-				}
-				if (cnx != null) {
-					cnx.close();
-				}
-			} catch (SQLException e) {
-				throw new DALException("Erreur lors de la creation de l'article : " + data);
-			}
-		}
+			cnx = DBConnection.seConnecter();
+			stmt = cnx.prepareStatement(AJOUTER, PreparedStatement.RETURN_GENERATED_KEYS);
+			stmt.setString(1, article.getNomArticle());
+			stmt.setString(2, article.getDescription());
+			stmt.setDate(3, Date.valueOf(article.getDateFinEncheres()));
+			stmt.setDate(4, Date.valueOf(article.getDateFinEncheres()));
+			stmt.setInt(5, article.getMiseAPrix());
+			stmt.setInt(6, article.getPrixVente());
+			stmt.setInt(7, article.getVendeur().getNoUtilisateur());
+			stmt.setInt(8, article.getCategorie().getNoCategorie());
 
+			stmt.executeUpdate();
+			ResultSet rs = stmt.getGeneratedKeys();
+			if (rs.next()) {
+				article.setNoArticle(rs.getInt(1));
+			}
+		} catch (SQLException e) {
+			cnx.rollback();
+			throw new DALException("Erreur lors de l'ajout du nouvel article");
+		} finally {
+			cnx.setAutoCommit(true);
+			DBConnection.seDeconnecter(cnx, stmt);
+		}
 	}
 
 	@Override
-	public void delete(int no) throws DALException {
-		Connection connection = null;
+	public void suppArticle(int no) throws DALException, SQLException {
+		Connection cnx = null;
 		PreparedStatement stmt = null;
 
 		try {
-			connection = DBConnection.seConnecter();
-			stmt = connection.prepareStatement(SUPPRIMER);
+			cnx = DBConnection.seConnecter();
+			stmt = cnx.prepareStatement(SUPPRIMER);
 
 			stmt.setInt(1, no);
 
 			stmt.executeUpdate();
 
 		} catch (SQLException e) {
-			throw new DALException("Erreur lors de la suppression de l'article : " + no);
+			cnx.rollback();
+			throw new DALException("erreur suppression article");
 		} finally {
-			try {
-				if (stmt != null) {
-					stmt.close();
-				}
-				if (connection != null) {
-					connection.close();
-				}
-			} catch (SQLException e) {
-				throw new DALException("Erreur lors de la suppression de l'article : " + no);
-			}
+			cnx.setAutoCommit(true);
+			DBConnection.seDeconnecter(cnx, stmt);
 		}
 
 	}
 
 	@Override
-	public void modifierPrixVente(ArticleVendu articleVendu, int proposition) throws DALException {
+	public void modifierPrixVente(ArticleVendu articleVendu, int proposition) throws DALException, SQLException {
 		Connection cnx = null;
 		PreparedStatement stmt = null;
 		try {
@@ -221,18 +186,11 @@ public class ArticleVenduImpl implements ArticleVenduDAO {
 			stmt.setInt(2, articleVendu.getNoArticle());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
-			throw new DALException("Erreur lors de la modification du prix de vente de l'article : " + articleVendu);
+			cnx.rollback();
+			throw new DALException("erreur modification prix de vente");
 		} finally {
-			try {
-				if (stmt != null) {
-					stmt.close();
-				}
-				if (cnx != null) {
-					cnx.close();
-				}
-			} catch (SQLException e) {
-				throw new DALException("Erreur lors de la modification du prix de vente de l'article : " + articleVendu);
-			}
+			cnx.setAutoCommit(true);
+			DBConnection.seDeconnecter(cnx, stmt);
 		}
 
 	}

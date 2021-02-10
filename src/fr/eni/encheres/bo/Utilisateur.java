@@ -100,6 +100,11 @@ public class Utilisateur {
 		super();
 		this.pseudo = pseudo;
 	}
+	
+	public Utilisateur(int noUtilisateur) {
+		super();
+		this.noUtilisateur = noUtilisateur;
+	}
 	////////// GETTERS AND SETTERS ////////// 
 	
 

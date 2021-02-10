@@ -29,8 +29,7 @@ public class ArticleVendu {
 	 * Constructeur par défault ne prenant aucun parametre
 	 */
 	public ArticleVendu() {
-		
-		
+
 	}
 	
 	/**
@@ -272,6 +271,11 @@ public class ArticleVendu {
 	 */
 	public int getNoArticle() {
 		return noArticle;
+	}
+	
+
+	public void setNoArticle(int noArticle) {
+		this.noArticle = noArticle;
 	}
 
 	@Override

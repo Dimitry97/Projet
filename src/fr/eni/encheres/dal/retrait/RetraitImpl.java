@@ -12,16 +12,14 @@ import fr.eni.encheres.dal.DALException;
 import fr.eni.encheres.dal.DBConnection;
 
 public class RetraitImpl implements RetraitDAO {
-	
+
 	private static final String AJOUTER = "INSERT INTO RETRAITS (rue, code_postal, ville) VALUES (?,?,?)";
 	private static final String SUPPRIMER = "DELETE FROM RETRAITS WHERE no_vente = ?";
 	private static final String MODIFIER = "UPDATE RETRAITS SET rue = ?, code_postal = ?, ville = ? WHERE no_vente = ?";
 	private static final String LISTER = "SELECT * FROM RETRAITS";
-	
-	
-	
+
 	@Override
-	public void ajouter(Retrait retrait) throws DALException {
+	public void ajoutRetrait(Retrait retrait) throws DALException {
 		Connection cnx = null;
 		PreparedStatement stmt = null;
 		try {
@@ -31,26 +29,18 @@ public class RetraitImpl implements RetraitDAO {
 			stmt.setString(2, retrait.getCodePostal());
 			stmt.setString(3, retrait.getVille());
 			stmt.executeUpdate();
-		}catch (SQLException e) {
+		} catch (SQLException e) {
 			throw new DALException("Erreur lors de l'ajout");
 		} finally {
-			try {
-				if (stmt != null) {
-					stmt.close();
-				}
-				if (cnx != null) {
-					cnx.close();
-				}
-			} catch (SQLException e) {
-				throw new DALException("Erreur lors de l'ajout");
-			}
+			DBConnection.seDeconnecter(cnx, stmt);
 		}
 
 	}
+
 	@Override
-	public void modifier(Retrait retrait) throws DALException {
+	public void modifRetrait(Retrait retrait) throws DALException {
 		Connection cnx = null;
-		PreparedStatement stmt =  null;
+		PreparedStatement stmt = null;
 		try {
 			cnx = DBConnection.seConnecter();
 			stmt = cnx.prepareStatement(MODIFIER);
@@ -61,72 +51,48 @@ public class RetraitImpl implements RetraitDAO {
 		} catch (SQLException e) {
 			throw new DALException("Erreur lors de la modification de l'ajout");
 		} finally {
-			try {
-				if (stmt != null) {
-					stmt.close();
-				}
-				if (cnx != null) {
-					cnx.close();
-				}
-			} catch (SQLException e) {
-				throw new DALException("Erreur lors de la modification de l'ajout");
-			}
+			DBConnection.seDeconnecter(cnx, stmt);
 		}
 	}
+
 	@Override
-	public ArrayList<Retrait> lister() throws DALException {
+	public ArrayList<Retrait> listerRetrait() throws DALException {
 		Connection cnx = null;
 		Statement stmt = null;
 		ResultSet rs = null;
 		ArrayList<Retrait> listeRetraits = new ArrayList<>();
 		try {
-			cnx= DBConnection.seConnecter();
+			cnx = DBConnection.seConnecter();
 			stmt = cnx.createStatement();
 			rs = stmt.executeQuery(LISTER);
 			Retrait retrait;
 			while (rs.next()) {
-				retrait = new Retrait(rs.getInt("no_Vente"),rs.getString("rue"), rs.getString("code_postal"), rs.getString("ville"));
+				retrait = new Retrait(rs.getInt("no_Vente"), rs.getString("rue"), rs.getString("code_postal"),
+						rs.getString("ville"));
 				listeRetraits.add(retrait);
 			}
-		}catch (SQLException e) {
+		} catch (SQLException e) {
 			throw new DALException("Erreur");
 		} finally {
-			try {
-				if (stmt != null) {
-					stmt.close();
-				}
-				if (cnx != null) {
-					cnx.close();
-				}
-			} catch (SQLException e) {
-				throw new DALException("Erreur");
-			}
+			DBConnection.seDeconnecter(cnx, stmt);
 		}
 		return listeRetraits;
 	}
+
 	@Override
-	public int supprimer(int id) throws DALException {
+	public int suppRetrait(int id) throws DALException {
 		Connection cnx = null;
 		PreparedStatement stmt = null;
 		int nbreEnrgt = 0;
 		try {
-			cnx=DBConnection.seConnecter();
-			stmt=cnx.prepareStatement(SUPPRIMER);
+			cnx = DBConnection.seConnecter();
+			stmt = cnx.prepareStatement(SUPPRIMER);
 			stmt.setInt(1, id);
-			nbreEnrgt= stmt.executeUpdate();
+			nbreEnrgt = stmt.executeUpdate();
 		} catch (SQLException e) {
 			throw new DALException("Erreur lors de la suppression");
 		} finally {
-			try {
-				if (stmt != null) {
-					stmt.close();
-				}
-				if (cnx != null) {
-					cnx.close();
-				}
-			} catch (SQLException e) {
-				throw new DALException("Erreur lors de la suppression");
-			}
+			DBConnection.seDeconnecter(cnx, stmt);
 		}
 		return nbreEnrgt;
 	}

@@ -6,9 +6,9 @@ import fr.eni.encheres.bo.Retrait;
 import fr.eni.encheres.dal.DALException;
 
 public interface RetraitDAO {
-	public void ajouter (Retrait retrait) throws DALException;
-	public void modifier (Retrait retrait) throws DALException;
-	public ArrayList<Retrait> lister() throws DALException;
-	public int supprimer (int id) throws DALException;
+	public void ajoutRetrait (Retrait retrait) throws DALException;
+	public void modifRetrait (Retrait retrait) throws DALException;
+	public ArrayList<Retrait> listerRetrait() throws DALException;
+	public int suppRetrait (int id) throws DALException;
 
 }
