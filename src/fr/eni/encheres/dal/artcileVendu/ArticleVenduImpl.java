@@ -124,7 +124,7 @@ public class ArticleVenduImpl implements ArticleVenduDAO {
 			stmt = cnx.prepareStatement(MODIFIER);
 			stmt.setString(1, data.getNomArticle());
 			stmt.setString(2, data.getDescription());
-			stmt.setDate(3, Date.valueOf(data.getDateDebutEncheres()));
+			stmt.setDate(3, Date.valueOf(data.getDateFinEncheres()));
 			stmt.setInt(4, data.getMiseAPrix());
 			stmt.setInt(5, data.getMiseAPrix());
 			stmt.setInt(6, data.getVendeur().getNoUtilisateur());
@@ -157,9 +157,9 @@ public class ArticleVenduImpl implements ArticleVenduDAO {
 			stmt = cnx.prepareStatement(AJOUTER);
 			stmt.setString(1, data.getNomArticle());
 			stmt.setString(2, data.getDescription());
-			// rqt.setDate(3, new LocalDate(data.getDateFinEncheres().now());
+			stmt.setDate(3, Date.valueOf(data.getDateDebutEncheres()));
 			stmt.setInt(4, data.getMiseAPrix());
-			stmt.setInt(5, data.getMiseAPrix());
+			stmt.setInt(5, data.getEtatVente());
 			stmt.setInt(6, data.getVendeur().getNoUtilisateur());
 			stmt.setInt(7, data.getCategorie().getNoCategorie());
 			stmt.executeUpdate();
