@@ -133,6 +133,13 @@ public class Utilisateur {
 	}
 
 	/**
+	 * Méthode permettant de modifier le numéro utilisateur
+	 * @param noUtilisateur
+	 */	
+	public void setNoUtilisateur(int noUtilisateur) {
+		this.noUtilisateur = noUtilisateur;
+	}
+	/**
 	 * Methode permettant de recuperer le pseudo de l'utilisateur
 	 * @return le pseudo de l'utilisateur
 	 */
