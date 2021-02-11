@@ -17,5 +17,6 @@ public interface CategorieDAO {
 	public ArrayList<Categorie> listerCat() throws DALException;
 
 	public Categorie rechCatByNo(int id) throws DALException;
+	
 
 }

@@ -117,4 +117,6 @@ public class CategorieImpl implements CategorieDAO {
 		return categorie;
 	}
 
+	
+
 }

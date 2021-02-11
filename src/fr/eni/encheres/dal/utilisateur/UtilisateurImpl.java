@@ -9,6 +9,7 @@ import java.sql.Statement;
 import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.dal.DALException;
 import fr.eni.encheres.dal.DBConnection;
+import fr.eni.encheres.methode.Methodes;
 
 public class UtilisateurImpl  implements UtilisateurDAO{
 	
@@ -18,6 +19,8 @@ public class UtilisateurImpl  implements UtilisateurDAO{
 	private final static String SUPPRIMER = "DELETE FROM UTILISATEURS WHERE pseudo = ?;";
 	private final static String  MODIFIER = " UPDATE UTILISATEURS set pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ?, rue =?,"
 			+ " code_postal = ?, ville = ?, mot_de_passe = ?, administrateur = ? WHERE no_utilisateur = ?";
+	private final static String SELECTPSEUDOANDMDP = "SELECT pseudo, mot_de_passe FROM UTILISATEURS WHERE pseudo = ? AND mot_de_passe = ?";
+	
 	
 	
 	
@@ -80,7 +83,7 @@ public class UtilisateurImpl  implements UtilisateurDAO{
 			pstmt.setString(6, utilisateur.getRue());
 			pstmt.setString(7, utilisateur.getCodePostal());
 			pstmt.setString(8, utilisateur.getVille());
-			pstmt.setString(9, utilisateur.getMotDePasse());
+			pstmt.setString(9, Methodes.doHashing(utilisateur.getMotDePasse()));
 			pstmt.setInt(10, utilisateur.getCredit());
 			pstmt.setBoolean(11, utilisateur.isAdministrateur());
 
@@ -161,7 +164,7 @@ public class UtilisateurImpl  implements UtilisateurDAO{
 			pstmt.setString(6, utilisateur.getRue());
 			pstmt.setString(7, utilisateur.getCodePostal());
 			pstmt.setString(8, utilisateur.getVille());
-			pstmt.setString(9, utilisateur.getMotDePasse());
+			pstmt.setString(9, Methodes.doHashing(utilisateur.getMotDePasse()));
 			pstmt.setInt(10, utilisateur.getCredit());
 			pstmt.setBoolean(11, utilisateur.isAdministrateur());
 			pstmt.setInt(12, utilisateur.getNoUtilisateur());
@@ -173,6 +176,30 @@ public class UtilisateurImpl  implements UtilisateurDAO{
 			DBConnection.seDeconnecter(cnx, pstmt);
 		}
 		
+	}
+
+	@Override
+	public void getUtilisateurPseudoMdp(String pseudo, String motDePasse) throws DALException {
+		Connection cnx = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Utilisateur utilisateur = null;
+		
+		cnx = DBConnection.seConnecter();
+		try {
+			pstmt = cnx.prepareStatement(SELECTPSEUDOANDMDP);
+			pstmt.setString(1, pseudo);
+			pstmt.setString(2, motDePasse);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				utilisateur = new Utilisateur(rs.getString("pseudo"), rs.getString("mot_de_passe"));
+			}
+		} catch (SQLException e) {
+			throw new DALException("echec de rechercheProfilAvecMotDePasse");
+		}finally {
+			DBConnection.seDeconnecter(cnx, pstmt);
+		}
+				
 	}
 
 }

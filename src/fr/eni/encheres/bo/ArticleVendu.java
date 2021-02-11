@@ -1,7 +1,6 @@
 package fr.eni.encheres.bo;
 
 import java.sql.Date;
-import java.time.LocalDate;
 import java.util.List;
 
 public class ArticleVendu {
@@ -11,8 +10,8 @@ public class ArticleVendu {
 	private int noArticle;
 	private String nomArticle;
 	private String description;
-	private LocalDate dateDebutEncheres;
-	private LocalDate dateFinEncheres;
+	private Date dateDebutEncheres;
+	private Date dateFinEncheres;
 	private int miseAPrix;
 	private int prixVente;
 	private int etatVente;
@@ -47,8 +46,8 @@ public class ArticleVendu {
 	 * @param vendeur
 	 * @param enchere
 	 */
-	public ArticleVendu(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres,
-			LocalDate dateFinEncheres, int miseAPrix, int prixVente, int etatVente, Categorie categorie,
+	public ArticleVendu(int noArticle, String nomArticle, String description, Date dateDebutEncheres,
+			Date dateFinEncheres, int miseAPrix, int prixVente, int etatVente, Categorie categorie,
 			Retrait lieuRetrait, Utilisateur vendeur, List<Enchere> enchere) {
 		super();
 		this.noArticle = noArticle;
@@ -65,8 +64,8 @@ public class ArticleVendu {
 		this.enchere = enchere;
 	}
 	
-	public ArticleVendu(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres,
-			LocalDate dateFinEncheres, int miseAPrix, int etatVente, Categorie categorie,
+	public ArticleVendu(int noArticle, String nomArticle, String description, Date dateDebutEncheres,
+			Date dateFinEncheres, int miseAPrix, int etatVente, Categorie categorie,
 			Retrait lieuRetrait, Utilisateur vendeur) {
 		super();
 		this.noArticle = noArticle;
@@ -97,8 +96,8 @@ public class ArticleVendu {
 	 * @param vendeur
 	 * @param enchere
 	 */
-	public ArticleVendu(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres,
-			LocalDate dateFinEncheres, int etatVente, Categorie categorie, Retrait lieuRetrait, Utilisateur vendeur,
+	public ArticleVendu(int noArticle, String nomArticle, String description, Date dateDebutEncheres,
+			Date dateFinEncheres, int etatVente, Categorie categorie, Retrait lieuRetrait, Utilisateur vendeur,
 			List<Enchere> enchere) {
 		super();
 		this.noArticle = noArticle;
@@ -153,33 +152,33 @@ public class ArticleVendu {
 
 	/**
 	 * Methode permettant de récupérer date de mise en vente d'un article
-	 * @return la date du début de l'enchere (LocalDate)
+	 * @return la date du début de l'enchere (Date)
 	 */
-	public LocalDate getDateDebutEncheres() {
+	public Date getDateDebutEncheres() {
 		return dateDebutEncheres;
 	}
 
 	/**
 	 * Methode permettant de d'attribué une date de début des enchères sur un article
-	 * @param dateDebutEncheres (LocalDate)
+	 * @param dateDebutEncheres (Date)
 	 */
-	public void setDateDebutEncheres(LocalDate dateDebutEncheres) {
+	public void setDateDebutEncheres(Date dateDebutEncheres) {
 		this.dateDebutEncheres = dateDebutEncheres;
 	}
 
 	/**
 	 * Methode permettant de récupérer la date fin des enchères sur un article
-	 * @return la date de fin de l'enchere (LocalDate)
+	 * @return la date de fin de l'enchere (Date)
 	 */
-	public LocalDate getDateFinEncheres() {
+	public Date getDateFinEncheres() {
 		return dateFinEncheres;
 	}
 
 	/**
 	 *  Methode permettant de d'attribué une date de fin des enchères sur un article
-	 * @param dateFinEncheres (LocalDate)
+	 * @param dateFinEncheres (Date)
 	 */
-	public void setDateFinEncheres(LocalDate dateFinEncheres) {
+	public void setDateFinEncheres(Date dateFinEncheres) {
 		this.dateFinEncheres = dateFinEncheres;
 	}
 

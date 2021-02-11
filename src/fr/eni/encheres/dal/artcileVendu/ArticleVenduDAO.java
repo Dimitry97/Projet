@@ -18,7 +18,7 @@ public interface ArticleVenduDAO {
 	public void modifArticle(ArticleVendu data) throws DALException, SQLException; //
 	
 	//Insérer un nouvel article a vendre en BDD
-	public void nouvelArticle(ArticleVendu data) throws DALException, SQLException; //
+	public ArticleVendu nouvelArticle(ArticleVendu data) throws DALException, SQLException; //
 	
 	//Supprimer un article en vente en BDD
 	public void suppArticle(int id) throws DALException, SQLException; //

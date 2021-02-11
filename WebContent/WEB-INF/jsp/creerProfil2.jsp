@@ -16,7 +16,7 @@
 
 <div class="container-fluid">
 	<div class="col-md-2"></div>
-	<form role="form" method="post" action="./inscriptionServlet">
+	<form role="form" method="post" action="./servlets/inscriptionServlet">
 		<div class="row">
 			<div class="col-md-4">
 

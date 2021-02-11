@@ -17,11 +17,11 @@ import fr.eni.encheres.dal.utilisateur.UtilisateurDAO;
 /**
  * Servlet implementation class Inscription
  */
-@WebServlet("/inscriptionServlet")
+@WebServlet("/inscriptionServlet.html")
 public class InscriptionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-	public static final String VUE = "/WEB-INF/creerProfil.jsp";
+	public static final String VUE = "/WEB-INF/jsp/creerProfil2.jsp";
 	public static final String CHAMP_PSEUDO = "pseudo";
 	public static final String CHAMP_NOM = "nom";
 	public static final String CHAMP_PRENOM = "prenom";
@@ -97,7 +97,7 @@ public class InscriptionServlet extends HttpServlet {
 			
 			try {
 				utilisateurDAO.inserer(utilisateur);
-				System.out.println("utilisateur ajouté");
+				System.out.println("utilisateur ajoutï¿½");
 				request.getRequestDispatcher("/WEB-INF/jsp/listeEncheresConnecte.jsp").forward(request, response);
 			} catch (DALException e) {
 				
@@ -115,7 +115,7 @@ public class InscriptionServlet extends HttpServlet {
 	 */
 	private void validationNom( String nom ) throws Exception {
 	    if ( nom != null && nom.trim().length() < 1 && nom.trim().length() > 30) {
-	        throw new Exception( "Le nom d'utilisateur doit contenir entre 1 et 30 caractères." );
+	        throw new Exception( "Le nom d'utilisateur doit contenir entre 1 et 30 caractï¿½res." );
 	        
 	    }
 	}
@@ -125,7 +125,7 @@ public class InscriptionServlet extends HttpServlet {
 	 */
 	private void validationPrenom( String prenom ) throws Exception {
 	    if ( prenom != null && prenom.trim().length() < 1 && prenom.trim().length() > 30) {
-	        throw new Exception( "Le prenom d'utilisateur doit contenir entre 1 et 30 caractères." );
+	        throw new Exception( "Le prenom d'utilisateur doit contenir entre 1 et 30 caractï¿½res." );
 	    
 	    }
 	}
@@ -135,7 +135,7 @@ public class InscriptionServlet extends HttpServlet {
 	 */
 	private void validationRue( String rue ) throws Exception {
 	    if ( rue != null && rue.trim().length() < 1 && rue.trim().length() > 30) {
-	        throw new Exception( "Le nom de la rue doit contenir entre 1 et 30 caractères." );
+	        throw new Exception( "Le nom de la rue doit contenir entre 1 et 30 caractï¿½res." );
 	    
 	    }
 	}
@@ -145,7 +145,7 @@ public class InscriptionServlet extends HttpServlet {
 	 */
 	private void validationVille( String ville ) throws Exception {
 	    if ( ville != null && ville.trim().length() < 1 && ville.trim().length() > 30) {
-	        throw new Exception( "Le nom de la ville doit contenir entre 1 et 30 caractères." );
+	        throw new Exception( "Le nom de la ville doit contenir entre 1 et 30 caractï¿½res." );
 	    
 	    }
 	}
@@ -169,9 +169,9 @@ public class InscriptionServlet extends HttpServlet {
 	private void validationPassword( String password, String passwordVerif ) throws Exception{
 	    if (password != null && password.trim().length() != 0 && passwordVerif != null && passwordVerif.trim().length() != 0) {
 	        if (!password.equals(passwordVerif)) {
-	            throw new Exception("Les mots de passe entrés sont différents, merci de les saisir à  nouveau.");
+	            throw new Exception("Les mots de passe entrï¿½s sont diffï¿½rents, merci de les saisir ï¿½ nouveau.");
 	        } else if (password.trim().length() < 3) {
-	            throw new Exception("Les mots de passe doivent contenir au moins 3 caractères.");
+	            throw new Exception("Les mots de passe doivent contenir au moins 3 caractï¿½res.");
 	        }
 	    } else {
 	        throw new Exception("Merci de saisir et confirmer votre mot de passe.");
@@ -198,7 +198,7 @@ public class InscriptionServlet extends HttpServlet {
 	}
 	
 	/**
-	 * Valide le numéro de téléphone d'utilisateur saisie. --> peut etre null
+	 * Valide le numï¿½ro de tï¿½lï¿½phone d'utilisateur saisie. --> peut etre null
 	 */
 	private void validationTelephone( String telephone ) throws Exception {
 	    if ( telephone.trim().length() != 0 && telephone.trim().length() != 10 && telephone.trim().length() != 12 ) {

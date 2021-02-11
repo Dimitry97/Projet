@@ -1,6 +1,9 @@
 package fr.eni.encheres.servlets;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,15 +11,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.dal.DALException;
+import fr.eni.encheres.dal.utilisateur.UtilisateurDAO;
 import fr.eni.encheres.dal.utilisateur.UtilisateurImpl;
-import fr.eni.encheres.methode.CryptageMdp;
+import fr.eni.encheres.methode.Methodes;
 
 /**
  * Servlet implementation class ServletConnexion
  */
-@WebServlet("/Connexion")
+@WebServlet("/connexion.html")
 public class ServletConnexion extends HttpServlet {
+	
+	Utilisateur utilisateur = new Utilisateur();
+	
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -33,7 +41,6 @@ public class ServletConnexion extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.setAttribute("displayNav", false); // On ne veux pas afficher de menu sur cette page
 		this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/pageConnexion.jsp").forward(request, response);
 	}
 
@@ -43,28 +50,67 @@ public class ServletConnexion extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String login = request.getParameter("login");
-		String pass = CryptageMdp.doHashing(request.getParameter("pass"));
+		// RequestDispatcher dispatcher =
+		// request.getRequestDispatcher("/WEB-INF/jsp/pageConnexion.jsp");
+
+		PrintWriter out = response.getWriter();
+
+		String erreur = null;
+		HttpSession session = request.getSession();
+
+		String pseudo = request.getParameter("pseudo");
+		String motDePasse = request.getParameter("password");
 
 		boolean exception = false;
 
-		UtilisateurImpl user = new UtilisateurImpl();
+		// Verification que le login et le mot de passe récupéré ne sont pas null
 
-		try {
-			user.getUtilisateurPseudoMdp(login, pass);
+		if (pseudo.length() == 0 || pseudo.isEmpty()) {
+//			request.setAttribute("erreur", "Veuillez renseigner votre pseudo");
+//			erreur = (String) session.getAttribute("erreur");
+//			out.print(erreur);
 
-			HttpSession session = request.getSession();
-			session.setAttribute("user", user);
-		} catch (DALException e) {
-			exception = true;
-		}
-
-		if (exception = true) {
 			this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/pageConnexion.jsp").forward(request, response);
+			
 
+		} else if (motDePasse.length() == 0 || motDePasse.isEmpty()) {
+//			request.setAttribute("erreur", "Veuillez renseigner votre mot de passe");
+//			erreur = (String) session.getAttribute("erreur");
+//			out.print(erreur);
+
+			this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/pageConnexion.jsp").forward(request, response);
+			
 		} else {
-			this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/pageConnexion.jsp").forward(request, response);
-		}
-	}
+			try {
+				UtilisateurDAO user = new UtilisateurImpl();
+				System.out.println("ok");
+				user.getUtilisateurPseudoMdp(pseudo, motDePasse);
+				System.out.println("ok");
+				System.out.println(user);
 
+				if (pseudo.equals(utilisateur.getPseudo()) && motDePasse.equals(utilisateur.getMotDePasse())) {
+					// request.getSession().setAttribute("Connecte", user);
+
+					this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/monProfil2.jsp").forward(request,response);
+				}
+
+			} catch (DALException e) {
+				exception = true;
+				request.setAttribute("erreur",
+						"pseudo et/ou mot de passe incorrect(s)! Veuillez ressaisir vos identifiants!");
+				erreur = (String) session.getAttribute("erreur");
+				out.println(erreur);
+			}
+
+			if (exception = true) {
+				this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/pageConnexion.jsp").forward(request,
+						response);
+
+			} else {
+				this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/pageConnexion.jsp").forward(request,
+						response);
+			}
+		}
+
+	}
 }

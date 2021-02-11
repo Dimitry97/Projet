@@ -11,6 +11,7 @@
 <jsp:include page="/WEB-INF/fragments/headerConnect.jsp"></jsp:include>
 
 
+<form action="<%=request.getContextPath() %>/connexion.html" role="form" method="post">
 
 <div class="container-fluid">
 
@@ -23,13 +24,13 @@
 		
 			<div class="text-center"><h3>Connexion</h3></div>
 		
-			<form role="form" method="post" action="modifProfil">
+			
 			
 				<div class="form-group">
 					<label for="identifiant">Identifiant
 					<span class="requis">*</span>
 					</label>
-					<input type="text" class="form-control" id="identifiant" />
+					<input type="text" class="form-control" id="identifiant" name="pseudo" />
 				</div>
 				
 				<div class="form-group"> 
@@ -38,13 +39,13 @@
 					</label>
 					<input type="password" class="form-control" id="password" name="password" value=""/>
 				</div>
-			</form>	
+			
 			
 				<div class="row">
 					<div class="col-md-6">
-						<a href="./jsp/xxx" role="button" class="btn btn-primary btn-lg">
+						<button type="submit" class="btn btn-primary btn-lg">
 							Connexion
-						</a>
+						</button>
 					</div>
 					
 					<div class="col-md-6">
@@ -67,7 +68,7 @@
 		</div>
 	</div>
 </div>		
-					
+</form>			
 
 </body>
 </html>

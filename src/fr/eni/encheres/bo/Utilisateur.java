@@ -30,6 +30,11 @@ public class Utilisateur {
 	public Utilisateur() {
 		
 	}
+	
+	public Utilisateur(String pseudo, String motDePasse) {
+		this.pseudo = pseudo;
+		this.motDePasse = motDePasse;
+	}
 	/**
 	 * Constructeur avec tous les parametres necessaire a la creation d'un utilisateur
 	 * @param pseudo
@@ -133,7 +138,7 @@ public class Utilisateur {
 	}
 
 	/**
-	 * Méthode permettant de modifier le numéro utilisateur
+	 * Mï¿½thode permettant de modifier le numï¿½ro utilisateur
 	 * @param noUtilisateur
 	 */	
 	public void setNoUtilisateur(int noUtilisateur) {

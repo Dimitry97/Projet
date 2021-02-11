@@ -14,7 +14,7 @@ public interface UtilisateurDAO {
 	
 	
 	/**
-	 * Méthode abstraite pour rechercher un profil en vue de le modifier --> ressort le mot de passe
+	 * Methode abstraite pour rechercher un profil en vue de le modifier --> ressort le mot de passe
 	 * @param pseudo
 	 * @return
 	 * @throws DALException
@@ -22,7 +22,7 @@ public interface UtilisateurDAO {
 	Utilisateur rechercherProfilParPseudo(String pseudo)throws DALException;
 	
 	/**
-	 * Méthode abstraite pour ajouter un utilisateur
+	 * Methode abstraite pour ajouter un utilisateur
 	 * @param utilisateur
 	 * @throws DALException
 	 * @throws SQLException
@@ -30,7 +30,7 @@ public interface UtilisateurDAO {
 	void inserer (Utilisateur utilisateur) throws DALException, SQLException;
 	
 	/**
-	 * Méthode abstraite pour supprimer un utilisateur
+	 * Methode abstraite pour supprimer un utilisateur
 	 * @param pseudo
 	 * @throws DALException
 	 * @throws SQLException
@@ -38,10 +38,14 @@ public interface UtilisateurDAO {
 	void supprimer (Utilisateur utilisateur) throws DALException, SQLException;
 	
 	/**
-	 * Méthode abstraite pour modifier un utilisateur
+	 * Methode abstraite pour modifier un utilisateur
 	 * @param utilisateur
 	 * @throws DALException
 	 * @throws SQLException
 	 */
 	void modifier(Utilisateur utilisateur) throws DALException,SQLException;
+
+	void getUtilisateurPseudoMdp(String pseudo, String motDePasse) throws DALException;
+	
+	
 }

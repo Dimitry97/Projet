@@ -15,6 +15,7 @@ import fr.eni.encheres.bo.Retrait;
 import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.dal.DALException;
 import fr.eni.encheres.dal.DBConnection;
+import fr.eni.encheres.methode.Methodes;
 
 public class ArticleVenduImpl implements ArticleVenduDAO {
 
@@ -45,8 +46,8 @@ public class ArticleVenduImpl implements ArticleVenduDAO {
 			if (rs.next()) {
 				selection.setNomArticle(rs.getString("nom_article"));
 				selection.setDescription(rs.getString("description"));
-				selection.setDateDebutEncheres(rs.getDate("date_debut_encheres").toLocalDate());
-				selection.setDateFinEncheres(rs.getDate("date_fin_encheres").toLocalDate());
+				selection.setDateDebutEncheres(rs.getDate("date_debut_encheres"));
+				selection.setDateFinEncheres(rs.getDate("date_fin_encheres"));
 				selection.setMiseAPrix(rs.getInt("prix_initial"));
 				selection.setPrixVente(rs.getInt("prix_vente"));
 			} else {
@@ -75,10 +76,9 @@ public class ArticleVenduImpl implements ArticleVenduDAO {
 			while (rs.next()) {
 				Categorie categorie = new Categorie(rs.getString("libelle"));
 				Utilisateur vendeur = new Utilisateur(rs.getString("pseudo"));
-				Date dateDbt = rs.getDate("date_debut_enchere");
-				Date dateFin = rs.getDate("date_fin_encheres");
-				LocalDate dbtEnchere = dateDbt.toLocalDate();
-				LocalDate finEnchere = dateFin.toLocalDate();
+				Date dbtEnchere = rs.getDate("date_debut_enchere");
+				Date finEnchere = rs.getDate("date_fin_encheres");
+				
 				Retrait retrait = new Retrait(rs.getInt("no_retrait"), rs.getString("rue"), rs.getString("code_postal"),
 						rs.getString("ville"));
 				vente = new ArticleVendu(rs.getInt("no_article"), rs.getString("nom_article"),
@@ -108,8 +108,8 @@ public class ArticleVenduImpl implements ArticleVenduDAO {
 			
 			stmt.setString(1, article.getNomArticle());
 			stmt.setString(2, article.getDescription());
-			stmt.setDate(3, Date.valueOf(article.getDateFinEncheres()));
-			stmt.setDate(4, Date.valueOf(article.getDateFinEncheres()));
+			stmt.setDate(3, Methodes.dateJavaVersSql(article.getDateFinEncheres()));
+			stmt.setDate(4, Methodes.dateJavaVersSql(article.getDateFinEncheres()));
 			stmt.setInt(5, article.getMiseAPrix());
 			stmt.setInt(6, article.getPrixVente());
 			stmt.setInt(7, article.getVendeur().getNoUtilisateur());
@@ -128,7 +128,7 @@ public class ArticleVenduImpl implements ArticleVenduDAO {
 	}
 
 	@Override
-	public void nouvelArticle(ArticleVendu article) throws DALException, SQLException {
+	public ArticleVendu nouvelArticle(ArticleVendu article) throws DALException, SQLException {
 		Connection cnx = null;
 		PreparedStatement stmt = null;
 		
@@ -140,8 +140,8 @@ public class ArticleVenduImpl implements ArticleVenduDAO {
 			
 			stmt.setString(1, article.getNomArticle());
 			stmt.setString(2, article.getDescription());
-			stmt.setDate(3, Date.valueOf(article.getDateFinEncheres()));
-			stmt.setDate(4, Date.valueOf(article.getDateFinEncheres()));
+			stmt.setDate(3, Methodes.dateJavaVersSql(article.getDateFinEncheres()));
+			stmt.setDate(4, Methodes.dateJavaVersSql(article.getDateFinEncheres()));
 			stmt.setInt(5, article.getMiseAPrix());
 			stmt.setInt(6, article.getPrixVente());
 			stmt.setInt(7, article.getVendeur().getNoUtilisateur());
@@ -160,6 +160,7 @@ public class ArticleVenduImpl implements ArticleVenduDAO {
 			cnx.setAutoCommit(true);
 			DBConnection.seDeconnecter(cnx, stmt);
 		}
+		return article;
 	}
 
 	@Override
@@ -204,4 +205,6 @@ public class ArticleVenduImpl implements ArticleVenduDAO {
 		}
 
 	}
+	
+	
 }

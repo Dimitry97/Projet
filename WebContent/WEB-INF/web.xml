@@ -2,6 +2,14 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
   <display-name>SiteEncheres</display-name>
   <welcome-file-list>
-    <welcome-file>ListeEncheres2Servlet.html</welcome-file>
+    <welcome-file>connexion.html</welcome-file>
   </welcome-file-list>
+  
+  <servlet>
+    <servlet-name>ServletConnexion</servlet-name>
+</servlet>
+<servlet-mapping>
+    <servlet-name>ServletConnexion</servlet-name>
+    <url-pattern>/servlets/ServletConnexion</url-pattern>  <!-- This is the URL of the servlet. -->
+</servlet-mapping>
 </web-app>
