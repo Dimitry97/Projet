@@ -25,5 +25,8 @@ public interface ArticleVenduDAO {
 	
 	// Modifier le prix de vente en fonction des propositions
 	public void modifierPrixVente (ArticleVendu articleVendu, int proposition) throws DALException, SQLException; //
+	
+	//Recherche du numéro de categorie par libelle
+	int rechercheNoCategorie(String libelle) throws DALException;
 
 }
