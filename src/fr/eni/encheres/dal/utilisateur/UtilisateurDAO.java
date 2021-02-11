@@ -62,4 +62,6 @@ public interface UtilisateurDAO {
 	 * @throws SQLException
 	 */
 	public boolean verifPseudoUnique(String pseudo) throws DALException, SQLException;
+	
+	void getUtilisateurPseudoMdp(String pseudo, String motDePasse) throws DALException;
 }
