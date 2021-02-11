@@ -10,7 +10,7 @@
 
 	<jsp:include page="/WEB-INF/fragments/headerConnect.jsp"></jsp:include>
 
-
+<form role="form" method="post" action="./NouvelleVenteServlet">
 	<div class="container-fluid">
 
 		<div class="row">
@@ -23,7 +23,7 @@
 		<div class="row">
 			<div class="col-md-3">
 				<div class="card" style="width: 18rem;">
-					<img class="card-img-top" src="..." alt="imageVente">
+					<img class="card-img-top" src="..." alt="imageVente" name="imageVente">
 					<!-- Ajouter photo de uploader -->
 				</div>
 			</div>
@@ -32,19 +32,19 @@
 
 				<div class="form-group">
 					<label for="article"> Article </label> <input type="text"
-						class="form-control" id="article" placeholder="Nom de l'article"
+						class="form-control" id="article" placeholder="Nom de l'article" name="article"
 						required="required" />
 				</div>
 
 				<div class="form-group">
 					<label for="description"> Description </label>
-					<textarea class="form-control" id="description"
+					<textarea class="form-control" id="description" name="description"
 						placeholder="Description du produit" required="required"></textarea>
 				</div>
 
 				<div class="form-group">
 					<label for="categorie"> Catégorie </label> <select
-						class="form-control" id="categorie" required="required">
+						class="form-control" id="categorie" name="categorie" required="required">
 						<option>Informatique</option>
 						<option>Ameublement</option>
 						<option>Vêtement</option>
@@ -55,42 +55,44 @@
 				<!-- A travailler -->
 				<div class="form-group">
 					<label for="photo"> Photo de l'article&nbsp;&nbsp;&nbsp;&nbsp; </label>
-					<button type="submit" class="btn btn-default btn-sm" id="photo">
+					<button type="submit" class="btn btn-default btn-sm" id="photo" name="photo">
 						Charger la photo</button>
 				</div>
 				<!-- A travailler -->
 
 				<div class="form-group">
 					<label for="miseAPrixArticle"> Mise à prix </label> <input
-						type="number" class="form-control" id="miseAPrixArticle" />
+						type="number" class="form-control" id="miseAPrixArticle" name="miseAPrixArticle"/>
 				</div>
 
 				<div class="form-group">
 					<label for="debutEnchere"> Début de l'enchère <!-- Attention conversion date -->
-					</label> <input type="date" class="form-control" id="debutEnchere" />
+					</label> <input type="date" class="form-control" id="debutEnchere" name="debutEnchere"/>
 				</div>
 
 				<div class="form-group">
 					<label for="finEnchere"> Fin de l'enchère <!-- Attention conversion date -->
-					</label> <input type="date" class="form-control" id="finEnchere" />
+					</label> <input type="date" class="form-control" id="finEnchere" name="finEnchere"/>
 				</div>
 
 
 				<div class="card">
 					<div class="card-body">
 						<h5 class="card-title">Retrait</h5>
-						<label for="article">Rue</label>
+						<label for="rue">Rue</label>
 						<div class="card">
-							<h7 class="card-title text-align">Inserer rue vendeur</h7>
+							<input type="text"
+						class="form-control" id="rue" placeholder="Numero et nom de la rue" name="rue"/>
 						</div>
-						<label for="article">Code Postal</label>
+						<label for="codePostal">Code Postal</label>
 						<div class="card">
-							<h7 class="card-title text-align">Inserer code postal
-							vendeur</h7>
+							<input type="text"
+						class="form-control" id="codePostal" placeholder="Saisir le code postal" name="codePostal"/>
 						</div>
-						<label for="article">Ville</label>
+						<label for="ville">Ville</label>
 						<div class="card">
-							<h7 class="card-title text-align">Inserer ville vendeur</h7>
+							<input type="text"
+						class="form-control" id="ville" placeholder="Nom de la ville" name="ville"/>
 						</div>
 					</div>
 
@@ -121,5 +123,6 @@
 				</div>
 			</div>
 		</div>
+	</form>
 </body>
 </html>

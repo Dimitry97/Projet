@@ -53,7 +53,7 @@ public class NouvelleVenteServlet extends HttpServlet {
 		session.setAttribute("ville", nvVille);
 
 		
-		this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/nouvelleVente.jsp").forward( request, response );
+		this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/nouvelleVente2.jsp").forward( request, response );
 		
 	}
 
@@ -142,7 +142,7 @@ public class NouvelleVenteServlet extends HttpServlet {
 		}
 		
 		
-		request.getRequestDispatcher("/WEB-INF/jsp/nouvelleVente.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/jsp/nouvelleVente2.jsp").forward(request, response);
 		
 		
 	}
