@@ -1,16 +1,23 @@
 package fr.eni.encheres.servlets;
 
 import java.io.IOException;
+import java.sql.SQLException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import fr.eni.encheres.bo.Utilisateur;
+import fr.eni.encheres.dal.DALException;
+import fr.eni.encheres.dal.DAOFactory;
+import fr.eni.encheres.dal.utilisateur.UtilisateurDAO;
+
 /**
  * Servlet implementation class Inscription
  */
-@WebServlet("/Inscription")
+@WebServlet("/inscriptionServlet")
 public class InscriptionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -59,7 +66,18 @@ public class InscriptionServlet extends HttpServlet {
 		String password = request.getParameter(CHAMP_MDP);
 		String passwordVerif = request.getParameter(CHAMP_VERIF_MDP);
 		
+		
+		
+		int credit = 100;
+		boolean admin = false;
+		UtilisateurDAO utilisateurDAO ;
+		
+		boolean verifOk = false;
+		
+		utilisateurDAO = DAOFactory.getUtilisateurDAO();
+		
 		try {
+			
 			validationPseudo(pseudo);
 			validationNom(nom);
 			validationPrenom(prenom);
@@ -69,9 +87,26 @@ public class InscriptionServlet extends HttpServlet {
 			validationCodePostal(codePostal);
 			validationVille(ville);
 			validationPassword(password, passwordVerif);
+			verifOk = true;
 		} catch (Exception e){
-			// TO DO gerer les exceptions
+			throw new ServletException("Erreur sur un des champs" + e.getMessage());
 		}
+		
+		if(verifOk) {
+			Utilisateur utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, password, credit, admin);
+			
+			try {
+				utilisateurDAO.inserer(utilisateur);
+				System.out.println("utilisateur ajouté");
+				request.getRequestDispatcher("/WEB-INF/jsp/listeEncheresConnecte.jsp").forward(request, response);
+			} catch (DALException e) {
+				
+			} catch (SQLException e) {
+				
+			}
+			
+		}
+		
 		
 	}
 
@@ -81,7 +116,7 @@ public class InscriptionServlet extends HttpServlet {
 	private void validationNom( String nom ) throws Exception {
 	    if ( nom != null && nom.trim().length() < 1 && nom.trim().length() > 30) {
 	        throw new Exception( "Le nom d'utilisateur doit contenir entre 1 et 30 caractères." );
-	    
+	        
 	    }
 	}
 	
@@ -147,7 +182,8 @@ public class InscriptionServlet extends HttpServlet {
 	 * Valide le pseudo d'utilisateur saisi.
 	 */
 	private void validationPseudo( String pseudo ) throws Exception {
-	    if ( pseudo != null && pseudo.trim().length() < 3 ) {
+	    if ( pseudo != null || pseudo.trim().length() < 3 && pseudo.trim().length() > 10 || pseudo.matches("[a-zA-Z0-9]+")) {
+	    	System.out.println("erreur");
 	        throw new Exception( "Le pseudo doit contenir au moins 3 caractÃ¨res." );
 	    }
 	}
@@ -156,7 +192,7 @@ public class InscriptionServlet extends HttpServlet {
 	 * Valide le codePostal d'utilisateur saisi.
 	 */
 	private void validationCodePostal( String codePostal ) throws Exception {
-	    if ( codePostal != null && codePostal.trim().length() != 5 ) {
+	    if ( codePostal != null && codePostal.trim().length() > 5 ) {
 	        throw new Exception( "Le code postal doit contenir 5 caractÃ¨res." );
 	    }
 	}
