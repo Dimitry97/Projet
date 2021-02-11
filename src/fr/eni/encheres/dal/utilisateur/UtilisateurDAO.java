@@ -14,7 +14,7 @@ public interface UtilisateurDAO {
 	
 	
 	/**
-	 * Methode abstraite pour rechercher un profil en vue de le modifier --> ressort le mot de passe
+	 * Méthode abstraite pour rechercher un profil en vue de le modifier --> ressort le mot de passe
 	 * @param pseudo
 	 * @return
 	 * @throws DALException
@@ -22,7 +22,7 @@ public interface UtilisateurDAO {
 	Utilisateur rechercherProfilParPseudo(String pseudo)throws DALException;
 	
 	/**
-	 * Methode abstraite pour ajouter un utilisateur
+	 * Méthode abstraite pour ajouter un utilisateur
 	 * @param utilisateur
 	 * @throws DALException
 	 * @throws SQLException
@@ -30,7 +30,7 @@ public interface UtilisateurDAO {
 	void inserer (Utilisateur utilisateur) throws DALException, SQLException;
 	
 	/**
-	 * Methode abstraite pour supprimer un utilisateur
+	 * Méthode abstraite pour supprimer un utilisateur
 	 * @param pseudo
 	 * @throws DALException
 	 * @throws SQLException
@@ -38,14 +38,28 @@ public interface UtilisateurDAO {
 	void supprimer (Utilisateur utilisateur) throws DALException, SQLException;
 	
 	/**
-	 * Methode abstraite pour modifier un utilisateur
+	 * Méthode abstraite pour modifier un utilisateur
 	 * @param utilisateur
 	 * @throws DALException
 	 * @throws SQLException
 	 */
 	void modifier(Utilisateur utilisateur) throws DALException,SQLException;
-
-	void getUtilisateurPseudoMdp(String pseudo, String motDePasse) throws DALException;
 	
+	/**
+	 * Méthode vérifiant l'existance d'une adresse mail en BDD
+	 * @param mail
+	 * @return
+	 * @throws DALException
+	 * @throws SQLException
+	 */
+	boolean verifMailUnique(String mail) throws DALException, SQLException;
 	
+	/**
+	 * Méthode vérifirnat l'existance d'un pseudo en BDD
+	 * @param pseudo
+	 * @return
+	 * @throws DALException
+	 * @throws SQLException
+	 */
+	public boolean verifPseudoUnique(String pseudo) throws DALException, SQLException;
 }

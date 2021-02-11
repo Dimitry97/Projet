@@ -19,7 +19,7 @@ import fr.eni.encheres.dal.utilisateur.UtilisateurDAO;
 /**
  * Servlet implementation class Inscription
  */
-@WebServlet("/inscriptionServlet.html")
+@WebServlet("/inscriptionServlet")
 public class InscriptionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -59,12 +59,11 @@ public class InscriptionServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		//Map d'erreurs
-		Map<String, String> erreurs = new HashMap<String, String>();
-		
+		Map<String, String> erreurs = new HashMap<String, String>();		
 		
 		String resultat;
 		
-		// Recuperer les champs du formulaire
+		// Récupère les champs du formulaire
 		String pseudo = request.getParameter(CHAMP_PSEUDO);
 		String nom = request.getParameter(CHAMP_NOM);
 		String prenom = request.getParameter(CHAMP_PRENOM);
@@ -82,21 +81,17 @@ public class InscriptionServlet extends HttpServlet {
 		boolean admin = false;
 		boolean verifOk = false;
 		
-		UtilisateurDAO utilisateurDAO ;
+		UtilisateurDAO utilisateurDAO ;		
+		utilisateurDAO = DAOFactory.getUtilisateurDAO();		
 		
-		utilisateurDAO = DAOFactory.getUtilisateurDAO();
-		
-		
-		//Test des champs rentrés par utilisateur via chaque méthode dédiée aux tests
+		//Test des champs rentrés par utilisateur via chaque méthode de test
+		//Chaque méthode renvoit une erreur de la hasmap "erreurs" si elle en lève une
 		try {
 			
 			try {
 				validationPseudo(pseudo);
 			} catch (Exception e) {
 				erreurs.put(CHAMP_PSEUDO, e.getMessage());
-				System.out.println("test:");
-				System.out.println(erreurs.get(CHAMP_PSEUDO));
-				System.out.println("/fin de test");
 			}
 			
 			try {
@@ -147,6 +142,16 @@ public class InscriptionServlet extends HttpServlet {
 				erreurs.put(CHAMP_MDP, e.getMessage());
 			}
 			
+			boolean verifMail = utilisateurDAO.verifMailUnique(email);
+			if(verifMail) {
+				erreurs.put(CHAMP_EMAIL, "Email déjà utilisé, veuillez en choisir un autre");
+			}
+			
+			boolean verifPseudo = utilisateurDAO.verifPseudoUnique(pseudo);
+			if(verifPseudo) {
+				erreurs.put(CHAMP_PSEUDO, "Pseudo déjà utilisé, veuillez en choisir un autre");
+			}
+			
 			request.setAttribute( ATT_ERREURS, erreurs );
 	        
 			
@@ -161,38 +166,37 @@ public class InscriptionServlet extends HttpServlet {
 			request.setAttribute( ATT_RESULTAT, resultat );
 	        
 	       
-			
 		} catch (Exception e){
 			throw new ServletException("Erreur sur un des champs" + e.getMessage());
 		}
 		
-		if(verifOk) {
+		
+		
+			//Instanciation de l'utilisateur
 			Utilisateur utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, password, credit, admin);
 			
+			//Insertion utilisateur en BDD
 			try {
+							
 				utilisateurDAO.inserer(utilisateur);
-				System.out.println("utilisateur ajoutï¿½");
+				System.out.println("utilisateur ajouté");
 				request.getRequestDispatcher("/WEB-INF/jsp/listeEncheresConnecte.jsp").forward(request, response);
 			} catch (DALException e) {
 				
 			} catch (SQLException e) {
 				
 			}
-			
-		}
-		
+				
 		
 	}
 
+	
+	///////////////////////////////////////////////////////////////////
+	//Ensemble des méthodes permettant de tester la validité des données de l'utilisateur
 	/**
 	 * Valide le nom .
 	 */
 	private void validationNom( String nom ) throws Exception {
-<<<<<<< HEAD
-	    if ( nom != null && nom.trim().length() < 1 && nom.trim().length() > 30) {
-	        throw new Exception( "Le nom d'utilisateur doit contenir entre 1 et 30 caractï¿½res." );
-	        
-=======
 		if(nom.trim().isEmpty()) {
 			throw new Exception("Veuillez renseigner votre Nom");
 		}
@@ -202,7 +206,6 @@ public class InscriptionServlet extends HttpServlet {
 	    if(nom.matches("[a-zA-Z]*") == false) {
 	    	System.out.println("caractere interdit");
 	        throw new Exception( "Caractère interdit" );
->>>>>>> branch 'main' of https://github.com/Dimitry97/Projet
 	    }
 	}
 	
@@ -210,16 +213,11 @@ public class InscriptionServlet extends HttpServlet {
 	 * Valide le prenom .
 	 */
 	private void validationPrenom( String prenom ) throws Exception {
-<<<<<<< HEAD
-	    if ( prenom != null && prenom.trim().length() < 1 && prenom.trim().length() > 30) {
-	        throw new Exception( "Le prenom d'utilisateur doit contenir entre 1 et 30 caractï¿½res." );
-=======
 		if(prenom.trim().isEmpty()) {
 			throw new Exception("Veuillez renseigner votre Prénom");
 		}
 	    if (prenom.trim().length() < 1 && prenom.trim().length() > 30) {
 	        throw new Exception( "Le prenom d'utilisateur doit contenir entre 1 et 30 caractères." );
->>>>>>> branch 'main' of https://github.com/Dimitry97/Projet
 	    
 	    }
 	    if(prenom.matches("[a-zA-Z]*") == false) {
@@ -231,16 +229,11 @@ public class InscriptionServlet extends HttpServlet {
 	 * Valide le nom de rue .
 	 */
 	private void validationRue( String rue ) throws Exception {
-<<<<<<< HEAD
-	    if ( rue != null && rue.trim().length() < 1 && rue.trim().length() > 30) {
-	        throw new Exception( "Le nom de la rue doit contenir entre 1 et 30 caractï¿½res." );
-=======
 		if(rue.trim().isEmpty()) {
 			throw new Exception("Veuillez renseigner le nom de votre rue");
 		}
 	    if ( rue.trim().length() < 1 && rue.trim().length() > 30) {
 	        throw new Exception( "Le nom de la rue doit contenir entre 1 et 30 caractères." );
->>>>>>> branch 'main' of https://github.com/Dimitry97/Projet
 	    
 	    }
 	    if(rue.matches("[a-zA-Z]*") == false) {
@@ -252,16 +245,11 @@ public class InscriptionServlet extends HttpServlet {
 	 * Valide le nom de la ville .
 	 */
 	private void validationVille( String ville ) throws Exception {
-<<<<<<< HEAD
-	    if ( ville != null && ville.trim().length() < 1 && ville.trim().length() > 30) {
-	        throw new Exception( "Le nom de la ville doit contenir entre 1 et 30 caractï¿½res." );
-=======
 		if(ville.trim().isEmpty()) {
 			throw new Exception("Veuillez renseigner le nom de votre Ville");
 		}
 	    if (ville.trim().length() < 1 && ville.trim().length() > 30) {
 	        throw new Exception( "Le nom de la ville doit contenir entre 1 et 30 caractères." );
->>>>>>> branch 'main' of https://github.com/Dimitry97/Projet
 	    
 	    }
 	    if(ville.matches("[a-zA-Z]*") == false) {
@@ -289,9 +277,9 @@ public class InscriptionServlet extends HttpServlet {
 	private void validationPassword( String password, String passwordVerif ) throws Exception{
 	    if (password != null && password.trim().length() != 0 && passwordVerif != null && passwordVerif.trim().length() != 0) {
 	        if (!password.equals(passwordVerif)) {
-	            throw new Exception("Les mots de passe entrï¿½s sont diffï¿½rents, merci de les saisir ï¿½ nouveau.");
+	            throw new Exception("Les mots de passe entrés sont différents, merci de les saisir à  nouveau.");
 	        } else if (password.trim().length() < 3) {
-	            throw new Exception("Les mots de passe doivent contenir au moins 3 caractï¿½res.");
+	            throw new Exception("Les mots de passe doivent contenir au moins 3 caractères.");
 	        }
 	    } else {
 	        throw new Exception("Merci de saisir et confirmer votre mot de passe.");
@@ -329,7 +317,7 @@ public class InscriptionServlet extends HttpServlet {
 	}
 	
 	/**
-	 * Valide le numï¿½ro de tï¿½lï¿½phone d'utilisateur saisie. --> peut etre null
+	 * Valide le numéro de téléphone d'utilisateur saisie. --> peut etre null
 	 */
 	private void validationTelephone( String telephone ) throws Exception {
 	    if ( telephone.trim().length() != 0 && (telephone.trim().length() != 10 && telephone.trim().length() != 12 )) {
