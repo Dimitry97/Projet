@@ -4,7 +4,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 import fr.eni.encheres.bo.ArticleVendu;
-import fr.eni.encheres.bo.Categorie;
 import fr.eni.encheres.dal.DALException;
 
 public interface ArticleVenduDAO {

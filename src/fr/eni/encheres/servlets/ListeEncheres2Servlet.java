@@ -2,7 +2,6 @@ package fr.eni.encheres.servlets;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -13,9 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import fr.eni.encheres.bo.ArticleVendu;
 import fr.eni.encheres.bo.Categorie;
-import fr.eni.encheres.bo.Enchere;
-import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.dal.DALException;
+import fr.eni.encheres.dal.DAOFactory;
 import fr.eni.encheres.dal.artcileVendu.ArticleVenduDAO;
 import fr.eni.encheres.dal.categorie.CategorieDAO;
 
@@ -48,17 +46,19 @@ public class ListeEncheres2Servlet extends HttpServlet {
 		
 
 		
-		ArticleVenduDAO articleVenduDAO = null;
-		CategorieDAO categorieDAO = null;
+		
+		
 		
 		//
 		String categorieChoisie = request.getParameter("categorie");
 		List<ArticleVendu> listeArticlesEnVente = null;
-
 		Categorie rechNoCategorie;
+		
 		int noCategorie = 0;
 		try {
-			rechNoCategorie = categorieDAO.rechercheNoCategorie(categorieChoisie);
+			
+			
+			rechNoCategorie = DAOFactory.getCategorieDAO().rechercheNoCategorie(categorieChoisie);
 			noCategorie = rechNoCategorie.getNoCategorie();
 		} catch (DALException e) {
 			// TODO Auto-generated catch block
@@ -76,7 +76,7 @@ public class ListeEncheres2Servlet extends HttpServlet {
 		// rechercher article via barre de recherche (si contient mot clé) et aucune categorie choisie
 		if(nomArticleRecherche != null && categorieChoisie == null) {
 			try {
-				listeArticlesEnVente = articleVenduDAO.rechercheParMotCle(nomArticleRecherche);
+				listeArticlesEnVente = DAOFactory.getArticleDAO().rechercheParMotCle(nomArticleRecherche);
 				// affiche article correspondant au mot clé saisi
 				if (listeArticlesEnVente != null) {
 					request.setAttribute("listeArticlesEnVente", listeArticlesEnVente);
@@ -98,7 +98,7 @@ public class ListeEncheres2Servlet extends HttpServlet {
 		// rechercher article si aucun mot clé et categorie choisie
 		if(nomArticleRecherche == null && categorieChoisie != null) {
 			try {
-				listeArticlesEnVente = articleVenduDAO.rechercheParNoCategorie(noCategorie);
+				listeArticlesEnVente = DAOFactory.getArticleDAO().rechercheParNoCategorie(noCategorie);
 
 				// affiche article correspondant au mot clé saisi
 				if (listeArticlesEnVente != null) {
@@ -121,7 +121,7 @@ public class ListeEncheres2Servlet extends HttpServlet {
 		// rechercher article si aucun mot clé et aucune categorie choisie (afficher tous les articles à la vente)
 		if(nomArticleRecherche != null && categorieChoisie != null) {
 			try {
-				listeArticlesEnVente = articleVenduDAO.rechercheParMotCleEtCategorie(nomArticleRecherche, noCategorie);
+				listeArticlesEnVente = DAOFactory.getArticleDAO().rechercheParMotCleEtCategorie(nomArticleRecherche, noCategorie);
 
 				// affiche article correspondant au mot clé saisi
 				if (listeArticlesEnVente != null) {
