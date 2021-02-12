@@ -19,7 +19,6 @@ public class UtilisateurImpl  implements UtilisateurDAO{
 	private final static String  MODIFIER = " UPDATE UTILISATEURS set pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ?, rue =?,"
 			+ " code_postal = ?, ville = ?, mot_de_passe = ?, administrateur = ? WHERE no_utilisateur = ?";
 	private final static String SELECTPSEUDOANDMDP = "SELECT pseudo, mot_de_passe FROM UTILISATEURS WHERE pseudo = ? AND mot_de_passe = ?";
-	private static final String GET_BY_ID = "SELECT * FROM UTILISATEURS WHERE no_utilisateur=?";
 	
 	
 	

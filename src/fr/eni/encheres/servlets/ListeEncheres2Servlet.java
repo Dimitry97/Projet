@@ -16,7 +16,6 @@ import fr.eni.encheres.bo.Categorie;
 import fr.eni.encheres.bo.Enchere;
 import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.dal.DALException;
-import fr.eni.encheres.dal.DAOFactory;
 import fr.eni.encheres.dal.artcileVendu.ArticleVenduDAO;
 import fr.eni.encheres.dal.categorie.CategorieDAO;
 
@@ -50,7 +49,7 @@ public class ListeEncheres2Servlet extends HttpServlet {
 
 		
 		ArticleVenduDAO articleVenduDAO = null;
-		
+		CategorieDAO categorieDAO = null;
 		
 		//
 		String categorieChoisie = request.getParameter("categorie");
@@ -59,7 +58,7 @@ public class ListeEncheres2Servlet extends HttpServlet {
 		Categorie rechNoCategorie;
 		int noCategorie = 0;
 		try {
-			rechNoCategorie = DAOFactory.getCategorieDAO().rechercheNoCategorie(categorieChoisie);
+			rechNoCategorie = categorieDAO.rechercheNoCategorie(categorieChoisie);
 			noCategorie = rechNoCategorie.getNoCategorie();
 		} catch (DALException e) {
 			// TODO Auto-generated catch block
@@ -69,22 +68,22 @@ public class ListeEncheres2Servlet extends HttpServlet {
 		
 		// RECHERCHER ARTICLE // 
 
-		String nomArticleRecherche = request.getParameter("rechercheArticle"); // "rechercheArticle" = mot clï¿½ saisie dans jsp
+		String nomArticleRecherche = request.getParameter("rechercheArticle"); // "rechercheArticle" = mot clé saisie dans jsp
 		
 
 		
 		
-		// rechercher article via barre de recherche (si contient mot clï¿½) et aucune categorie choisie
+		// rechercher article via barre de recherche (si contient mot clé) et aucune categorie choisie
 		if(nomArticleRecherche != null && categorieChoisie == null) {
 			try {
-				listeArticlesEnVente = DAOFactory.getArticleDAO().rechercheParMotCle(nomArticleRecherche);
-				// affiche article correspondant au mot clï¿½ saisi
+				listeArticlesEnVente = articleVenduDAO.rechercheParMotCle(nomArticleRecherche);
+				// affiche article correspondant au mot clé saisi
 				if (listeArticlesEnVente != null) {
 					request.setAttribute("listeArticlesEnVente", listeArticlesEnVente);
 					this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/listeEncheres2.jsp").forward(request, response);
 				} else {
-					// si aucun article correspondant au mot clï¿½ saisi
-					String messageAucunResultat = "Aucun article correspondant ï¿½ votre recherche n'a ï¿½tï¿½ trouvï¿½ !";
+					// si aucun article correspondant au mot clé saisi
+					String messageAucunResultat = "Aucun article correspondant à votre recherche n'a été trouvé !";
 					request.setAttribute("messageAucunResultat", messageAucunResultat);
 					this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/listeEncheres2.jsp").forward(request, response);
 				}
@@ -96,18 +95,18 @@ public class ListeEncheres2Servlet extends HttpServlet {
 		}
 		
 		
-		// rechercher article si aucun mot clï¿½ et categorie choisie
+		// rechercher article si aucun mot clé et categorie choisie
 		if(nomArticleRecherche == null && categorieChoisie != null) {
 			try {
 				listeArticlesEnVente = articleVenduDAO.rechercheParNoCategorie(noCategorie);
 
-				// affiche article correspondant au mot clï¿½ saisi
+				// affiche article correspondant au mot clé saisi
 				if (listeArticlesEnVente != null) {
 					request.setAttribute("listeArticlesEnVente", listeArticlesEnVente);
 					this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/listeEncheres2.jsp").forward(request, response);
 				} else {
-					// si aucun article correspondant ï¿½ la categorie choisie
-					String messageAucunResultat = "Aucun article correspondant ï¿½ votre recherche n'a ï¿½tï¿½ trouvï¿½ !";
+					// si aucun article correspondant à la categorie choisie
+					String messageAucunResultat = "Aucun article correspondant à votre recherche n'a été trouvé !";
 					request.setAttribute("messageAucunResultat", messageAucunResultat);
 					this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/listeEncheres2.jsp").forward(request, response);
 				}
@@ -119,18 +118,18 @@ public class ListeEncheres2Servlet extends HttpServlet {
 		}
 		
 		
-		// rechercher article si aucun mot clï¿½ et aucune categorie choisie (afficher tous les articles ï¿½ la vente)
+		// rechercher article si aucun mot clé et aucune categorie choisie (afficher tous les articles à la vente)
 		if(nomArticleRecherche != null && categorieChoisie != null) {
 			try {
 				listeArticlesEnVente = articleVenduDAO.rechercheParMotCleEtCategorie(nomArticleRecherche, noCategorie);
 
-				// affiche article correspondant au mot clï¿½ saisi
+				// affiche article correspondant au mot clé saisi
 				if (listeArticlesEnVente != null) {
 					request.setAttribute("listeArticlesEnVente", listeArticlesEnVente);
 					this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/listeEncheres2.jsp").forward(request, response);
 				} else {
-					// si aucun article correspondant ï¿½ la categorie choisie
-					String messageAucunResultat = "Aucun article correspondant ï¿½ votre recherche n'a ï¿½tï¿½ trouvï¿½ !";
+					// si aucun article correspondant à la categorie choisie
+					String messageAucunResultat = "Aucun article correspondant à votre recherche n'a été trouvé !";
 					request.setAttribute("messageAucunResultat", messageAucunResultat);
 					this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/listeEncheres2.jsp").forward(request, response);
 				}

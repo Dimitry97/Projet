@@ -13,7 +13,6 @@ import javax.servlet.http.HttpSession;
 
 import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.dal.DALException;
-import fr.eni.encheres.dal.DAOFactory;
 import fr.eni.encheres.dal.utilisateur.UtilisateurDAO;
 import fr.eni.encheres.dal.utilisateur.UtilisateurImpl;
 import fr.eni.encheres.methode.Methodes;
@@ -82,7 +81,7 @@ public class ServletConnexion extends HttpServlet {
 			try {
 				UtilisateurDAO user = new UtilisateurImpl();
 				System.out.println("ok");
-				utilisateur =  DAOFactory.getUtilisateurDAO().getUtilisateurPseudoMdp(pseudo, motDePasse);
+				utilisateur = user.getUtilisateurPseudoMdp(pseudo, motDePasse);
 				System.out.println("ok");
 
 				if (utilisateur == null) {
