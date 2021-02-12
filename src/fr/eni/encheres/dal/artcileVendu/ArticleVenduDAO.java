@@ -26,6 +26,15 @@ public interface ArticleVenduDAO {
 	
 	// Modifier le prix de vente en fonction des propositions
 	public void modifierPrixVente (ArticleVendu articleVendu, int proposition) throws DALException, SQLException; //
+
+	// recherche d'un article par mot clé
+	public List<ArticleVendu> rechercheParMotCle(String nomArticleRecherche) throws DALException, SQLException;
+
+	// recherche d'un article par categorie
+	public List<ArticleVendu> rechercheParNoCategorie(int noCategorieChoisie) throws DALException, SQLException;
+
+	// recherche d'un article par mot clé et categorie
+	public List<ArticleVendu> rechercheParMotCleEtCategorie(String nomArticleRecherche, int noCategorieChoisie) throws DALException, SQLException;
 	
 	
 

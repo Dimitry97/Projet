@@ -32,7 +32,9 @@ public class ArticleVenduImpl implements ArticleVenduDAO {
 	private static final String RECHERCHER = "select * from ARTICLES_VENDUS where no_article = ?";
 	private static final String LISTER = "select * from ARTICLES_VENDUS ORDER BY no_article DESC";
 	
-	
+	private final static String RECHERCHE_PAR_MOTCLE = "SELECT nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial FROM ARTICLES_VENDUS WHERE nom_article LIKE ?;";
+	private final static String RECHERCHE_PAR_CATEGORIE = "SELECT nom_article,description, date_debut_encheres, date_fin_encheres,prix_initial FROM ARTICLES_VENDUS WHERE no_categorie = ?;";
+	private final static String RECHERCHE_PAR_MOTCLE_ET_CATEGORIE = "SELECT nom_article,description, date_debut_encheres, date_fin_encheres,prix_initial FROM ARTICLES_VENDUS WHERE nom_article LIKE ? AND no_categorie = ?;";
 
 	@Override
 	public ArticleVendu selectArticleByNo(int id) throws DALException {
@@ -206,6 +208,117 @@ public class ArticleVenduImpl implements ArticleVenduDAO {
 			DBConnection.seDeconnecter(cnx, stmt);
 		}
 
+	}
+
+	@Override
+	public List<ArticleVendu> rechercheParMotCle(String nomArticleRecherche) throws DALException, SQLException {
+		Connection cnx = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+
+		List<ArticleVendu> listeArticleEnVente = new ArrayList<>();
+		try {
+			cnx = DBConnection.seConnecter();
+			stmt = cnx.prepareStatement(RECHERCHE_PAR_MOTCLE);
+			stmt.setString(1, "%" + nomArticleRecherche + "%");
+			rs = stmt.executeQuery();
+			
+			ArticleVendu articleEnVente = null;
+			
+			while (rs.next()) {
+				articleEnVente = new ArticleVendu();
+				articleEnVente.setNoArticle(rs.getInt("no_article"));
+				articleEnVente.setNomArticle(rs.getString("nom_article"));
+				articleEnVente.setDescription(rs.getString("description"));
+				articleEnVente.setDateDebutEncheres(rs.getDate("date_debut_enchere"));
+				articleEnVente.setDateFinEncheres(rs.getDate("date_fin_enchere"));
+				articleEnVente.setMiseAPrix(rs.getInt("prix_initial"));
+				// integrer pseudo ??
+				
+				listeArticleEnVente.add(articleEnVente);
+			}
+		} catch (SQLException e) {
+			throw new DALException("Erreur lors de la recherche par mot clé");
+		} finally {
+			DBConnection.seDeconnecter(cnx, stmt);
+		}
+		
+		return listeArticleEnVente;
+	}
+
+
+	
+	@Override
+	public List<ArticleVendu> rechercheParNoCategorie(int noCategorieChoisie) throws DALException, SQLException {
+		Connection cnx = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+
+		List<ArticleVendu> listeArticleEnVente = new ArrayList<>();
+		try {
+			cnx = DBConnection.seConnecter();
+			stmt = cnx.prepareStatement(RECHERCHE_PAR_CATEGORIE);
+			stmt.setInt(1, noCategorieChoisie);
+			rs = stmt.executeQuery();
+			
+			ArticleVendu articleEnVente = null;
+			
+			while (rs.next()) {
+				articleEnVente = new ArticleVendu();
+				articleEnVente.setNoArticle(rs.getInt("no_article"));
+				articleEnVente.setNomArticle(rs.getString("nom_article"));
+				articleEnVente.setDescription(rs.getString("description"));
+				articleEnVente.setDateDebutEncheres(rs.getDate("date_debut_enchere"));
+				articleEnVente.setDateFinEncheres(rs.getDate("date_fin_enchere"));
+				articleEnVente.setMiseAPrix(rs.getInt("prix_initial"));
+				// integrer pseudo ??
+				
+				listeArticleEnVente.add(articleEnVente);
+			}
+		} catch (SQLException e) {
+			throw new DALException("Erreur lors de la recherche par catégorie");
+		} finally {
+			DBConnection.seDeconnecter(cnx, stmt);
+		}
+		
+		return listeArticleEnVente;
+	}
+
+	@Override
+	public List<ArticleVendu> rechercheParMotCleEtCategorie(String nomArticleRecherche, int noCategorieChoisie) throws DALException, SQLException {
+		Connection cnx = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+
+		List<ArticleVendu> listeArticleEnVente = new ArrayList<>();
+		try {
+			cnx = DBConnection.seConnecter();
+			stmt = cnx.prepareStatement(RECHERCHE_PAR_MOTCLE_ET_CATEGORIE);
+			stmt.setString(1, "%" + nomArticleRecherche + "%");
+			stmt.setInt(2, noCategorieChoisie);
+			rs = stmt.executeQuery();
+			
+			ArticleVendu articleEnVente = null;
+			
+			while (rs.next()) {
+				articleEnVente = new ArticleVendu();
+				articleEnVente.setNoArticle(rs.getInt("no_article"));
+				articleEnVente.setNomArticle(rs.getString("nom_article"));
+				articleEnVente.setDescription(rs.getString("description"));
+				articleEnVente.setDateDebutEncheres(rs.getDate("date_debut_enchere"));
+				articleEnVente.setDateFinEncheres(rs.getDate("date_fin_enchere"));
+				articleEnVente.setMiseAPrix(rs.getInt("prix_initial"));
+				// integrer pseudo ??
+				
+				listeArticleEnVente.add(articleEnVente);
+			}
+		} catch (SQLException e) {
+			throw new DALException("Erreur lors de la recherche par mot clé et catégorie");
+		} finally {
+			DBConnection.seDeconnecter(cnx, stmt);
+		}
+		
+		return listeArticleEnVente;
 	}
 	
 	

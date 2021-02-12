@@ -23,13 +23,13 @@
 
 				<div class="form-group">
 					<label for="article"> Filtres </label> <input type="text"
-						class="form-control" id="article"
+						class="form-control" id="rechercheArticle" name="rechercheArticle"
 						placeholder="Le nom de l'article contient ..." />
 				</div>
 
 				<div class="form-group">
 					<label for="categorie"> Catégorie </label> <select
-						class="form-control" id="categorie">
+						class="form-control" id="categorie" name="categorie">
 						<option>Informatique</option>
 						<option>Ameublement</option>
 						<option>Vêtement</option>
