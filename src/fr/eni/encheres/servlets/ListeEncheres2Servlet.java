@@ -14,8 +14,6 @@ import fr.eni.encheres.bo.ArticleVendu;
 import fr.eni.encheres.bo.Categorie;
 import fr.eni.encheres.dal.DALException;
 import fr.eni.encheres.dal.DAOFactory;
-import fr.eni.encheres.dal.artcileVendu.ArticleVenduDAO;
-import fr.eni.encheres.dal.categorie.CategorieDAO;
 
 /**
  * Servlet implementation class ListeEncheres2Servlet
