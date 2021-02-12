@@ -175,7 +175,7 @@ public class UtilisateurImpl  implements UtilisateurDAO{
 	}
 
 	/**
-	 * Méthode vérifiant l'existance d'une adresse mail en BDD
+	 * Mï¿½thode vï¿½rifiant l'existance d'une adresse mail en BDD
 	 * @param mail
 	 * @return
 	 * @throws DALException
@@ -210,7 +210,7 @@ public class UtilisateurImpl  implements UtilisateurDAO{
 	}
 	
 	/**
-	 * Méthode vérifiant l'existance d'un pseudo en BDD
+	 * Mï¿½thode vï¿½rifiant l'existance d'un pseudo en BDD
 	 * @param pseudo
 	 * @return
 	 * @throws DALException
@@ -241,7 +241,7 @@ public class UtilisateurImpl  implements UtilisateurDAO{
 	}
 	
 	@Override
-	public void getUtilisateurPseudoMdp(String pseudo, String motDePasse) throws DALException {
+	public Utilisateur getUtilisateurPseudoMdp(String pseudo, String motDePasse) throws DALException {
 		Connection cnx = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -255,12 +255,14 @@ public class UtilisateurImpl  implements UtilisateurDAO{
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				utilisateur = new Utilisateur(rs.getString("pseudo"), rs.getString("mot_de_passe"));
+			
 			}
 		} catch (SQLException e) {
 			throw new DALException("echec de rechercheProfilAvecMotDePasse");
 		}finally {
 			DBConnection.seDeconnecter(cnx, pstmt);
 		}
+		return utilisateur;
 				
 	}
 

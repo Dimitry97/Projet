@@ -22,9 +22,7 @@ import fr.eni.encheres.methode.Methodes;
  */
 @WebServlet("/connexion.html")
 public class ServletConnexion extends HttpServlet {
-	
-	Utilisateur utilisateur = new Utilisateur();
-	
+
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -52,7 +50,7 @@ public class ServletConnexion extends HttpServlet {
 			throws ServletException, IOException {
 		// RequestDispatcher dispatcher =
 		// request.getRequestDispatcher("/WEB-INF/jsp/pageConnexion.jsp");
-
+		Utilisateur utilisateur = new Utilisateur();
 		PrintWriter out = response.getWriter();
 
 		String erreur = null;
@@ -66,34 +64,36 @@ public class ServletConnexion extends HttpServlet {
 		// Verification que le login et le mot de passe récupéré ne sont pas null
 
 		if (pseudo.length() == 0 || pseudo.isEmpty()) {
-//			request.setAttribute("erreur", "Veuillez renseigner votre pseudo");
-//			erreur = (String) session.getAttribute("erreur");
-//			out.print(erreur);
+			request.setAttribute("erreur", "<p><strong>Veuillez renseigner votre pseudo</strong></p>");
+			erreur = (String) session.getAttribute("erreur");
+			out.print(erreur);
 
 			this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/pageConnexion.jsp").forward(request, response);
-			
 
 		} else if (motDePasse.length() == 0 || motDePasse.isEmpty()) {
-//			request.setAttribute("erreur", "Veuillez renseigner votre mot de passe");
-//			erreur = (String) session.getAttribute("erreur");
-//			out.print(erreur);
+			request.setAttribute("erreur", "Veuillez renseigner votre mot de passe");
+			erreur = (String) session.getAttribute("erreur");
+			out.print(erreur);
 
 			this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/pageConnexion.jsp").forward(request, response);
-			
+
 		} else {
 			try {
 				UtilisateurDAO user = new UtilisateurImpl();
 				System.out.println("ok");
-				user.getUtilisateurPseudoMdp(pseudo, motDePasse);
+				utilisateur = user.getUtilisateurPseudoMdp(pseudo, motDePasse);
 				System.out.println("ok");
-				System.out.println(user);
 
-				if (pseudo.equals(utilisateur.getPseudo()) && motDePasse.equals(utilisateur.getMotDePasse())) {
-					// request.getSession().setAttribute("Connecte", user);
+				if (utilisateur == null) {
+					this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/pageConnexion.jsp").forward(request,
+							response);
+				} else {
 
-					this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/monProfil2.jsp").forward(request,response);
+					System.out.println("utilisateur ok");
+
+					this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/monProfil2.jsp").forward(request,
+							response);
 				}
-
 			} catch (DALException e) {
 				exception = true;
 				request.setAttribute("erreur",

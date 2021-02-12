@@ -14,7 +14,7 @@ public interface UtilisateurDAO {
 	
 	
 	/**
-	 * Méthode abstraite pour rechercher un profil en vue de le modifier --> ressort le mot de passe
+	 * Mï¿½thode abstraite pour rechercher un profil en vue de le modifier --> ressort le mot de passe
 	 * @param pseudo
 	 * @return
 	 * @throws DALException
@@ -22,7 +22,7 @@ public interface UtilisateurDAO {
 	Utilisateur rechercherProfilParPseudo(String pseudo)throws DALException;
 	
 	/**
-	 * Méthode abstraite pour ajouter un utilisateur
+	 * Mï¿½thode abstraite pour ajouter un utilisateur
 	 * @param utilisateur
 	 * @throws DALException
 	 * @throws SQLException
@@ -30,7 +30,7 @@ public interface UtilisateurDAO {
 	void inserer (Utilisateur utilisateur) throws DALException, SQLException;
 	
 	/**
-	 * Méthode abstraite pour supprimer un utilisateur
+	 * Mï¿½thode abstraite pour supprimer un utilisateur
 	 * @param pseudo
 	 * @throws DALException
 	 * @throws SQLException
@@ -38,7 +38,7 @@ public interface UtilisateurDAO {
 	void supprimer (Utilisateur utilisateur) throws DALException, SQLException;
 	
 	/**
-	 * Méthode abstraite pour modifier un utilisateur
+	 * Mï¿½thode abstraite pour modifier un utilisateur
 	 * @param utilisateur
 	 * @throws DALException
 	 * @throws SQLException
@@ -46,7 +46,7 @@ public interface UtilisateurDAO {
 	void modifier(Utilisateur utilisateur) throws DALException,SQLException;
 	
 	/**
-	 * Méthode vérifiant l'existance d'une adresse mail en BDD
+	 * Mï¿½thode vï¿½rifiant l'existance d'une adresse mail en BDD
 	 * @param mail
 	 * @return
 	 * @throws DALException
@@ -55,7 +55,7 @@ public interface UtilisateurDAO {
 	boolean verifMailUnique(String mail) throws DALException, SQLException;
 	
 	/**
-	 * Méthode vérifirnat l'existance d'un pseudo en BDD
+	 * Mï¿½thode vï¿½rifirnat l'existance d'un pseudo en BDD
 	 * @param pseudo
 	 * @return
 	 * @throws DALException
@@ -63,5 +63,5 @@ public interface UtilisateurDAO {
 	 */
 	public boolean verifPseudoUnique(String pseudo) throws DALException, SQLException;
 	
-	void getUtilisateurPseudoMdp(String pseudo, String motDePasse) throws DALException;
+	Utilisateur getUtilisateurPseudoMdp(String pseudo, String motDePasse) throws DALException;
 }
