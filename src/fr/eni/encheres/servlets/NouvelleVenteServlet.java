@@ -1,8 +1,8 @@
 package fr.eni.encheres.servlets;
 
 import java.io.IOException;
-import java.sql.Date;
 import java.sql.SQLException;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,11 +12,16 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import fr.eni.encheres.bo.ArticleVendu;
+import fr.eni.encheres.bo.Categorie;
+import fr.eni.encheres.bo.Enchere;
 import fr.eni.encheres.bo.Retrait;
 import fr.eni.encheres.dal.DALException;
 import fr.eni.encheres.dal.artcileVendu.ArticleVenduDAO;
 import fr.eni.encheres.dal.artcileVendu.ArticleVenduImpl;
+import fr.eni.encheres.dal.categorie.CategorieDAO;
+import fr.eni.encheres.dal.categorie.CategorieImpl;
 import fr.eni.encheres.dal.retrait.RetraitDAO;
+import fr.eni.encheres.dal.retrait.RetraitImpl;
 import fr.eni.encheres.methode.Methodes;
 
 /**
@@ -62,6 +67,7 @@ public class NouvelleVenteServlet extends HttpServlet {
 	 */
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		// récuperer les données pour ajouter un nouvel article à la vente (nvXXX = nouvelle vente XXX)
 		String nvArticle = request.getParameter("article");
 		String nvDescription = request.getParameter("description");
@@ -75,20 +81,36 @@ public class NouvelleVenteServlet extends HttpServlet {
 		String nvCP = request.getParameter("codePostal");
 		String nvVille = request.getParameter("ville");
 		
-
+		// Gestion des dates de début et de fin
 		Date nvDateDebut = null, nvDateFin = null;
 		try {
-			nvDateDebut = (Date) Methodes.dateJSPVersJava(dateDebut);
-			nvDateFin = (Date) Methodes.dateJSPVersJava(dateFin);
+			nvDateDebut = Methodes.dateJSPVersJava(dateDebut);
+			nvDateFin = Methodes.dateJSPVersJava(dateFin);
 		} catch (Exception e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
 
-		
-		ArticleVenduDAO noC = new ArticleVenduImpl();
+		// Recherche catégorie grace au libelle puis recherche de la categorie grace au no 
+		CategorieDAO noC = new CategorieImpl();
+		Categorie noCategorie = new Categorie();
+
 		try {
-			int noCat = noC.rechercheNoCategorie(nvCategorie);
+			noCategorie = noC.rechercheNoCategorie(nvCategorie);
+		} catch (DALException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		Retrait nvRetrait = new Retrait();
+		nvRetrait.setCodePostal(nvCP);
+		nvRetrait.setRue(nvRue);
+		nvRetrait.setVille(nvVille);
+		
+		RetraitDAO retraitDAO = new RetraitImpl();
+		try {
+			retraitDAO.ajoutRetrait(nvRetrait);
 		} catch (DALException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -103,19 +125,22 @@ public class NouvelleVenteServlet extends HttpServlet {
 		nvArticleAVendre.setDateFinEncheres(nvDateFin);
 		nvArticleAVendre.setMiseAPrix(nvMiseAPrix);
 		nvArticleAVendre.setPrixVente(nvMiseAPrix);
+		nvArticleAVendre.setLieuRetrait(nvRetrait);
+		nvArticleAVendre.setCategorie(noCategorie);
 
 		HttpSession session = request.getSession();
 		int nvNoUtilisateur = (int) session.getAttribute("noUtilisateur");
 	
 		nvArticleAVendre.getVendeur().setNoUtilisateur(nvNoUtilisateur);
-		nvArticleAVendre.getCategorie().setNoCategorie(1); //noCat
 		
 		
 		
-		ArticleVenduDAO nouvelleVente = null;
+		ArticleVenduDAO nouvelleVente = new ArticleVenduImpl();
+		RetraitDAO retrait = new RetraitImpl();
 		try {
 			try {
 				nouvelleVente.nouvelArticle(nvArticleAVendre);
+				retrait.ajoutRetrait(nvRetrait);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -125,21 +150,15 @@ public class NouvelleVenteServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		
+		Enchere enchere = new Enchere();
+		enchere.setArticleVendu(nvArticleAVendre);
+		enchere.setDateEnchere(nvArticleAVendre.getDateFinEncheres());
 		
 		
 		
-		Retrait nvRetrait = new Retrait();
-		nvRetrait.setCodePostal(nvCP);
-		nvRetrait.setRue(nvRue);
-		nvRetrait.setVille(nvVille);
 		
-		RetraitDAO retraitDAO = null;
-		try {
-			retraitDAO.ajoutRetrait(nvRetrait);
-		} catch (DALException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+		
 		
 		
 		request.getRequestDispatcher("/WEB-INF/jsp/nouvelleVente2.jsp").forward(request, response);

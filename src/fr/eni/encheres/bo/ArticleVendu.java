@@ -1,6 +1,7 @@
 package fr.eni.encheres.bo;
 
-import java.sql.Date;
+
+import java.util.Date;
 import java.util.List;
 
 public class ArticleVendu {
@@ -255,6 +256,22 @@ public class ArticleVendu {
 		return vendeur;
 	}
 
+
+	public void setCategorie(Categorie categorie) {
+		this.categorie = categorie;
+	}
+
+	public void setLieuRetrait(Retrait lieuRetrait) {
+		this.lieuRetrait = lieuRetrait;
+	}
+
+	public void setVendeur(Utilisateur vendeur) {
+		this.vendeur = vendeur;
+	}
+
+	public void setEnchere(List<Enchere> enchere) {
+		this.enchere = enchere;
+	}
 
 	/**
 	 * Methode permettant de récupérer la liste des enchères ayant été fait sur l'article

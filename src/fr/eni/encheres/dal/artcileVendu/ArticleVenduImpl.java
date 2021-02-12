@@ -32,8 +32,7 @@ public class ArticleVenduImpl implements ArticleVenduDAO {
 	private static final String RECHERCHER = "select * from ARTICLES_VENDUS where no_article = ?";
 	private static final String LISTER = "select * from ARTICLES_VENDUS ORDER BY no_article DESC";
 	
-	// ajout pour rechercher noCategorie par libelle
-	private final static String RECHERCHE_CODE_CATEGORIE = "SELECT no_categorie FROM categories WHERE libelle = ?;";
+	
 
 	@Override
 	public ArticleVendu selectArticleByNo(int id) throws DALException {
@@ -209,44 +208,7 @@ public class ArticleVenduImpl implements ArticleVenduDAO {
 
 	}
 	
-	// ajout pour recherche no_categorie en fonction du libelle choisi par l'utilisateur
-		@Override
-		public int rechercheNoCategorie(String libelle) throws DALException {
-			Connection cnx = null;
-			PreparedStatement stmt = null;
-			ResultSet rs = null;
-			Categorie categorie = null;
-			int noCate =0;
-			try {
-				cnx = DBConnection.seConnecter();
-				stmt = cnx.prepareStatement(RECHERCHE_CODE_CATEGORIE);
-				stmt.setString(1, libelle);;
-				rs = stmt.executeQuery();
-				
-				while (rs.next()) {
-					if (categorie == null)
-						categorie = new Categorie();
-					categorie.setNoCategorie(rs.getInt("no_categorie"));
-					categorie.setLibelle(libelle);
-					noCate = categorie.getNoCategorie();
-				}
-				
-			} catch (SQLException e) {
-				throw new DALException("Erreur lors de la selection");
-			} finally {
-				try {
-					if (stmt != null) {
-						stmt.close();
-					}
-					if (cnx != null) {
-						cnx.close();
-					}
-				} catch (SQLException e) {
-					throw new DALException("Erreur lors de la selection");
-				}
-			}
-			return noCate;
-		}
+	
 	
 	
 }

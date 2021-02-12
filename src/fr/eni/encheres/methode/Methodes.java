@@ -3,6 +3,7 @@ package fr.eni.encheres.methode;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Methodes {
 	
@@ -62,8 +63,8 @@ public class Methodes {
 	 * @return
 	 * @throws Exception
 	 */
-	public static java.util.Date dateJSPVersJava(String dateJSP) throws Exception{
-		java.util.Date dateJava=null;
+	public static Date dateJSPVersJava(String dateJSP) throws Exception{
+		Date dateJava=null;
 		if (dateJSP != null){
 			try{
 				dateJava = new SimpleDateFormat("yyyy-MM-dd").parse(dateJSP);

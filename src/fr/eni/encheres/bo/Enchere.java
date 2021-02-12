@@ -1,12 +1,13 @@
 package fr.eni.encheres.bo;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 public class Enchere {
 
 	//////////ATTRIBUTS //////////
 	
-	private LocalDate dateEnchere;
+	private Date dateEnchere;
 	private int montantEnchere;
 	
 	private ArticleVendu articleVendu;
@@ -21,6 +22,7 @@ public class Enchere {
 	public Enchere() {
 		
 	}
+
 	/**
 	 * Constructeur permettant de créer une enchère
 	 * @param dateEncheres
@@ -28,7 +30,7 @@ public class Enchere {
 	 * @param articleVendu
 	 * @param utilisateur
 	 */
-	public Enchere(LocalDate dateEnchere, int montantEnchere, ArticleVendu articleVendu, Utilisateur utilisateur) {
+	public Enchere(Date dateEnchere, int montantEnchere, ArticleVendu articleVendu, Utilisateur utilisateur) {
 		super();
 		this.dateEnchere = dateEnchere;
 		this.montantEnchere = montantEnchere;
@@ -36,7 +38,7 @@ public class Enchere {
 		this.utilisateur = utilisateur;
 	}
 	
-	public Enchere(LocalDate dateEnchere, int montantEnchere) {
+	public Enchere(Date dateEnchere, int montantEnchere) {
 		super();
 		this.dateEnchere = dateEnchere;
 		this.montantEnchere = montantEnchere;
@@ -48,7 +50,7 @@ public class Enchere {
 	 * Methode permettant de récupérer la date des encheres effectuer par les utilisateurs
 	 * @return 
 	 */
-	public LocalDate getDateEnchere() {
+	public Date getDateEnchere() {
 		return dateEnchere;
 	}
 
@@ -88,6 +90,16 @@ public class Enchere {
 	 */
 	public Utilisateur getUtilisateur() {
 		return utilisateur;
+	}
+	
+	public void setDateEnchere(Date dateEnchere) {
+		this.dateEnchere = dateEnchere;
+	}
+	public void setArticleVendu(ArticleVendu articleVendu) {
+		this.articleVendu = articleVendu;
+	}
+	public void setUtilisateur(Utilisateur utilisateur) {
+		this.utilisateur = utilisateur;
 	}
 
 	

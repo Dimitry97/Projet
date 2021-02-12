@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import fr.eni.encheres.bo.ArticleVendu;
+import fr.eni.encheres.bo.Categorie;
 import fr.eni.encheres.dal.DALException;
 
 public interface ArticleVenduDAO {
@@ -26,7 +27,6 @@ public interface ArticleVenduDAO {
 	// Modifier le prix de vente en fonction des propositions
 	public void modifierPrixVente (ArticleVendu articleVendu, int proposition) throws DALException, SQLException; //
 	
-	//Recherche du numéro de categorie par libelle
-	int rechercheNoCategorie(String libelle) throws DALException;
+	
 
 }

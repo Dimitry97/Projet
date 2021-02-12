@@ -18,5 +18,8 @@ public interface CategorieDAO {
 
 	public Categorie rechCatByNo(int id) throws DALException;
 	
+	//Recherche du num�ro de categorie par libelle
+		Categorie rechercheNoCategorie(String libelle) throws DALException;
+	
 
 }
