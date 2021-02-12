@@ -79,7 +79,6 @@ public class InscriptionServlet extends HttpServlet {
 		//Initialisation des crédit à 100 et admin à faux
 		int credit = 100;
 		boolean admin = false;
-		boolean verifOk = false;
 		
 		UtilisateurDAO utilisateurDAO ;		
 		utilisateurDAO = DAOFactory.getUtilisateurDAO();		
@@ -154,10 +153,9 @@ public class InscriptionServlet extends HttpServlet {
 			
 			request.setAttribute( ATT_ERREURS, erreurs );
 	        
-			
+			//Redirection et chargement message echec ou réussite inscription
 			if(erreurs.isEmpty()) {
 				resultat =" Inscripition réussie";
-				verifOk = true;
 			}else {
 				resultat =" Echec de l'inscripition ";
 				this.getServletContext().getRequestDispatcher(VUE).forward(request, response);

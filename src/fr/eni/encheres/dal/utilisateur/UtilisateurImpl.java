@@ -44,6 +44,7 @@ public class UtilisateurImpl  implements UtilisateurDAO{
 				System.out.println("dans boucle rs next");
 				utilisateur.setPseudo(rs.getString("pseudo"));
 				utilisateur.setNom(rs.getString("nom"));
+				utilisateur.setPrenom(rs.getString("Prenom"));
 				utilisateur.setEmail(rs.getString("email"));
 				utilisateur.setTelephone(rs.getString("telephone"));
 				utilisateur.setRue(rs.getString("rue"));
