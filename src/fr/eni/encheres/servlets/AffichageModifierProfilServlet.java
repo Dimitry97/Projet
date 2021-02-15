@@ -16,13 +16,13 @@ import fr.eni.encheres.dal.DAOFactory;
 import fr.eni.encheres.dal.utilisateur.UtilisateurDAO;
 
 /**
- * Servlet implementation class consulterProfilServlet
+ * Servlet implementation class ModifierProfilServlet
  */
-@WebServlet("/ConsulterMonProfilServlet")
-public class ConsulterMonProfilServlet extends HttpServlet {
+@WebServlet("/ModifierProfilServlet")
+public class AffichageModifierProfilServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
-	public static final String VUE = "/WEB-INF/jsp/consulterMonProfil.jsp";
+	public static final String VUE = "/WEB-INF/jsp/monProfil2.jsp";
 	public static final String CHAMP_PSEUDO = "pseudo";
 	public static final String CHAMP_NOM = "nom";
 	public static final String CHAMP_PRENOM = "prenom";
@@ -31,30 +31,30 @@ public class ConsulterMonProfilServlet extends HttpServlet {
 	public static final String CHAMP_RUE = "rue";
 	public static final String CHAMP_CP = "codePostal";
 	public static final String CHAMP_VILLE = "ville";
+	public static final String CHAMP_CREDIT = "credit";
+	public static final String ATT_RESULTAT = "champsProfil";
 	
-	private static final String ATT_RESULTAT = "champsProfil";
-	
-	
+		
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ConsulterMonProfilServlet() {
+    public AffichageModifierProfilServlet() {
         super();
+       
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// Afficher la page Mon profil
-		this.getServletContext().getRequestDispatcher(VUE).forward( request, response );
-
+	
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 
 		//Map des valeurs des champs du profil à afficher 
 		Map<String, String> champsProfil = new HashMap<String, String>();
@@ -63,21 +63,21 @@ public class ConsulterMonProfilServlet extends HttpServlet {
 		
 				/////////*********************************************************************************/////////
 				//////////////////
-				String pseudo = "pseudo1"; // --> String de !!!TEST!!! pseudo à remplir avec pseudo user présent en BDD
+				String pseudo = "chichi2022"; // --> String de !!!TEST!!! pseudo à remplir avec pseudo user présent en BDD
 				//////////////////////////// --> Methode ci-dessous à décommenter lorsque navigation terminée
 				//////////////////
 				/////////**********************************************************************************////////
 				/**
-				pseudo = request.getParameter("pseudo");
-				--> à tester
+				--> Récuperer le pseudo de la session en cours <--
+				--> à modifier
 				**/
 				
 				UtilisateurDAO utilisateurDAO ;		
 				utilisateurDAO = DAOFactory.getUtilisateurDAO();
 				Utilisateur utilisateur;
 				try {
-					utilisateur = utilisateurDAO.rechercherProfilParPseudo(pseudo);
-					System.out.println(utilisateur);
+					utilisateur = utilisateurDAO.rechercherProfilParPseudoAvecCredit(pseudo);
+					
 				} catch (DALException e) {
 					throw new ServletException("pseudo inexistant");
 				}
@@ -85,6 +85,7 @@ public class ConsulterMonProfilServlet extends HttpServlet {
 				if(utilisateur.getTelephone().isEmpty()) {
 					utilisateur.setTelephone("Aucun numéro renseigné");
 				}
+				
 				
 				champsProfil.put(CHAMP_PSEUDO, utilisateur.getPseudo());
 				champsProfil.put(CHAMP_NOM, utilisateur.getNom());
@@ -94,14 +95,11 @@ public class ConsulterMonProfilServlet extends HttpServlet {
 				champsProfil.put(CHAMP_RUE, utilisateur.getRue());
 				champsProfil.put(CHAMP_CP, utilisateur.getCodePostal());
 				champsProfil.put(CHAMP_VILLE, utilisateur.getVille());
+				champsProfil.put(CHAMP_CREDIT, String.valueOf(utilisateur.getCredit()));
 					
 				request.setAttribute( ATT_RESULTAT, champsProfil );
 				
-				System.out.println(champsProfil.get(CHAMP_PSEUDO));
-				
 				this.getServletContext().getRequestDispatcher(VUE).forward( request, response );
-				
-		
-	}
 
+}
 }

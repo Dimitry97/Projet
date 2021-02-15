@@ -14,7 +14,7 @@ public interface UtilisateurDAO {
 	
 	
 	/**
-	 * Mï¿½thode abstraite pour rechercher un profil en vue de le modifier --> ressort le mot de passe
+	 * Méthode abstraite pour rechercher un profil en vue de le modifier --> ressort le mot de passe
 	 * @param pseudo
 	 * @return
 	 * @throws DALException
@@ -22,7 +22,15 @@ public interface UtilisateurDAO {
 	Utilisateur rechercherProfilParPseudo(String pseudo)throws DALException;
 	
 	/**
-	 * Mï¿½thode abstraite pour ajouter un utilisateur
+	 * Méthode abstraite pour rechercher un profil en vue de le modifier --> avec credit
+	 * @param pseudo
+	 * @return
+	 * @throws DALException
+	 */
+	Utilisateur rechercherProfilParPseudoAvecCredit(String pseudo)throws DALException;
+	
+	/**
+	 * Méthode abstraite pour ajouter un utilisateur
 	 * @param utilisateur
 	 * @throws DALException
 	 * @throws SQLException
@@ -30,7 +38,7 @@ public interface UtilisateurDAO {
 	void inserer (Utilisateur utilisateur) throws DALException, SQLException;
 	
 	/**
-	 * Mï¿½thode abstraite pour supprimer un utilisateur
+	 * Méthode abstraite pour supprimer un utilisateur
 	 * @param pseudo
 	 * @throws DALException
 	 * @throws SQLException
@@ -38,7 +46,7 @@ public interface UtilisateurDAO {
 	void supprimer (Utilisateur utilisateur) throws DALException, SQLException;
 	
 	/**
-	 * Mï¿½thode abstraite pour modifier un utilisateur
+	 * Méthode abstraite pour modifier un utilisateur
 	 * @param utilisateur
 	 * @throws DALException
 	 * @throws SQLException
@@ -46,7 +54,7 @@ public interface UtilisateurDAO {
 	void modifier(Utilisateur utilisateur) throws DALException,SQLException;
 	
 	/**
-	 * Mï¿½thode vï¿½rifiant l'existance d'une adresse mail en BDD
+	 * Méthode vï¿½rifiant l'existance d'une adresse mail en BDD
 	 * @param mail
 	 * @return
 	 * @throws DALException
@@ -55,7 +63,7 @@ public interface UtilisateurDAO {
 	boolean verifMailUnique(String mail) throws DALException, SQLException;
 	
 	/**
-	 * Mï¿½thode vï¿½rifirnat l'existance d'un pseudo en BDD
+	 * Méthode vï¿½rifirnat l'existance d'un pseudo en BDD
 	 * @param pseudo
 	 * @return
 	 * @throws DALException

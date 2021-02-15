@@ -11,7 +11,7 @@
 <jsp:include page="/WEB-INF/fragments/headerConnect.jsp"></jsp:include>
 
 <div class="text-center">
-	<h3>Consulter un profil d'un autre utilisateur </h3>
+	<h3>Consulter le profil d'un autre utilisateur </h3>
 </div>
 <br>
 
@@ -128,7 +128,7 @@
 			</div>
 			<br>
 			
-			<input type="submit" value="test">
+			<input type="submit" value="TEST AFFICHAGE">
 			
 			<div class="col-md-3"></div>
 		</div>
