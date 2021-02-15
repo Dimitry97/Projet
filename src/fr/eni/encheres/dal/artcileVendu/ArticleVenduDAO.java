@@ -34,6 +34,15 @@ public interface ArticleVenduDAO {
 
 	// recherche d'un article par mot clé et categorie
 	public List<ArticleVendu> rechercheParMotCleEtCategorie(String nomArticleRecherche, int noCategorieChoisie) throws DALException, SQLException;
+
+	// recherche ventes en cours par utilisateur
+	public List<ArticleVendu> rechercheVentesEnCoursParUtilisateur(int noUtilisateur) throws DALException, SQLException;
+
+	// recherche ventes non debutées par utilisateur
+	public List<ArticleVendu> rechercheVentesNonDebuteesParUtilisateur(int noUtilisateur) throws DALException, SQLException;
+
+	// recherche ventes terminées par utilisateur
+	public List<ArticleVendu> rechercheVentesTermineesParUtilisateur(int noUtilisateur) throws DALException, SQLException;
 	
 	
 

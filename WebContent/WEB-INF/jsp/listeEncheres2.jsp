@@ -43,8 +43,8 @@
 				<br> <br> <br>
 				<!-- A modifier -->
 				<div class="row">
-					<a href="./jsp/xxx" role="button"
-						class="btn btn-primary btn-lg btn-block active"> Rechercher </a>
+					<button type="submit" name="rechercher" id="rechercher" role="button"
+						class="btn btn-primary btn-lg btn-block active"> Rechercher </button>
 
 				</div>
 			</div>

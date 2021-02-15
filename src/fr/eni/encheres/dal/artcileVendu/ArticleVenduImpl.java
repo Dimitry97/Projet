@@ -35,6 +35,13 @@ public class ArticleVenduImpl implements ArticleVenduDAO {
 	private final static String RECHERCHE_PAR_CATEGORIE = "SELECT nom_article,description, date_debut_encheres, date_fin_encheres,prix_initial FROM ARTICLES_VENDUS WHERE no_categorie = ?;";
 	private final static String RECHERCHE_PAR_MOTCLE_ET_CATEGORIE = "SELECT nom_article,description, date_debut_encheres, date_fin_encheres,prix_initial FROM ARTICLES_VENDUS WHERE nom_article LIKE ? AND no_categorie = ?;";
 
+	// recherche identique à RECHERCHE_VENTE_EN_COURS_UTILISATEUR, faire recherche si no_utilisateur != utilisateur session en cours
+//	private final static String RECHERCHE_ENCHERES_OUVERTES = "SELECT nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial FROM ARTICLES_VENDUS WHERE no_utilisateur = ? AND date_debut_encheres > CURRENT_DATE AND date_fin_encheres < CURRENT_DATE";
+	
+	private final static String RECHERCHE_VENTE_EN_COURS_UTILISATEUR = "SELECT nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial FROM ARTICLES_VENDUS WHERE no_utilisateur = ? AND date_debut_encheres > CURRENT_DATE AND date_fin_encheres < CURRENT_DATE";
+	private final static String RECHERCHE_VENTE_NON_DEBUTEE_UTILISATEUR = "SELECT nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial FROM ARTICLES_VENDUS WHERE no_utilisateur = ? AND date_debut_encheres < CURRENT_DATE";
+	private final static String RECHERCHE_VENTE_TERMINEE_UTILISATEUR = "SELECT nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial FROM ARTICLES_VENDUS WHERE no_utilisateur = ? AND date_fin_encheres > CURRENT_DATE";
+	
 	@Override
 	public ArticleVendu selectArticleByNo(int id) throws DALException {
 		Connection cnx = null;
@@ -320,7 +327,118 @@ public class ArticleVenduImpl implements ArticleVenduDAO {
 		return listeArticleEnVente;
 	}
 	
+	// pour recherche ventes par utilisateur
+	@Override
+	public List<ArticleVendu> rechercheVentesEnCoursParUtilisateur(int noUtilisateur) throws DALException, SQLException {
+		Connection cnx = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+
+		List<ArticleVendu> listeArticleEnVente = new ArrayList<>();
+		try {
+			cnx = DBConnection.seConnecter();
+			stmt = cnx.prepareStatement(RECHERCHE_VENTE_EN_COURS_UTILISATEUR);
+			stmt.setInt(1, noUtilisateur);
+			rs = stmt.executeQuery();
+			
+			ArticleVendu articleEnVente = null;
+			
+			while (rs.next()) {
+				articleEnVente = new ArticleVendu();
+				articleEnVente.setNoArticle(rs.getInt("no_article"));
+				articleEnVente.setNomArticle(rs.getString("nom_article"));
+				articleEnVente.setDescription(rs.getString("description"));
+				articleEnVente.setDateDebutEncheres(rs.getDate("date_debut_enchere"));
+				articleEnVente.setDateFinEncheres(rs.getDate("date_fin_enchere"));
+				articleEnVente.setMiseAPrix(rs.getInt("prix_initial"));
+				// integrer pseudo ??
+				
+				listeArticleEnVente.add(articleEnVente);
+			}
+		} catch (SQLException e) {
+			throw new DALException("Erreur lors de la recherche de vos ventes");
+		} finally {
+			DBConnection.seDeconnecter(cnx, stmt);
+		}
+		
+		return listeArticleEnVente;
+	}
 	
+	// pour recherche ventes non débutées par utilisateur
+	@Override
+	public List<ArticleVendu> rechercheVentesNonDebuteesParUtilisateur(int noUtilisateur) throws DALException, SQLException {
+		Connection cnx = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+
+		List<ArticleVendu> listeArticleEnVente = new ArrayList<>();
+		try {
+			cnx = DBConnection.seConnecter();
+			stmt = cnx.prepareStatement(RECHERCHE_VENTE_NON_DEBUTEE_UTILISATEUR);
+			stmt.setInt(1, noUtilisateur);
+			rs = stmt.executeQuery();
+			
+			ArticleVendu articleEnVente = null;
+			
+			while (rs.next()) {
+				articleEnVente = new ArticleVendu();
+				articleEnVente.setNoArticle(rs.getInt("no_article"));
+				articleEnVente.setNomArticle(rs.getString("nom_article"));
+				articleEnVente.setDescription(rs.getString("description"));
+				articleEnVente.setDateDebutEncheres(rs.getDate("date_debut_enchere"));
+				articleEnVente.setDateFinEncheres(rs.getDate("date_fin_enchere"));
+				articleEnVente.setMiseAPrix(rs.getInt("prix_initial"));
+				// integrer pseudo ??
+				
+				listeArticleEnVente.add(articleEnVente);
+			}
+		} catch (SQLException e) {
+			throw new DALException("Erreur lors de la recherche de vos ventes");
+		} finally {
+			DBConnection.seDeconnecter(cnx, stmt);
+		}
+		
+		return listeArticleEnVente;
+	}
+	
+	// pour recherche ventes terminées par utilisateur
+	@Override
+	public List<ArticleVendu> rechercheVentesTermineesParUtilisateur(int noUtilisateur) throws DALException, SQLException {
+		Connection cnx = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+
+		List<ArticleVendu> listeArticleEnVente = new ArrayList<>();
+		try {
+			cnx = DBConnection.seConnecter();
+			stmt = cnx.prepareStatement(RECHERCHE_VENTE_TERMINEE_UTILISATEUR);
+			stmt.setInt(1, noUtilisateur);
+			rs = stmt.executeQuery();
+			
+			ArticleVendu articleEnVente = null;
+			
+			while (rs.next()) {
+				articleEnVente = new ArticleVendu();
+				articleEnVente.setNoArticle(rs.getInt("no_article"));
+				articleEnVente.setNomArticle(rs.getString("nom_article"));
+				articleEnVente.setDescription(rs.getString("description"));
+				articleEnVente.setDateDebutEncheres(rs.getDate("date_debut_enchere"));
+				articleEnVente.setDateFinEncheres(rs.getDate("date_fin_enchere"));
+				articleEnVente.setMiseAPrix(rs.getInt("prix_initial"));
+				// integrer pseudo ??
+				
+				listeArticleEnVente.add(articleEnVente);
+			}
+		} catch (SQLException e) {
+			throw new DALException("Erreur lors de la recherche de vos ventes");
+		} finally {
+			DBConnection.seDeconnecter(cnx, stmt);
+		}
+		
+		return listeArticleEnVente;
+	}
+
+
 	
 	
 }

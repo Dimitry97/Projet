@@ -41,23 +41,25 @@
 				<div class="row">
 					<div class="col-md-6">
 						<div class="form-group row">
-							<input class="form-check-input" type="radio" class="col-sm-2">&nbsp; Achat
+							<input class="form-check-input" type="radio" class="col-sm-2" name="btnRadioAchats" id="btnRadioAchats" >&nbsp; Achats
 						</div>
 						<br>
 						<div class="col-sm-12">
 							<div class="form-check">
 								<input class="form-check-input" type="checkbox"
-									id="encheresOuvertes"> <label class="form-check-label"
+									id="encheresOuvertes" name="encheresOuvertes" onClick="btnRadioVentes.disabled"> 
+									<label class="form-check-label"
 									for="encheresOuvertes"> enchères ouvertes </label>
 							</div>
 							<div class="form-check">
-								<input class="form-check-input" type="checkbox" id="mesEncheres">
+								<input class="form-check-input" type="checkbox" id="mesEncheres" name="mesEncheres" onClick="btnRadioVentes.disabled">
 								<label class="form-check-label" for="mesEncheres"> mes
 									enchères </label>
 							</div>
 							<div class="form-check">
 								<input class="form-check-input" type="checkbox"
-									id="mesEncheresRemportees"> <label
+									id="mesEncheresRemportees" name="mesEncheresRemportees" onClick="btnRadioVentes.disabled"> 
+									<label
 									class="form-check-label" for="mesEncheresRemportees">
 									mes enchères remportées </label>
 							</div>
@@ -67,24 +69,24 @@
 
 					<div class="col-md-6">
 						<div class="form-group row">
-							<input class="form-check-input" type="radio" class="col-sm-2">&nbsp; Mes
+							<input class="form-check-input" type="radio" class="col-sm-2" name="btnRadioVentes" id="btnRadioVentes">&nbsp; Mes
 							ventes
 						</div>
 						<br>
 						<div class="col-sm-12">
 							<div class="form-check">
 								<input class="form-check-input" type="checkbox"
-									id="venteEnCours"> <label class="form-check-label"
+									id="venteEnCours" name="venteEnCours"  onClick="btnRadioVentes.disabled"> <label class="form-check-label"
 									for="venteEnCours"> mes ventes encours </label>
 							</div>
 							<div class="form-check">
 								<input class="form-check-input" type="checkbox"
-									id="ventesNonDebutees"> <label class="form-check-label"
+									id="ventesNonDebutees" name="ventesNonDebutees" onClick="btnRadioVentes.disabled"> <label class="form-check-label"
 									for="ventesNonDebutees"> ventes non débutées </label>
 							</div>
 							<div class="form-check">
 								<input class="form-check-input" type="checkbox"
-									id="ventesTerminées"> <label class="form-check-label"
+									id="ventesTerminées" name="ventesTerminées" onClick="btnRadioVentes.disabled"> <label class="form-check-label"
 									for="ventesTerminées"> ventes terminées </label>
 							</div>
 						</div>
@@ -98,8 +100,8 @@
 				<br> <br> <br>
 				<!-- A modifier -->
 				<div class="row">
-					<a href="./jsp/xxx" role="button"
-						class="btn btn-primary btn-lg btn-block active"> Rechercher </a>
+					<button type="submit" name="rechercher" id="rechercher" role="button"
+						class="btn btn-primary btn-lg btn-block active"> Rechercher </button>
 
 				</div>
 			</div>
