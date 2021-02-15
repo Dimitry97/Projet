@@ -41,7 +41,7 @@ public class ListeEncheresConnecteServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/WEB-INF/jsp/ListeEncheresConnecte.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/jsp/listeEncheresConnecte.jsp").forward(request, response);
 	}
 
 	/**
@@ -85,12 +85,12 @@ public class ListeEncheresConnecteServlet extends HttpServlet {
 				// affiche article correspondant au mot clé saisi
 				if (listeArticlesEnVente != null) {
 					request.setAttribute("listeArticlesEnVente", listeArticlesEnVente);
-					this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/ListeEncheresConnecte.jsp").forward(request, response);
+					this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/listeEncheresConnecte.jsp").forward(request, response);
 				} else {
 					// si aucun article correspondant au mot clé saisi
 					String messageAucunResultat = "Aucun article correspondant à votre recherche n'a été trouvé !";
 					request.setAttribute("messageAucunResultat", messageAucunResultat);
-					this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/ListeEncheresConnecte.jsp").forward(request, response);
+					this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/listeEncheresConnecte.jsp").forward(request, response);
 				}
 			} catch (DALException e) {
 				e.printStackTrace();
@@ -108,12 +108,12 @@ public class ListeEncheresConnecteServlet extends HttpServlet {
 				// affiche article correspondant au mot clé saisi
 				if (listeArticlesEnVente != null) {
 					request.setAttribute("listeArticlesEnVente", listeArticlesEnVente);
-					this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/ListeEncheresConnecte.jsp").forward(request, response);
+					this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/listeEncheresConnecte.jsp").forward(request, response);
 				} else {
 					// si aucun article correspondant à la categorie choisie
 					String messageAucunResultat = "Aucun article correspondant à votre recherche n'a été trouvé !";
 					request.setAttribute("messageAucunResultat", messageAucunResultat);
-					this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/ListeEncheresConnecte.jsp").forward(request, response);
+					this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/listeEncheresConnecte.jsp").forward(request, response);
 				}
 			} catch (DALException e) {
 				e.printStackTrace();
@@ -131,12 +131,12 @@ public class ListeEncheresConnecteServlet extends HttpServlet {
 				// affiche article correspondant au mot clé saisi
 				if (listeArticlesEnVente != null) {
 					request.setAttribute("listeArticlesEnVente", listeArticlesEnVente);
-					this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/ListeEncheresConnecte.jsp").forward(request, response);
+					this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/listeEncheresConnecte.jsp").forward(request, response);
 				} else {
 					// si aucun article correspondant à la categorie choisie
 					String messageAucunResultat = "Aucun article correspondant à votre recherche n'a été trouvé !";
 					request.setAttribute("messageAucunResultat", messageAucunResultat);
-					this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/ListeEncheresConnecte.jsp").forward(request, response);
+					this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/listeEncheresConnecte.jsp").forward(request, response);
 				}
 			} catch (DALException e) {
 				e.printStackTrace();
@@ -164,12 +164,12 @@ public class ListeEncheresConnecteServlet extends HttpServlet {
 				// affiche liste des encheres
 				if (listeEncheres != null) {
 					request.setAttribute("listeEncheres", listeEncheres);
-					this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/ListeEncheresConnecte.jsp").forward(request, response);
+					this.getServletContext().getRequestDispatcher("/WEB-INF/jsp//WEB-INF/jsp/listeEncheresConnecte.jsp").forward(request, response);
 				} else {
 					// si aucun article correspondant
 					String messageAucunResultat = "Vous n'avez actuellement aucun article en vente !";
 					request.setAttribute("messageAucunResultat", messageAucunResultat);
-					this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/ListeEncheresConnecte.jsp").forward(request, response);
+					this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/listeEncheresConnecte.jsp").forward(request, response);
 				}
 			} catch (DALException e) {
 				e.printStackTrace();
@@ -184,12 +184,12 @@ public class ListeEncheresConnecteServlet extends HttpServlet {
 				// affiche article
 				if (listeEncheres != null) {
 					request.setAttribute("listeEncheres", listeEncheres);
-					this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/ListeEncheresConnecte.jsp").forward(request, response);
+					this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/listeEncheresConnecte.jsp").forward(request, response);
 				} else {
 					// si aucun article correspondant
 					String messageAucunResultat = "Vous n'avez actuellement aucun article en vente !";
 					request.setAttribute("messageAucunResultat", messageAucunResultat);
-					this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/ListeEncheresConnecte.jsp").forward(request, response);
+					this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/listeEncheresConnecte.jsp").forward(request, response);
 				}
 			} catch (DALException e) {
 				e.printStackTrace();
@@ -204,12 +204,12 @@ public class ListeEncheresConnecteServlet extends HttpServlet {
 				// affiche article
 				if (listeEncheres != null) {
 					request.setAttribute("listeEncheres", listeEncheres);
-					this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/ListeEncheresConnecte.jsp").forward(request, response);
+					this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/listeEncheresConnecte.jsp").forward(request, response);
 				} else {
 					// si aucun article correspondant
 					String messageAucunResultat = "Vous n'avez actuellement aucun article en vente !";
 					request.setAttribute("messageAucunResultat", messageAucunResultat);
-					this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/ListeEncheresConnecte.jsp").forward(request, response);
+					this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/listeEncheresConnecte.jsp").forward(request, response);
 				}
 			} catch (DALException e) {
 				e.printStackTrace();
@@ -231,12 +231,12 @@ public class ListeEncheresConnecteServlet extends HttpServlet {
 				// affiche article
 				if (listeArticlesEnVente != null) {
 					request.setAttribute("listeArticlesEnVente", listeArticlesEnVente);
-					this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/ListeEncheresConnecte.jsp").forward(request, response);
+					this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/listeEncheresConnecte.jsp").forward(request, response);
 				} else {
 					// si aucun article correspondant
 					String messageAucunResultat = "Vous n'avez actuellement aucun article en vente !";
 					request.setAttribute("messageAucunResultat", messageAucunResultat);
-					this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/ListeEncheresConnecte.jsp").forward(request, response);
+					this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/listeEncheresConnecte.jsp").forward(request, response);
 				}
 			} catch (DALException e) {
 				e.printStackTrace();
@@ -253,12 +253,12 @@ public class ListeEncheresConnecteServlet extends HttpServlet {
 				// affiche article
 				if (listeArticlesEnVente != null) {
 					request.setAttribute("listeArticlesEnVente", listeArticlesEnVente);
-					this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/ListeEncheresConnecte.jsp").forward(request, response);
+					this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/listeEncheresConnecte.jsp").forward(request, response);
 				} else {
 					// si aucun article correspondant
 					String messageAucunResultat = "Aucune vente en attente n'a été trouvé !";
 					request.setAttribute("messageAucunResultat", messageAucunResultat);
-					this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/ListeEncheresConnecte.jsp").forward(request, response);
+					this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/listeEncheresConnecte.jsp").forward(request, response);
 				}
 			} catch (DALException e) {
 				e.printStackTrace();
@@ -275,12 +275,12 @@ public class ListeEncheresConnecteServlet extends HttpServlet {
 				// affiche article
 				if (listeArticlesEnVente != null) {
 					request.setAttribute("listeArticlesEnVente", listeArticlesEnVente);
-					this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/ListeEncheresConnecte.jsp").forward(request, response);
+					this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/listeEncheresConnecte.jsp").forward(request, response);
 				} else {
 					// si aucun article correspondant
 					String messageAucunResultat = "Aucune vente en attente n'a été trouvé !";
 					request.setAttribute("messageAucunResultat", messageAucunResultat);
-					this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/ListeEncheresConnecte.jsp").forward(request, response);
+					this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/listeEncheresConnecte.jsp").forward(request, response);
 				}
 			} catch (DALException e) {
 				e.printStackTrace();
