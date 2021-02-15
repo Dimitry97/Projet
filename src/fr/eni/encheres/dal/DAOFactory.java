@@ -4,6 +4,8 @@ import fr.eni.encheres.dal.artcileVendu.ArticleVenduDAO;
 import fr.eni.encheres.dal.artcileVendu.ArticleVenduImpl;
 import fr.eni.encheres.dal.categorie.CategorieDAO;
 import fr.eni.encheres.dal.categorie.CategorieImpl;
+import fr.eni.encheres.dal.enchere.EnchereDAO;
+import fr.eni.encheres.dal.enchere.EnchereDAOImpl;
 import fr.eni.encheres.dal.retrait.RetraitDAO;
 import fr.eni.encheres.dal.retrait.RetraitImpl;
 import fr.eni.encheres.dal.utilisateur.UtilisateurDAO;
@@ -42,6 +44,14 @@ public class DAOFactory {
 		retraitDAO = new RetraitImpl();
 		
 		return retraitDAO;
+	}
+	
+	public static EnchereDAO getEnchereDAO() {
+		EnchereDAO enchereDAO = null;
+		
+		enchereDAO = new EnchereDAOImpl();
+		
+		return enchereDAO;
 	}
 	
 }
