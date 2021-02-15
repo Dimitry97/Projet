@@ -14,10 +14,11 @@ public class UtilisateurImpl  implements UtilisateurDAO{
 	
 	
 	private final static String RECHERCHER = "SELECT pseudo, nom, prenom, email, telephone, rue, code_postal, ville FROM UTILISATEURS WHERE pseudo = ?;";
+	private final static String RECHERCHER_AVEC_CREDIT = "SELECT pseudo, nom, prenom, email, telephone, rue, code_postal, ville, credit FROM UTILISATEURS WHERE pseudo = ?;";
 	private final static String INSERER = "INSERT INTO UTILISATEURS (pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) values (?,?,?,?,?,?,?,?,?,?,?);";
 	private final static String SUPPRIMER = "DELETE FROM UTILISATEURS WHERE pseudo = ?;";
-	private final static String  MODIFIER = " UPDATE UTILISATEURS set pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ?, rue =?,"
-			+ " code_postal = ?, ville = ?, mot_de_passe = ?, administrateur = ? WHERE no_utilisateur = ?";
+	private final static String  MODIFIER = " UPDATE UTILISATEURS set pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ?, rue =?, code_postal = ?, ville = ?, mot_de_passe = ?, credit = ?, administrateur = ? WHERE no_utilisateur = ?;";
+			
 	private final static String SELECTPSEUDOANDMDP = "SELECT pseudo, mot_de_passe FROM UTILISATEURS WHERE pseudo = ? AND mot_de_passe = ?";
 	
 	
@@ -41,7 +42,6 @@ public class UtilisateurImpl  implements UtilisateurDAO{
 			pstmt.setString(1, pseudo);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
-				System.out.println("dans boucle rs next");
 				utilisateur.setPseudo(rs.getString("pseudo"));
 				utilisateur.setNom(rs.getString("nom"));
 				utilisateur.setPrenom(rs.getString("Prenom"));
@@ -50,15 +50,56 @@ public class UtilisateurImpl  implements UtilisateurDAO{
 				utilisateur.setRue(rs.getString("rue"));
 				utilisateur.setCodePostal(rs.getString("code_postal"));
 				utilisateur.setVille(rs.getString("ville"));
+				System.out.println(utilisateur);
 			}
 		} catch (SQLException e) {
-			throw new DALException("echec de rechercheProfilAvecMotDePasse");
+			throw new DALException("echec de recherche profil par pseudo");
 		}finally {
 			DBConnection.seDeconnecter(cnx, pstmt);
 		}
 				
 		return utilisateur;
 	}
+	
+	
+	/**
+	 * Methode pour selectionner un utilisateur avec tous les parametres
+	 * @param pseudo
+	 * @return un utilisateur
+	 * @finally libere les connexions ouvertes
+	 */
+	@Override
+	public Utilisateur rechercherProfilParPseudoAvecCredit(String pseudo) throws DALException {
+		Connection cnx = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Utilisateur utilisateur = new Utilisateur();
+		
+		cnx = DBConnection.seConnecter();
+		try {
+			pstmt = cnx.prepareStatement(RECHERCHER_AVEC_CREDIT);
+			pstmt.setString(1, pseudo);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				utilisateur.setPseudo(rs.getString("pseudo"));
+				utilisateur.setNom(rs.getString("nom"));
+				utilisateur.setPrenom(rs.getString("Prenom"));
+				utilisateur.setEmail(rs.getString("email"));
+				utilisateur.setTelephone(rs.getString("telephone"));
+				utilisateur.setRue(rs.getString("rue"));
+				utilisateur.setCodePostal(rs.getString("code_postal"));
+				utilisateur.setVille(rs.getString("ville"));
+				utilisateur.setCredit(rs.getInt("credit"));
+			}
+		} catch (SQLException e) {
+			throw new DALException("echec de recherche profil par pseudo avec credit");
+		}finally {
+			DBConnection.seDeconnecter(cnx, pstmt);
+		}
+				
+		return utilisateur;
+	}
+	
 	
 	/**
 	 * Methode pour inserer un utilisateur
@@ -169,10 +210,14 @@ public class UtilisateurImpl  implements UtilisateurDAO{
 			pstmt.setString(9, utilisateur.getMotDePasse());
 			pstmt.setInt(10, utilisateur.getCredit());
 			pstmt.setBoolean(11, utilisateur.isAdministrateur());
-			pstmt.setInt(12, utilisateur.getNoUtilisateur());
+			pstmt.setInt(12, 43);
+			
+			pstmt.executeUpdate();
+			System.out.println("update successfull");
 		} catch (SQLException e) {
-			cnx.rollback();
 			throw new DALException("erreur modification utilisateur");
+			//cnx.rollback();
+			
 		} finally {
 			cnx.setAutoCommit(true);
 			DBConnection.seDeconnecter(cnx, pstmt);
