@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.dal.DALException;
@@ -59,18 +60,10 @@ public class AffichageModifierProfilServlet extends HttpServlet {
 		//Map des valeurs des champs du profil à afficher 
 		Map<String, String> champsProfil = new HashMap<String, String>();
 		
-		// Recuperer les champs du formulaire
+		// Recupereration du pseudo de la session en cours
+		HttpSession session = request.getSession();
+		String pseudo = (String) session.getAttribute("pseudo");
 		
-				/////////*********************************************************************************/////////
-				//////////////////
-				String pseudo = "chichi2022"; // --> String de !!!TEST!!! pseudo à remplir avec pseudo user présent en BDD
-				//////////////////////////// --> Methode ci-dessous à décommenter lorsque navigation terminée
-				//////////////////
-				/////////**********************************************************************************////////
-				/**
-				--> Récuperer le pseudo de la session en cours <--
-				--> à modifier
-				**/
 				
 				UtilisateurDAO utilisateurDAO ;		
 				utilisateurDAO = DAOFactory.getUtilisateurDAO();
@@ -82,9 +75,7 @@ public class AffichageModifierProfilServlet extends HttpServlet {
 					throw new ServletException("pseudo inexistant");
 				}
 				
-				if(utilisateur.getTelephone().isEmpty()) {
-					utilisateur.setTelephone("Aucun numéro renseigné");
-				}
+				
 				
 				
 				champsProfil.put(CHAMP_PSEUDO, utilisateur.getPseudo());
