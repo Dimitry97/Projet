@@ -146,7 +146,7 @@ public class NouvelleVenteServlet extends HttpServlet {
 		nvArticleAVendre.setDateFinEncheres(nvDateFin);
 		nvArticleAVendre.setMiseAPrix(nvMiseAPrix);
 		nvArticleAVendre.setPrixVente(nvMiseAPrix);
-		nvArticleAVendre.setLieuRetrait(nvRetrait); 
+		nvArticleAVendre.setNoRetrait(nvRetrait.getNoRetrait());
 		nvArticleAVendre.setCategorie(noCategorie);
 		nvArticleAVendre.setVendeur(utilisateur);
 		
@@ -163,9 +163,7 @@ public class NouvelleVenteServlet extends HttpServlet {
 		RetraitDAO retrait = new RetraitImpl();
 		try {
 			try {
-				System.out.println("test 1:");
 				nouvelVenteDAO.nouvelArticle(nvArticleAVendre);
-				System.out.println("test 2:");
 				retrait.ajoutRetrait(nvRetrait);
 				
 			} catch (SQLException e) {

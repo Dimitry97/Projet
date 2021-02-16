@@ -20,20 +20,26 @@ public class RetraitImpl implements RetraitDAO {
 
 	@Override
 	public void ajoutRetrait(Retrait retrait) throws DALException {
+		int noRetrait;
 		Connection cnx = null;
 		PreparedStatement stmt = null;
 		try {
 			cnx = DBConnection.seConnecter();
-			stmt = cnx.prepareStatement(AJOUTER);
+			stmt = cnx.prepareStatement(AJOUTER, PreparedStatement.RETURN_GENERATED_KEYS);
 			stmt.setString(1, retrait.getRue());
 			stmt.setString(2, retrait.getCodePostal());
 			stmt.setString(3, retrait.getVille());
 			stmt.executeUpdate();
+			ResultSet rs = stmt.getGeneratedKeys();
+			if (rs.next()) {
+				retrait.setNoRetrait(rs.getInt(1));
+			}
 		} catch (SQLException e) {
 			throw new DALException("Erreur lors de l'ajout");
 		} finally {
 			DBConnection.seDeconnecter(cnx, stmt);
 		}
+		
 
 	}
 

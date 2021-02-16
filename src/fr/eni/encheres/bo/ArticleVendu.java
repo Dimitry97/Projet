@@ -16,7 +16,7 @@ public class ArticleVendu {
 	private int miseAPrix;
 	private int prixVente;
 	private int etatVente;
-
+	private int noRetrait;
 	private Categorie categorie;
 	private Retrait lieuRetrait;
 	private Utilisateur vendeur;
@@ -114,11 +114,46 @@ public class ArticleVendu {
 	}
 
 	
+	/**
+	 *------>test PB SQL
+	 * @param nomArticle
+	 * @param description
+	 * @param dateDebutEncheres
+	 * @param dateFinEncheres
+	 * @param miseAPrix
+	 * @param prixVente
+	 * @param noRetrait
+	 * @param categorie
+	 * @param vendeur
+	 */
+
+	public ArticleVendu(String nomArticle, String description, Date dateDebutEncheres, Date dateFinEncheres,
+			int miseAPrix, int prixVente, int noRetrait, Categorie categorie, Utilisateur vendeur) {
+		super();
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.dateDebutEncheres = dateDebutEncheres;
+		this.dateFinEncheres = dateFinEncheres;
+		this.miseAPrix = miseAPrix;
+		this.prixVente = prixVente;
+		this.noRetrait = noRetrait;
+		this.categorie = categorie;
+		this.vendeur = vendeur;
+	}
+
 
 	////////// GETTERS AND SETTERS ////////// 
-	
-	
 
+	public int getNoRetrait() {
+		return noRetrait;
+	}
+
+	public void setNoRetrait(int noRetrait) {
+		this.noRetrait = noRetrait;
+	}
+	
+	
+	
 	/**
 	 * Methode permettant de récupérer le nom d'un article vendu
 	 * @return le nom de l'article (String)
@@ -126,6 +161,8 @@ public class ArticleVendu {
 	public String getNomArticle() {
 		return nomArticle;
 	}
+
+	
 
 	/**
 	 * Methode permettant de modifier le nom d'un article vendu
