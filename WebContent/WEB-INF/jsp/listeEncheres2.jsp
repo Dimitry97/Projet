@@ -6,6 +6,9 @@
 <meta charset="UTF-8">
 <title>Liste des enchères non connecté</title>
 </head>
+
+<jsp:include page="/WEB-INF/fragments/headerConnect.jsp"></jsp:include>
+
 <body>
 
 	<div class="container-fluid">

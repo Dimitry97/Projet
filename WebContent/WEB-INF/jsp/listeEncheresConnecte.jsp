@@ -1,11 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Liste des enchères connecté</title>
 </head>
+
+<jsp:include page="/WEB-INF/fragments/headerConnect.jsp"></jsp:include>
+
 <body>
 
 	<div class="container-fluid">
@@ -36,132 +40,132 @@
 						<option>Sport / Loisirs</option>
 					</select>
 				</div>
-
-
-				<div class="row">
-					<div class="col-md-6">
-						<div class="form-group row">
-							<input class="form-check-input" type="radio" class="col-sm-2" name="btnRadioAchats" id="btnRadioAchats" >&nbsp; Achats
-						</div>
-						<br>
-						<div class="col-sm-12">
-							<div class="form-check">
-								<input class="form-check-input" type="checkbox"
-									id="encheresOuvertes" name="encheresOuvertes" onClick="btnRadioVentes.disabled"> 
-									<label class="form-check-label"
-									for="encheresOuvertes"> enchères ouvertes </label>
-							</div>
-							<div class="form-check">
-								<input class="form-check-input" type="checkbox" id="mesEncheres" name="mesEncheres" onClick="btnRadioVentes.disabled">
-								<label class="form-check-label" for="mesEncheres"> mes
-									enchères </label>
-							</div>
-							<div class="form-check">
-								<input class="form-check-input" type="checkbox"
-									id="mesEncheresRemportees" name="mesEncheresRemportees" onClick="btnRadioVentes.disabled"> 
-									<label
-									class="form-check-label" for="mesEncheresRemportees">
-									mes enchères remportées </label>
-							</div>
-						</div>
-					</div>
-
-
-					<div class="col-md-6">
-						<div class="form-group row">
-							<input class="form-check-input" type="radio" class="col-sm-2" name="btnRadioVentes" id="btnRadioVentes">&nbsp; Mes
-							ventes
-						</div>
-						<br>
-						<div class="col-sm-12">
-							<div class="form-check">
-								<input class="form-check-input" type="checkbox"
-									id="venteEnCours" name="venteEnCours"  onClick="btnRadioVentes.disabled"> <label class="form-check-label"
-									for="venteEnCours"> mes ventes encours </label>
-							</div>
-							<div class="form-check">
-								<input class="form-check-input" type="checkbox"
-									id="ventesNonDebutees" name="ventesNonDebutees" onClick="btnRadioVentes.disabled"> <label class="form-check-label"
-									for="ventesNonDebutees"> ventes non débutées </label>
-							</div>
-							<div class="form-check">
-								<input class="form-check-input" type="checkbox"
-									id="ventesTerminées" name="ventesTerminées" onClick="btnRadioVentes.disabled"> <label class="form-check-label"
-									for="ventesTerminées"> ventes terminées </label>
-							</div>
-						</div>
-
-					</div>
-				</div>
 			</div>
-
 
 			<div class="col-md-5">
 				<br> <br> <br>
 				<!-- A modifier -->
-				<div class="row">
-					<button type="submit" name="rechercher" id="rechercher" role="button"
-						class="btn btn-primary btn-lg btn-block active"> Rechercher </button>
-
+				
+				
+				<div class="row col-md-12">
+					<button type="submit" name="rechercher" id="rechercher"
+						role="button" class="btn btn-primary btn-lg btn-block active">
+						Rechercher</button>
 				</div>
+				
 			</div>
-
-
-			<div class="row">
-				<div class="col-md-1"></div>
-				<div class="col-md-10"><br>
-					<div class="carousel slide" id="carousel-709174">
-						<ol class="carousel-indicators">
-							<li data-slide-to="0" data-target="#carousel-709174"
-								class="active"></li>
-							<li data-slide-to="1" data-target="#carousel-709174"></li>
-							<li data-slide-to="2" data-target="#carousel-709174"></li>
-						</ol>
-						<div class="carousel-inner">
-							<div class="carousel-item active">
-								<img class="d-block w-100" alt="Carousel Bootstrap First"
-									src="https://www.layoutit.com/img/sports-q-c-1600-500-1.jpg" />
-								<div class="carousel-caption">
-									<h4>Récuperer nom article 1</h4>
-
-								</div>
-							</div>
-							<div class="carousel-item">
-								<img class="d-block w-100" alt="Carousel Bootstrap Second"
-									src="https://www.layoutit.com/img/sports-q-c-1600-500-2.jpg" />
-								<div class="carousel-caption">
-									<h4>Récuperer nom article 2</h4>
-
-								</div>
-							</div>
-							<div class="carousel-item">
-								<img class="d-block w-100" alt="Carousel Bootstrap Third"
-									src="https://www.layoutit.com/img/sports-q-c-1600-500-3.jpg" />
-								<div class="carousel-caption">
-									<h4>Récuperer nom article 3</h4>
-
-								</div>
-							</div>
-						</div>
-						<a class="carousel-control-prev" href="#carousel-709174"
-							data-slide="prev"><span class="carousel-control-prev-icon"></span>
-							<span class="sr-only">Previous</span></a> <a
-							class="carousel-control-next" href="#carousel-709174"
-							data-slide="next"><span class="carousel-control-next-icon"></span>
-							<span class="sr-only">Next</span></a>
-					</div>
-				</div>
-				<div class="col-md-1"></div>
-			</div>
-
-
-
-
-			<div class="col-md-1"></div>
-
 		</div>
 
+
 	</div>
+
+	<form name="choix">
+		<div class="row container-fluid row col-md-12">
+			<script type="text/javascript">
+					window.onload = function(){
+						  var radios = document.getElementsByName("choix");                 // récupération des radio
+						  for(i=0;i<radios.length;i++){                                     // boucle sur tous
+						    if(radios[i].checked)                                           // si le radio est coché,
+						    	document.getElementById("venteEnCours" + radios[i].id).disabled = true; // griser le select correspondant
+						    	document.getElementById("ventesNonDebutees" + radios[i].id).disabled = true;	
+						    	document.getElementById("ventesTerminees" + radios[i].id).disabled = true;
+						  } else {
+							    	document.getElementById("encheresOuvertes" + radios[i].id).disabled = true; // griser le select correspondant
+							    	document.getElementById("mesEncheres" + radios[i].id).disabled = true;	
+							    	document.getElementById("mesEncheresRemportees" + radios[i].id).disabled = true;
+						  }
+						
+					
+// 					function grise(){
+// 							if(document.getElementById ('btnRadioAchats').checked){
+// 						        document.getElementById("encheresOuvertes").disabled = false;
+// 						        document.getElementById("mesEncheres").disabled = false;
+// 						        document.getElementById("mesEncheresRemportees").disabled = false;
+// 						        document.getElementById("venteEnCours").disabled = true;
+// 						        document.getElementById("ventesNonDebutees").disabled = true;
+// 						        document.getElementById("ventesTerminees").disabled = true;
+
+// 						    }else if(document.getElementById('btnRadioVentes').checked){
+// 						    	document.getElementById("encheresOuvertes").disabled = true;
+// 						        document.getElementById("mesEncheres").disabled = true;
+// 						        document.getElementById("mesEncheresRemportees").disabled = true;
+// 						        document.getElementById("venteEnCours").disabled = false;
+// 						        document.getElementById("ventesNonDebutees").disabled = false;
+// 						        document.getElementById("ventesTerminees").disabled = false;
+// 						    }
+// 						}
+						</script>
+			<div class="col-md-1"></div>
+			<div class="col-md-3">
+
+				<div class="choix">
+					<input type="radio" name="choix" id="btnRadioAchats" value="Achats" checked onclick="grise(this)">
+						<label>Achats</label><br>
+						
+					<input type="checkbox" id="encheresOuvertes" name="encheresOuvertes"> 
+						<label for="encheresOuvertes"> enchères ouvertes </label><br> 
+					<input type="checkbox" id="mesEncheres" name="mesEncheres">
+						<label for="mesEncheres"> mes enchères </label><br> 
+					<input type="checkbox" id="mesEncheresRemportees" name="mesEncheresRemportees">
+						<label for="mesEncheresRemportees"> mes enchères remportées </label><br>	
+				</div>
+				
+			</div>
+
+
+				<div class="choix">
+					<input type="radio" name="choix" id="btnRadioVentes" value="Mes ventes" checked onclick="grise(this)">
+					<Label>Mes ventes</Label><br>
+					
+					<input type="checkbox" id="venteEnCours" name="venteEnCours">
+						<label for="venteEnCours"> mes ventes encours </label><br>
+					<input type="checkbox" id="ventesNonDebutees" name="ventesNonDebutees">
+						<label for="ventesNonDebutees"> ventes non débutées </label><br>
+					<input type="checkbox" id="ventesTerminees" name="ventesTerminees">
+						<label for="ventesTerminées"> ventes terminées </label><br>
+
+			</div>
+
+			<div class="col-md-1"></div>
+		</div>
+	</form>
+
+
+
+
+
+
+	<div class="row justify-content-center col-md-12">
+		<div class="col-md-1"></div>
+		<div class="col-md-10">
+			
+			<c:if test="${empty listeArticlesEnVente}">
+				<div class="card-body">
+					<article style="text_align-center">Aucun article ne correspond à votre
+						recherche</article>
+				</div>
+			</c:if>
+
+			<c:if test="${!empty listeArticlesEnVente}">
+				<div class="card-body">
+					<article>
+					<p>No article : ${ArticleVendu.noArticle }</p>
+					<p>Article : ${ArticleVendu.nomArticle }</p>
+					<p>Article : ${ArticleVendu.description }</p>
+					
+					</article>
+				</div>
+			</c:if>
+		</div>
+		<div class="col-md-1"></div>
+	</div>
+
+
+
+
+	<div class="col-md-1"></div>
+
+
 
 
 </body>
