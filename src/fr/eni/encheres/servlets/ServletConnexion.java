@@ -93,7 +93,7 @@ public class ServletConnexion extends HttpServlet {
 					
 					
 /////////////////////////////////////////////////////////Modifier adresse dispatcher
-					this.getServletContext().getRequestDispatcher("/ModifierProfilServlet").forward(request,
+					this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/nouvelleVente2.jsp").forward(request,
 							response);
 				}
 			} catch (DALException e) {

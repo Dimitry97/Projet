@@ -141,30 +141,35 @@ public class ArticleVenduImpl implements ArticleVenduDAO {
 	public ArticleVendu nouvelArticle(ArticleVendu article) throws DALException, SQLException {
 		Connection cnx = null;
 		PreparedStatement stmt = null;
-		
+		cnx = DBConnection.seConnecter();
+		cnx.setAutoCommit(false);
 		try {
-			cnx = DBConnection.seConnecter();
-			cnx.setAutoCommit(false);
+			
+
 			
 			stmt = cnx.prepareStatement(AJOUTER, PreparedStatement.RETURN_GENERATED_KEYS);
 			
 			stmt.setString(1, article.getNomArticle());
 			stmt.setString(2, article.getDescription());
 			stmt.setDate(3, Methodes.dateJavaVersSql(article.getDateFinEncheres()));
-			stmt.setDate(4, Methodes.dateJavaVersSql(article.getDateFinEncheres()));
+			stmt.setDate(4, Methodes.dateJavaVersSql(article.getDateDebutEncheres()));
 			stmt.setInt(5, article.getMiseAPrix());
 			stmt.setInt(6, article.getPrixVente());
 			stmt.setInt(7, article.getVendeur().getNoUtilisateur());
 			stmt.setInt(8, article.getCategorie().getNoCategorie());
 			stmt.setInt(9, article.getLieuRetrait().getNoRetrait());
 
+			
 			stmt.executeUpdate();
+
+			System.out.println("test IMPL:");
 			ResultSet rs = stmt.getGeneratedKeys();
 			if (rs.next()) {
 				article.setNoArticle(rs.getInt(1));
 			}
 		} catch (SQLException e) {
 			cnx.rollback();
+			System.out.println("STACKTRACE:");e.printStackTrace();
 			throw new DALException("Erreur lors de l'ajout du nouvel article");
 		} finally {
 			cnx.setAutoCommit(true);

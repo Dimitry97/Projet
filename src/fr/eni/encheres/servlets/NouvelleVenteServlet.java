@@ -33,7 +33,7 @@ import fr.eni.encheres.methode.Methodes;
 @WebServlet("/NouvelleVenteServlet")
 public class NouvelleVenteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private ArticleVenduDAO nouvelVente;
+	
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -48,7 +48,7 @@ public class NouvelleVenteServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		
-		this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/nouvelleVente2.jsp").forward( request, response );
+		//this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/nouvelleVente2.jsp").forward( request, response );
 		
 	}
 
@@ -58,6 +58,8 @@ public class NouvelleVenteServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		ArticleVenduDAO nouvelVenteDAO;
+		nouvelVenteDAO = DAOFactory.getArticleDAO();
 		
 		// recuperation la session utlisateur
 				HttpSession session = request.getSession();
@@ -77,7 +79,7 @@ public class NouvelleVenteServlet extends HttpServlet {
 				// recuperation des données de la session (données utilisateurs connecté)
 				String nvRue = utilisateur.getRue();
 				String nvCP = utilisateur.getCodePostal();
-				String nvVille = utilisateur.getRue();
+				String nvVille = utilisateur.getVille();
 
 				// ajoute les données récuperées à des variable utilisable dans le doPost
 				session.setAttribute("rue", nvRue);
@@ -134,6 +136,7 @@ public class NouvelleVenteServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 
+		//recuperer int no retrati
 		
 		
 		ArticleVendu nvArticleAVendre = new ArticleVendu();
@@ -143,7 +146,7 @@ public class NouvelleVenteServlet extends HttpServlet {
 		nvArticleAVendre.setDateFinEncheres(nvDateFin);
 		nvArticleAVendre.setMiseAPrix(nvMiseAPrix);
 		nvArticleAVendre.setPrixVente(nvMiseAPrix);
-		nvArticleAVendre.setLieuRetrait(nvRetrait);
+		nvArticleAVendre.setLieuRetrait(nvRetrait); 
 		nvArticleAVendre.setCategorie(noCategorie);
 		nvArticleAVendre.setVendeur(utilisateur);
 		
@@ -156,18 +159,19 @@ public class NouvelleVenteServlet extends HttpServlet {
 		
 		
 		
-		ArticleVenduDAO nouvelleVente = new ArticleVenduImpl();
+		//ArticleVenduDAO nouvelleVente = new ArticleVenduImpl();
 		RetraitDAO retrait = new RetraitImpl();
 		try {
 			try {
-				nouvelleVente.nouvelArticle(nvArticleAVendre);
+				System.out.println("test 1:");
+				nouvelVenteDAO.nouvelArticle(nvArticleAVendre);
+				System.out.println("test 2:");
 				retrait.ajoutRetrait(nvRetrait);
+				
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		} catch (DALException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -182,7 +186,7 @@ public class NouvelleVenteServlet extends HttpServlet {
 		
 		
 		
-		request.getRequestDispatcher("/WEB-INF/jsp/nouvelleVente2.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/jsp/consulterMonProfil.jsp").forward(request, response);
 		
 		
 	}
