@@ -141,20 +141,26 @@
 			
 			<c:if test="${empty listeArticlesEnVente}">
 				<div class="card-body">
-					<article style="text_align-center">Aucun article ne correspond à votre
+					<article>Aucun article ne correspond à votre
 						recherche</article>
 				</div>
 			</c:if>
 
 			<c:if test="${!empty listeArticlesEnVente}">
-				<div class="card-body">
-					<article>
-					<p>No article : ${ArticleVendu.noArticle }</p>
-					<p>Article : ${ArticleVendu.nomArticle }</p>
-					<p>Article : ${ArticleVendu.description }</p>
-					
-					</article>
-				</div>
+				
+				<c:forEach var="ArticleVendu" items="${listeArticlesEnVente }">
+					<div class="card-body">
+						<article>
+							<p>No article : ${ArticleVendu.noArticle }</p>
+							<p>Article : ${ArticleVendu.nomArticle }</p>
+							<p>Description : ${ArticleVendu.description }</p>
+							<p>Prix de vente : ${ArticleVendu.prixVente }</p>
+							<p>Fin de l'enchere : ${ArticleVendu.dateFinEncheres }</p>
+						</article>
+						
+					</div>
+				</c:forEach>
+				
 			</c:if>
 		</div>
 		<div class="col-md-1"></div>
