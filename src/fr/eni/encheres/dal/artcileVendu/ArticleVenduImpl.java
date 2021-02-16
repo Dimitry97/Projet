@@ -159,7 +159,7 @@ public class ArticleVenduImpl implements ArticleVenduDAO {
 			stmt.setInt(8, article.getCategorie().getNoCategorie());
 			stmt.setInt(9, article.getLieuRetrait().getNoRetrait());
 
-			
+			//////////////////////////////////
 			stmt.executeUpdate();
 
 			System.out.println("test IMPL:");
