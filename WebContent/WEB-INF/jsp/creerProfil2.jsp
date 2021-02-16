@@ -11,7 +11,7 @@
 <jsp:include page="/WEB-INF/fragments/headerConnect.jsp"></jsp:include>
 
 <div class="text-center">
-	<h3>Mon profil</h3>
+	<h3>Nouveau profil</h3>
 </div>
 <br>
 
