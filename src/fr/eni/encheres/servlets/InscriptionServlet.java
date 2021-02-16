@@ -15,6 +15,7 @@ import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.dal.DALException;
 import fr.eni.encheres.dal.DAOFactory;
 import fr.eni.encheres.dal.utilisateur.UtilisateurDAO;
+import fr.eni.encheres.methode.ValidationChampsInscriptionModification;
 
 /**
  * Servlet implementation class Inscription
@@ -36,7 +37,6 @@ public class InscriptionServlet extends HttpServlet {
     public static final String CHAMP_VERIF_MDP = "passwordVerif";
 
 	private static final String ATT_ERREURS = "erreurs";
-	private static final String ATT_RESULTAT = "résultats";
     
 	
     /**
@@ -61,7 +61,7 @@ public class InscriptionServlet extends HttpServlet {
 		//Map d'erreurs
 		Map<String, String> erreurs = new HashMap<String, String>();		
 		
-		String resultat;
+		boolean inscriptionOk;
 		
 		// Récupère les champs du formulaire
 		String pseudo = request.getParameter(CHAMP_PSEUDO);
@@ -88,55 +88,55 @@ public class InscriptionServlet extends HttpServlet {
 		try {
 			
 			try {
-				validationPseudo(pseudo);
+				ValidationChampsInscriptionModification.validationPseudo(pseudo);
 			} catch (Exception e) {
 				erreurs.put(CHAMP_PSEUDO, e.getMessage());
 			}
 			
 			try {
-				validationNom(nom);
+				ValidationChampsInscriptionModification.validationNom(nom);
 			} catch (Exception e) {
 				erreurs.put(CHAMP_NOM, e.getMessage());
 			}
 			
 			try {
-				validationPrenom(prenom);
+				ValidationChampsInscriptionModification.validationPrenom(prenom);
 			} catch (Exception e) {
 				erreurs.put(CHAMP_PRENOM, e.getMessage());
 			}
 			
 			try {
-				validationEmail(email);
+				ValidationChampsInscriptionModification.validationEmail(email);
 			} catch (Exception e) {
 				erreurs.put(CHAMP_EMAIL, e.getMessage());
 			}
 			
 			try {
-				validationTelephone(telephone);
+				ValidationChampsInscriptionModification.validationTelephone(telephone);
 			} catch (Exception e) {
 				erreurs.put(CHAMP_TEL, e.getMessage());
 			}
 			
 			try {
-				validationRue(rue);
+				ValidationChampsInscriptionModification.validationRue(rue);
 			} catch (Exception e) {
 				erreurs.put(CHAMP_RUE, e.getMessage());
 			}
 			
 			try {
-				validationCodePostal(codePostal);
+				ValidationChampsInscriptionModification.validationCodePostal(codePostal);
 			} catch (Exception e) {
 				erreurs.put(CHAMP_CP, e.getMessage());
 			}
 			
 			try {
-				validationVille(ville);
+				ValidationChampsInscriptionModification.validationVille(ville);
 			} catch (Exception e) {
 				erreurs.put(CHAMP_VILLE, e.getMessage());
 			}
 			
 			try {
-				validationPassword(password, passwordVerif);
+				ValidationChampsInscriptionModification.validationPassword(password, passwordVerif);
 			} catch (Exception e) {
 				erreurs.put(CHAMP_MDP, e.getMessage());
 			}
@@ -155,21 +155,20 @@ public class InscriptionServlet extends HttpServlet {
 	        
 			//Redirection et chargement message echec ou réussite inscription
 			if(erreurs.isEmpty()) {
-				resultat =" Inscripition réussie";
+				inscriptionOk = true;
 			}else {
-				resultat =" Echec de l'inscripition ";
+				inscriptionOk = false ;
 				this.getServletContext().getRequestDispatcher(VUE).forward(request, response);
 			}
 			
-			request.setAttribute( ATT_RESULTAT, resultat );
+			
 	        
 	       
 		} catch (Exception e){
 			throw new ServletException("Erreur sur un des champs" + e.getMessage());
 		}
 		
-		
-		
+		if(inscriptionOk) {
 			//Instanciation de l'utilisateur
 			Utilisateur utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, password, credit, admin);
 			
@@ -184,143 +183,12 @@ public class InscriptionServlet extends HttpServlet {
 			} catch (SQLException e) {
 				
 			}
+		}
+		
+			
 				
 		
 	}
 
-	
-	///////////////////////////////////////////////////////////////////
-	//Ensemble des méthodes permettant de tester la validité des données de l'utilisateur
-	/**
-	 * Valide le nom .
-	 */
-	private void validationNom( String nom ) throws Exception {
-		if(nom.trim().isEmpty()) {
-			throw new Exception("Veuillez renseigner votre Nom");
-		}
-	    if (  nom.trim().length() < 1 || nom.trim().length() > 30 ) {
-	        throw new Exception( "Le nom d'utilisateur doit contenir entre 1 et 30 caractères." );
-	    }
-	    if(nom.matches("[a-zA-Z]*") == false) {
-	    	System.out.println("caractere interdit");
-	        throw new Exception( "Caractère interdit" );
-	    }
-	}
-	
-	/**
-	 * Valide le prenom .
-	 */
-	private void validationPrenom( String prenom ) throws Exception {
-		if(prenom.trim().isEmpty()) {
-			throw new Exception("Veuillez renseigner votre Prénom");
-		}
-	    if (prenom.trim().length() < 1 && prenom.trim().length() > 30) {
-	        throw new Exception( "Le prenom d'utilisateur doit contenir entre 1 et 30 caractères." );
-	    
-	    }
-	    if(prenom.matches("[a-zA-Z]*") == false) {
-	        throw new Exception( "Caractère interdit" );
-	    }
-	}
-	
-	/**
-	 * Valide le nom de rue .
-	 */
-	private void validationRue( String rue ) throws Exception {
-		if(rue.trim().isEmpty()) {
-			throw new Exception("Veuillez renseigner le nom de votre rue");
-		}
-	    if ( rue.trim().length() < 1 && rue.trim().length() > 30) {
-	        throw new Exception( "Le nom de la rue doit contenir entre 1 et 30 caractères." );
-	    
-	    }
-	    if(rue.matches("[a-zA-Z]*") == false) {
-	        throw new Exception( "Caractère interdit" );
-	    }
-	}
-	
-	/**
-	 * Valide le nom de la ville .
-	 */
-	private void validationVille( String ville ) throws Exception {
-		if(ville.trim().isEmpty()) {
-			throw new Exception("Veuillez renseigner le nom de votre Ville");
-		}
-	    if (ville.trim().length() < 1 && ville.trim().length() > 30) {
-	        throw new Exception( "Le nom de la ville doit contenir entre 1 et 30 caractères." );
-	    
-	    }
-	    if(ville.matches("[a-zA-Z]*") == false) {
-	    	System.out.println("Caractère interdit");
-	        throw new Exception( "Caractère interdit" );
-	    }
-	}
-	
-	/**
-	 * Valide l'adresse mail saisie.
-	 */
-	private void validationEmail( String email ) throws Exception {
-	    if ( email != null && email.trim().length() != 0 ) {
-	        if ( !email.matches( "([^.@]+)(\\.[^.@]+)*@([^.@]+\\.)+([^.@]+)" ) ) {
-	            throw new Exception( "Merci de saisir une adresse mail valide." );
-	        }
-	    } else {
-	        throw new Exception( "Merci de saisir une adresse mail." );
-	    }
-	}
-
-	/**
-	 * Valide les mots de passe saisis.
-	 */
-	private void validationPassword( String password, String passwordVerif ) throws Exception{
-	    if (password != null && password.trim().length() != 0 && passwordVerif != null && passwordVerif.trim().length() != 0) {
-	        if (!password.equals(passwordVerif)) {
-	            throw new Exception("Les mots de passe entrés sont différents, merci de les saisir à  nouveau.");
-	        } else if (password.trim().length() < 3) {
-	            throw new Exception("Les mots de passe doivent contenir au moins 3 caractères.");
-	        }
-	    } else {
-	        throw new Exception("Merci de saisir et confirmer votre mot de passe.");
-	    }
-	}
-
-	/**
-	 * Valide le pseudo d'utilisateur saisi.
-	 */
-	private void validationPseudo( String pseudo ) throws Exception {
-		if(pseudo.trim().isEmpty()) {
-			throw new Exception("Veuillez renseigner un pseudo");
-		}
-	    if (pseudo.trim().length() < 3 ||  pseudo.trim().length() > 30 ) {
-	        throw new Exception( "Le pseudo doit contenir au moins 3 caractères." );
-	    }
-	    if(pseudo.matches("[a-zA-Z0-9]*") == false) {
-	        throw new Exception( "Caractère interdit" );
-	    }
-	}
-	
-	/**
-	 * Valide le codePostal d'utilisateur saisi.
-	 */
-	private void validationCodePostal( String codePostal ) throws Exception {
-		if(codePostal.trim().isEmpty()) {
-			throw new Exception("Veuillez renseigner un code postal");
-		}
-	    if (codePostal.trim().length() != 5 ) {
-	        throw new Exception( "Le code postal doit contenir 5 chiffres." );
-	    }
-	    if(!codePostal.matches("[0-9]*")){
-	    	throw new Exception("lettre dans champ code postal");
-	    }
-	}
-	
-	/**
-	 * Valide le numéro de téléphone d'utilisateur saisie. --> peut etre null
-	 */
-	private void validationTelephone( String telephone ) throws Exception {
-	    if ( telephone.trim().length() != 0 && (telephone.trim().length() != 10 && telephone.trim().length() != 12 )) {
-	        throw new Exception( "Le numéro de téléphone doit contenir 10 chiffres (12 avec indicatif)");
-	    }
-	}
 
 }
