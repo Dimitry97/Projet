@@ -83,15 +83,17 @@ public class ServletConnexion extends HttpServlet {
 				System.out.println("ok");
 				utilisateur = user.getUtilisateurPseudoMdp(pseudo, motDePasse);
 				System.out.println("ok");
-
+				session.setAttribute("pseudo", pseudo);
 				if (utilisateur == null) {
 					this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/pageConnexion.jsp").forward(request,
 							response);
 				} else {
 
 					System.out.println("utilisateur ok");
-
-					this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/monProfil2.jsp").forward(request,
+					
+					
+/////////////////////////////////////////////////////////Modifier adresse dispatcher
+					this.getServletContext().getRequestDispatcher("/ModifierProfilServlet").forward(request,
 							response);
 				}
 			} catch (DALException e) {
