@@ -150,22 +150,12 @@ public class NouvelleVenteServlet extends HttpServlet {
 		nvArticleAVendre.setCategorie(noCategorie);
 		nvArticleAVendre.setVendeur(utilisateur);
 		
-		/*
-		 * HttpSession session = request.getSession(); int nvNoUtilisateur = (int)
-		 * session.getAttribute("noUtilisateur");
-		 * 
-		 * nvArticleAVendre.getVendeur().setNoUtilisateur(nvNoUtilisateur);
-		 */
 		
 		
-		
-		//ArticleVenduDAO nouvelleVente = new ArticleVenduImpl();
 		RetraitDAO retrait = new RetraitImpl();
 		try {
 			try {
-				nouvelVenteDAO.nouvelArticle(nvArticleAVendre);
-				retrait.ajoutRetrait(nvRetrait);
-				
+				nouvelVenteDAO.nouvelArticle(nvArticleAVendre);	
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -176,11 +166,6 @@ public class NouvelleVenteServlet extends HttpServlet {
 		Enchere enchere = new Enchere();
 		enchere.setArticleVendu(nvArticleAVendre);
 		enchere.setDateEnchere(nvArticleAVendre.getDateFinEncheres());
-		
-		
-		
-		
-		
 		
 		
 		

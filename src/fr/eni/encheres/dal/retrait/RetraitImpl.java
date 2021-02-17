@@ -20,7 +20,6 @@ public class RetraitImpl implements RetraitDAO {
 
 	@Override
 	public void ajoutRetrait(Retrait retrait) throws DALException {
-		int noRetrait;
 		Connection cnx = null;
 		PreparedStatement stmt = null;
 		try {
