@@ -2,7 +2,9 @@ package fr.eni.encheres.servlets;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -12,9 +14,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import fr.eni.encheres.bo.ArticleVendu;
 import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.dal.DALException;
 import fr.eni.encheres.dal.DAOFactory;
+import fr.eni.encheres.dal.artcileVendu.ArticleVenduDAO;
 import fr.eni.encheres.dal.utilisateur.UtilisateurDAO;
 import fr.eni.encheres.methode.ValidationChampsInscriptionModification;
 
@@ -35,10 +39,12 @@ public class SupprimerOuModifierProfilServlet extends HttpServlet {
 	public static final String CHAMP_CP = "codePostal";
 	public static final String CHAMP_VILLE = "ville";
 	public static final String CHAMP_MDP = "password";
+	public static final String CHAMP_NOUVEAU_MDP = "passwordNouveau";
 	public static final String CHAMP_VERIF_MDP = "passwordVerif";
-
+	public static final String CHAMP_SUPPRIMER = "supprimer";
+	public static final String CHAMP_CREDIT = "credit";
 	private static final String ATT_ERREURS = "erreurs";
-	
+	public static final String CHAMP_PROFIL = "champsProfil";
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -59,23 +65,48 @@ public class SupprimerOuModifierProfilServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		
+		UtilisateurDAO utilisateurDAO ;		
+		utilisateurDAO = DAOFactory.getUtilisateurDAO();
+		Utilisateur utilisateur = new Utilisateur();
 
-
-		//Condition en fonction du choix du bouton mise à jour ou suppression
+		//////////Rï¿½cupï¿½ration du pseudo de la session en cours
+		HttpSession session = request.getSession();
+		String pseudo = (String) session.getAttribute("pseudo");
+			
+		//Condition en fonction du choix du bouton mise ï¿½ jour ou suppression
 		String action = request.getParameter("action");
+		
+		//Map d'erreurs
+		Map<String, String> erreurs = new HashMap<String, String>();	
+		boolean modifOk;
+		
+		//Map de champ prÃ©rempli avec info de l'utilisateur
+		Map<String, String> champsProfil = new HashMap<String, String>();
+		try {
+			utilisateur = utilisateurDAO.rechercherProfilParPseudoAvecCredit(pseudo);
+		} catch (DALException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		champsProfil.put(CHAMP_PSEUDO, utilisateur.getPseudo());
+		champsProfil.put(CHAMP_NOM, utilisateur.getNom());
+		champsProfil.put(CHAMP_PRENOM, utilisateur.getPrenom());
+		champsProfil.put(CHAMP_EMAIL, utilisateur.getEmail());
+		champsProfil.put(CHAMP_TEL, utilisateur.getTelephone());
+		champsProfil.put(CHAMP_RUE, utilisateur.getRue());
+		champsProfil.put(CHAMP_CP, utilisateur.getCodePostal());
+		champsProfil.put(CHAMP_VILLE, utilisateur.getVille());
+		champsProfil.put(CHAMP_CREDIT, String.valueOf(utilisateur.getCredit()));
+			
+		System.out.println(champsProfil);
+		request.setAttribute( CHAMP_PROFIL, champsProfil );
+		
+		
+		
 		if (action.equals("Update")) { //---------------------------------------->UPDATE profil
 
-			UtilisateurDAO utilisateurDAO ;		
-			utilisateurDAO = DAOFactory.getUtilisateurDAO();
-			Utilisateur utilisateur = new Utilisateur();
-
-			//Map d'erreurs
-			Map<String, String> erreurs = new HashMap<String, String>();	
-			boolean modifOk;
-			//////////Récupération du pseudo de la session en cours
-			HttpSession session = request.getSession();
-			String pseudo = (String) session.getAttribute("pseudo");
+			
+			
 
 			try {
 				utilisateur = utilisateurDAO.rechercherProfilParPseudoAvecCredit(pseudo);
@@ -91,7 +122,7 @@ public class SupprimerOuModifierProfilServlet extends HttpServlet {
 			System.out.println("crdt:" + credit);
 			request.setAttribute("credit", credit);
 			
-			// Récupère les champs du formulaire
+			// Rï¿½cupï¿½re les champs du formulaire
 			String pseudoChamp = request.getParameter(CHAMP_PSEUDO);
 			String nom = request.getParameter(CHAMP_NOM);
 			String prenom = request.getParameter(CHAMP_PRENOM);
@@ -103,8 +134,8 @@ public class SupprimerOuModifierProfilServlet extends HttpServlet {
 			String password = request.getParameter(CHAMP_MDP);
 			String passwordVerif = request.getParameter(CHAMP_VERIF_MDP);
 
-			//Verification de la validité des nouveux champs rentrés par l'utilisateur
-			//Chaque méthode renvoit une erreur de la hasmap "erreurs" si elle en lève une
+			//Verification de la validitï¿½ des nouveux champs rentrï¿½s par l'utilisateur
+			//Chaque mï¿½thode renvoit une erreur de la hasmap "erreurs" si elle en lï¿½ve une
 			try {
 
 				try {
@@ -164,23 +195,23 @@ public class SupprimerOuModifierProfilServlet extends HttpServlet {
 				boolean verifMail = utilisateurDAO.verifMailUnique(email);
 				if(verifMail && (email.matches(emailOrigine) == false )) {
 					System.out.println(verifMail);
-					erreurs.put(CHAMP_EMAIL, "Email déjà utilisé, veuillez en choisir un autre");
+					erreurs.put(CHAMP_EMAIL, "Email dï¿½jï¿½ utilisï¿½, veuillez en choisir un autre");
 				}
 
 				boolean verifPseudo = utilisateurDAO.verifPseudoUnique(pseudoChamp);
 				if(verifPseudo && (pseudoChamp.matches(pseudoOrgine) == false )) {
 					System.out.println("verifpseudo" + verifPseudo);
-					erreurs.put(CHAMP_PSEUDO, "Pseudo déjà utilisé, veuillez en choisir un autre");
+					erreurs.put(CHAMP_PSEUDO, "Pseudo dï¿½jï¿½ utilisï¿½, veuillez en choisir un autre");
 				}
 				
 				if(password.trim().isEmpty()) {
 					erreurs.put(CHAMP_MDP, "Veuillez entrer votre mot de passe");
 				}else if(password != passwordOrigine) {
-					erreurs.put(CHAMP_MDP, "Mot de passe erroné");
+					erreurs.put(CHAMP_MDP, "Mot de passe erronï¿½");
 				}
 				
 				request.setAttribute( ATT_ERREURS, erreurs );
-				//Redirection et chargement message echec ou réussite inscription
+				//Redirection et chargement message echec ou rï¿½ussite inscription
 				if(erreurs.isEmpty()) {
 					modifOk = true;
 				}else {
@@ -207,7 +238,6 @@ public class SupprimerOuModifierProfilServlet extends HttpServlet {
 			try {
 				utilisateurDAO.modifier(utilisateur);
 
-				System.out.println("après");
 			} catch (DALException e) {
 
 			} catch (SQLException e) {
@@ -218,6 +248,81 @@ public class SupprimerOuModifierProfilServlet extends HttpServlet {
 			
 
 		}else{//------------------------------------------------------------------>DELETE profil
+			//RecupÃ©ration du mot de passe utilisateur de la session en cours
+			try {
+				utilisateur = utilisateurDAO.rechercherProfilParPseudoAvecCredit(pseudo);
+			} catch (DALException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			String passwordOrigine = utilisateur.getMotDePasse();
+			
+			
+			 int noUtilisateur = utilisateur.getNoUtilisateur();
+			 ArticleVenduDAO articleVenduDAO;
+			 articleVenduDAO = DAOFactory.getArticleDAO();
+			 List<ArticleVendu> listArticle = new ArrayList<ArticleVendu>();
+			 listArticle = null;
+			try {
+				listArticle = articleVenduDAO.rechercheVentesTermineesParUtilisateur(noUtilisateur);
+			} catch (DALException e) {
+				e.printStackTrace();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+			try {
+				listArticle = articleVenduDAO.rechercheVentesEnCoursParUtilisateur(noUtilisateur);
+			} catch (DALException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			try {
+				listArticle = articleVenduDAO.rechercheVentesNonDebuteesParUtilisateur(noUtilisateur);
+			} catch (DALException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			if(listArticle.isEmpty()) {
+				String password = request.getParameter("password");
+				
+				if(password.trim().isEmpty()) {
+					erreurs.put(CHAMP_MDP, "Veuillez entrer votre mot de passe");
+				}else if(password.trim().matches(passwordOrigine.trim()) ) {
+					try {
+						utilisateurDAO.supprimer(utilisateur);
+						session.invalidate();
+						System.out.println("pseudo de session : " + pseudo);
+					} catch (DALException e) {
+						e.printStackTrace();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				} else {
+					erreurs.put(CHAMP_MDP, "Mot de passe erronÃ© ");
+				}
+				
+				request.setAttribute( ATT_ERREURS, erreurs );
+
+				request.getRequestDispatcher(VUE).forward(request, response);
+				
+			}else if(listArticle != null) {
+				
+				
+				System.out.println(listArticle);
+				erreurs.put(CHAMP_SUPPRIMER, "Suppression impossible, vous avez des ventes en cours ou Ã  venir" );
+				request.setAttribute( ATT_ERREURS, erreurs );
+				System.out.println("suppression utilisateur impossible, vente associÃ©e");
+				request.getRequestDispatcher(VUE).forward(request, response);
+			}
 		}
 	}
 

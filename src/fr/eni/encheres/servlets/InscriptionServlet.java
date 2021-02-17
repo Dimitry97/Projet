@@ -57,13 +57,15 @@ public class InscriptionServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
 		
 		//Map d'erreurs
 		Map<String, String> erreurs = new HashMap<String, String>();		
 		
 		boolean inscriptionOk;
 		
-		// Récupère les champs du formulaire
+		// Rï¿½cupï¿½re les champs du formulaire
 		String pseudo = request.getParameter(CHAMP_PSEUDO);
 		String nom = request.getParameter(CHAMP_NOM);
 		String prenom = request.getParameter(CHAMP_PRENOM);
@@ -76,15 +78,15 @@ public class InscriptionServlet extends HttpServlet {
 		String passwordVerif = request.getParameter(CHAMP_VERIF_MDP);
 		
 		
-		//Initialisation des crédit à 100 et admin à faux
+		//Initialisation des crï¿½dit ï¿½ 100 et admin ï¿½ faux
 		int credit = 100;
 		boolean admin = false;
 		
 		UtilisateurDAO utilisateurDAO ;		
 		utilisateurDAO = DAOFactory.getUtilisateurDAO();		
 		
-		//Test des champs rentrés par utilisateur via chaque méthode de test
-		//Chaque méthode renvoit une erreur de la hasmap "erreurs" si elle en lève une
+		//Test des champs rentrï¿½s par utilisateur via chaque mï¿½thode de test
+		//Chaque mï¿½thode renvoit une erreur de la hasmap "erreurs" si elle en lï¿½ve une
 		try {
 			
 			try {
@@ -143,17 +145,17 @@ public class InscriptionServlet extends HttpServlet {
 			
 			boolean verifMail = utilisateurDAO.verifMailUnique(email);
 			if(verifMail) {
-				erreurs.put(CHAMP_EMAIL, "Email déjà utilisé, veuillez en choisir un autre");
+				erreurs.put(CHAMP_EMAIL, "Email dï¿½jï¿½ utilisï¿½, veuillez en choisir un autre");
 			}
 			
 			boolean verifPseudo = utilisateurDAO.verifPseudoUnique(pseudo);
 			if(verifPseudo) {
-				erreurs.put(CHAMP_PSEUDO, "Pseudo déjà utilisé, veuillez en choisir un autre");
+				erreurs.put(CHAMP_PSEUDO, "Pseudo dï¿½jï¿½ utilisï¿½, veuillez en choisir un autre");
 			}
 			
 			request.setAttribute( ATT_ERREURS, erreurs );
 	        
-			//Redirection et chargement message echec ou réussite inscription
+			//Redirection et chargement message echec ou rï¿½ussite inscription
 			if(erreurs.isEmpty()) {
 				inscriptionOk = true;
 			}else {
@@ -176,7 +178,7 @@ public class InscriptionServlet extends HttpServlet {
 			try {
 							
 				utilisateurDAO.inserer(utilisateur);
-				System.out.println("utilisateur ajouté");
+				System.out.println("utilisateur ajoutï¿½");
 				request.getRequestDispatcher("/WEB-INF/jsp/listeEncheresConnecte.jsp").forward(request, response);
 			} catch (DALException e) {
 				

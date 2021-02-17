@@ -19,7 +19,7 @@ import fr.eni.encheres.dal.utilisateur.UtilisateurDAO;
 /**
  * Servlet implementation class ModifierProfilServlet
  */
-@WebServlet("/ModifierProfilServlet")
+@WebServlet("/AffichageModifierProfilServlet")
 public class AffichageModifierProfilServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     

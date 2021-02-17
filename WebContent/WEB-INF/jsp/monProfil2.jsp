@@ -15,6 +15,8 @@
 	<c:if test="${ !empty sessionScope.pseudo }">		
 		<h3>Profil de ${ sessionScope.pseudo }</h3>		
 	</c:if>
+	<span class="erreurs text-danger">${erreurs['supprimer']}</span>
+	
 
 <div class="container-fluid">
 
@@ -63,7 +65,7 @@
 				<div class="form-group"> 
 					<label for="passwordActuel"> Mot de passe actuel</label>
 					<!--  recuperer le mot de passe en bdd -->
-					<input type="password" class="form-control" id="passwordActuel" name="passwordActuel" value="">
+					<input type="password" class="form-control" id="passwordActuel" name="password" value="">
 					<span class="erreur text-danger">${erreurs['password']}</span>
 				</div>
 					 

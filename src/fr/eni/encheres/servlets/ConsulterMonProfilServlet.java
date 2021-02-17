@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.dal.DALException;
@@ -61,16 +62,9 @@ public class ConsulterMonProfilServlet extends HttpServlet {
 		
 		// Recuperer les champs du formulaire
 		
-				/////////*********************************************************************************/////////
-				//////////////////
-				String pseudo = "pseudo1"; // --> String de !!!TEST!!! pseudo à remplir avec pseudo user présent en BDD
-				//////////////////////////// --> Methode ci-dessous à décommenter lorsque navigation terminée
-				//////////////////
-				/////////**********************************************************************************////////
-				/**
-				pseudo = request.getParameter("pseudo");
-				--> à tester
-				**/
+			
+				HttpSession session = request.getSession();
+				String pseudo = (String) session.getAttribute("pseudo");
 				
 				UtilisateurDAO utilisateurDAO ;		
 				utilisateurDAO = DAOFactory.getUtilisateurDAO();

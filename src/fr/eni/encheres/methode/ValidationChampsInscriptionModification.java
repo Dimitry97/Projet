@@ -4,7 +4,7 @@ public class ValidationChampsInscriptionModification {
 
 
 	///////////////////////////////////////////////////////////////////
-	//Ensemble des m�thodes permettant de tester la validit� des donn�es de l'utilisateur
+	//Ensemble des m�thodes permettant de tester la validit� des donn�es de l'utilisateur
 	/**
 	 * Valide le nom .
 	 */
@@ -13,10 +13,10 @@ public class ValidationChampsInscriptionModification {
 			throw new Exception("Veuillez renseigner votre Nom");
 		}
 		if (  nom.trim().length() < 1 || nom.trim().length() > 30 ) {
-			throw new Exception( "Le nom d'utilisateur doit contenir entre 1 et 30 caract�res." );
+			throw new Exception( "Le nom d'utilisateur doit contenir entre 1 et 30 caractères." );
 		}
-		if(nom.matches("[a-zA-Z]*") == false) {
-			throw new Exception( "Caract�re interdit" );
+		if(nom.matches("[a-zA-Z'éàèê ëûüîï]*") == false) {
+			throw new Exception( "Caractère interdit" );
 		}
 	}
 
@@ -25,14 +25,14 @@ public class ValidationChampsInscriptionModification {
 	 */
 	public static void validationPrenom( String prenom ) throws Exception {
 		if(prenom.trim().isEmpty()) {
-			throw new Exception("Veuillez renseigner votre Pr�nom");
+			throw new Exception("Veuillez renseigner votre Prénom");
 		}
 		if (prenom.trim().length() < 1 && prenom.trim().length() > 30) {
-			throw new Exception( "Le prenom d'utilisateur doit contenir entre 1 et 30 caract�res." );
+			throw new Exception( "Le prenom d'utilisateur doit contenir entre 1 et 30 caractères." );
 
 		}
-		if(prenom.matches("[a-zA-Z]*") == false) {
-			throw new Exception( "Caract�re interdit" );
+		if(prenom.matches("[a-zA-Z'éàèêëûüîï]*") == false) {
+			throw new Exception( "Caractère interdit" );
 		}
 	}
 
@@ -44,11 +44,11 @@ public class ValidationChampsInscriptionModification {
 			throw new Exception("Veuillez renseigner le nom de votre rue");
 		}
 		if ( rue.trim().length() < 1 && rue.trim().length() > 30) {
-			throw new Exception( "Le nom de la rue doit contenir entre 1 et 30 caract�res." );
+			throw new Exception( "Le nom de la rue doit contenir entre 1 et 30 caractères." );
 
 		}
-		if(rue.matches("[a-zA-Z]*") == false) {
-			throw new Exception( "Caract�re interdit" );
+		if(rue.matches("[a-zA-Z'éàèêëûüîï ']*") == false) {
+			throw new Exception( "Caractère interdit" );
 		}
 	}
 
@@ -60,11 +60,11 @@ public class ValidationChampsInscriptionModification {
 			throw new Exception("Veuillez renseigner le nom de votre Ville");
 		}
 		if (ville.trim().length() < 1 && ville.trim().length() > 30) {
-			throw new Exception( "Le nom de la ville doit contenir entre 1 et 30 caract�res." );
+			throw new Exception( "Le nom de la ville doit contenir entre 1 et 30 caractères." );
 
 		}
-		if(ville.matches("[a-zA-Z]*") == false) {
-			throw new Exception( "Caract�re interdit" );
+		if(ville.matches("[a-zA-Z''éàèêëûüîï ]*") == false) {
+			throw new Exception( "Caractère interdit" );
 		}
 	}
 
@@ -87,10 +87,10 @@ public class ValidationChampsInscriptionModification {
 	public static void validationPassword( String password, String passwordVerif ) throws Exception{
 		if (password != null && password.trim().length() != 0 && passwordVerif != null && passwordVerif.trim().length() != 0) {
 			if (!password.equals(passwordVerif)) {
-				throw new Exception("Les mots de passe entr�s sont diff�rents, merci de les saisir �  nouveau.");
+				throw new Exception("Les mots de passe entrés sont différents, merci de les saisir à nouveau.");
 			} 
 			if (password.trim().length() < 3) {
-				throw new Exception("Les mots de passe doivent contenir au moins 3 caract�res.");
+				throw new Exception("Les mots de passe doivent contenir au moins 3 caractères.");
 			}
 		}
 		if(password.trim().isEmpty() || passwordVerif.trim().isEmpty()) {
@@ -106,10 +106,10 @@ public class ValidationChampsInscriptionModification {
 			throw new Exception("Veuillez renseigner un pseudo");
 		}
 		if (pseudo.trim().length() < 3 ||  pseudo.trim().length() > 30 ) {
-			throw new Exception( "Le pseudo doit contenir au moins 3 caract�res." );
+			throw new Exception( "Le pseudo doit contenir au moins 3 caractères." );
 		}
 		if(pseudo.matches("[a-zA-Z0-9]*") == false) {
-			throw new Exception( "Caract�re interdit" );
+			throw new Exception( "Caractère interdit" );
 		}
 	}
 
@@ -129,11 +129,11 @@ public class ValidationChampsInscriptionModification {
 	}
 
 	/**
-	 * Valide le num�ro de t�l�phone d'utilisateur saisie. --> peut etre null
+	 * Valide le numéro de téléphone d'utilisateur saisie. --> peut etre null
 	 */
 	public static void validationTelephone( String telephone ) throws Exception {
 		if ( telephone.trim().length() != 0 && (telephone.trim().length() != 10 && telephone.trim().length() != 12 )) {
-			throw new Exception( "Le num�ro de t�l�phone doit contenir 10 chiffres (12 avec indicatif)");
+			throw new Exception( "Le numéro de téléphone doit contenir 10 chiffres (12 avec indicatif)");
 		}
 	}
 

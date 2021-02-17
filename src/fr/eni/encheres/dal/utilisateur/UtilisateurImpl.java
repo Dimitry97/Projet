@@ -14,7 +14,7 @@ public class UtilisateurImpl  implements UtilisateurDAO{
 	
 	
 	private final static String RECHERCHER = "SELECT pseudo, nom, prenom, email, telephone, rue, code_postal, ville FROM UTILISATEURS WHERE pseudo = ?;";
-	private final static String RECHERCHER_AVEC_CREDIT = "SELECT pseudo, nom, prenom, email, telephone, rue, code_postal, ville, credit, no_utilisateur FROM UTILISATEURS WHERE pseudo = ?;";
+	private final static String RECHERCHER_AVEC_CREDIT = "SELECT pseudo, nom, prenom, email, telephone, rue, code_postal, ville,mot_de_passe, credit, no_utilisateur FROM UTILISATEURS WHERE pseudo = ?;";
 	private final static String INSERER = "INSERT INTO UTILISATEURS (pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) values (?,?,?,?,?,?,?,?,?,?,?);";
 	private final static String SUPPRIMER = "DELETE FROM UTILISATEURS WHERE pseudo = ?;";
 	private final static String MODIFIER = "UPDATE UTILISATEURS SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ?, rue = ?, code_postal = ?, ville = ?, mot_de_passe = ? WHERE no_utilisateur = ?;";
@@ -50,7 +50,6 @@ public class UtilisateurImpl  implements UtilisateurDAO{
 				utilisateur.setRue(rs.getString("rue"));
 				utilisateur.setCodePostal(rs.getString("code_postal"));
 				utilisateur.setVille(rs.getString("ville"));
-				System.out.println(utilisateur);
 			}
 		} catch (SQLException e) {
 			throw new DALException("echec de recherche profil par pseudo");
@@ -91,6 +90,7 @@ public class UtilisateurImpl  implements UtilisateurDAO{
 				utilisateur.setVille(rs.getString("ville"));
 				utilisateur.setCredit(rs.getInt("credit"));
 				utilisateur.setNoUtilisateur(rs.getInt("no_utilisateur"));
+				utilisateur.setMotDePasse(rs.getString("mot_de_passe"));
 			}
 		} catch (SQLException e) {
 			throw new DALException("echec de recherche profil par pseudo avec credit");
