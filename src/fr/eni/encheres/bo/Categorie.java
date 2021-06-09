@@ -48,6 +48,9 @@ public class Categorie {
 	public Categorie(int noCategorie) {
 
 		this.noCategorie = noCategorie;
+
+
+
 	}
 
 	/**
